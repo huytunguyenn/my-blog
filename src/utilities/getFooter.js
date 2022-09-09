@@ -15,7 +15,7 @@ const creatFooter = () => {
         items: [
           {
             label: 'Tutorial',
-            to: '/docs/intro',
+            to: '/docs/learn/intro',
           },
         ],
       },
