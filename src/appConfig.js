@@ -18,6 +18,7 @@ class AppConfiguration {
       label: 'Twitter',
       url: 'https://twitter.com/docusaurus',
     };
+    this.editUrl = 'https://github.com/huytunguyenn/my-blog/tree/main';
   }
 }
 
