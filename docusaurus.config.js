@@ -22,8 +22,8 @@ const prism = getPrism();
 const config = {
   title: 'Chào mừng',
   tagline: 'hế nhô',
-  url: 'https://your-docusaurus-test-site.com',
-  baseUrl: '/',
+  url: 'https://huytunguyenn.github.io',
+  baseUrl: '/my-blog/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
