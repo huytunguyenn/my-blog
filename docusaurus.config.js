@@ -28,6 +28,7 @@ const config = {
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
   organizationName: 'huytunguyenn',
+  trailingSlash: false, // read more: https://github.com/slorber/trailing-slash-guide
   projectName: 'my-blog',
   i18n,
   staticDirectories: [ 'static', ],
