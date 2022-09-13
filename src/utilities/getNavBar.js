@@ -1,8 +1,7 @@
-
 const createNavBar = () => {
   return {
     hideOnScroll: true,
-    title: 'tu-huy Nguyen',
+    title: 'huytu',
     logo: {
       alt: '',
       src: 'img/logo.svg',
@@ -14,28 +13,26 @@ const createNavBar = () => {
     items: [
       {
         /**
-         * type doc link
+         * type doc link: dẫn tới 1 docId cụ thể
          */
         type: 'doc',
         docId: 'learn-intro', // required - vì type là doc nên id sẽ ở docs/learn-intro.mdx
-        label: 'MeLearn',
+        label: 'Learn',
         position: 'left',
       },
       {
         /**
-         * type: 'default' - Navbar link: regular link
+         * type: 'default' - Navbar link: regular link, đi tới link bth
          */
-        to: '/blog',
-        // href: 'https://www.facebook.com' -> either `to` or `href`
-        label: 'Blog',
-        // html: '<b>Introduction</b>' -> either `label` or `html`
+        to: '/blog', // either `to` or `href`. href: 'https://www.facebook.com'
+        label: 'Blog', // either `label` or `html`. html: '<b>Introduction</b>'
         position: 'left'
       },
-      // {
-      //   to: '/projects',
-      //   label: 'My Projects',
-      //   position: 'left'
-      // },
+      {
+        to: '/projects',
+        label: 'Projects',
+        position: 'left'
+      },
       {
         /**
          * link a navbar item to the first document link of a given sidebar
@@ -43,7 +40,7 @@ const createNavBar = () => {
          * -> use this if your sidebar is updated often & order is not stable
          */
         type: 'docSidebar',
-        sidebarId: 'myself', // this is in sidebars.js
+        sidebarId: 'myself', // in sidebars.js
         /** sidebars.js
          * module.exports = {
          *   ....
@@ -57,7 +54,7 @@ const createNavBar = () => {
          *   ]
          * }
          */
-        label: 'BoutMe',
+        label: 'Me',
         position: 'left',
       },
       {
@@ -79,13 +76,18 @@ const createNavBar = () => {
         position: 'right',
       },
       {
-        /**
-         * custom HTML
-         */
-        type: 'html',
-        position: 'right',
-        value: '<button>Give feedback</button>',
+        to: '/docs/learn/tutorial-basics/how-to-use',
+        label: '💩',
+        position: 'right'
       },
+      // {
+      //   /**
+      //    * custom HTML
+      //    */
+      //   type: 'html',
+      //   position: 'right',
+      //   value: '<button>Give feedback</button>',
+      // },
       // {
       //   /**
       //    * dropdown items only accept the following "link-like" item types:
