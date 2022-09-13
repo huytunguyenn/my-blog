@@ -6,8 +6,8 @@ const createNavBar = () => {
       alt: '',
       src: 'img/logo.svg',
       srcDark: 'img/logo.svg',
-      width: 32,
-      height: 32,
+      // width: 32,
+      // height: 32,
       href: '/',
     },
     items: [
