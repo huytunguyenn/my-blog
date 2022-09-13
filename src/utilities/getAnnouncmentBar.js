@@ -1,4 +1,3 @@
-
 const getAnnouncementBar = () => {
     return {
         id: 'support_us',

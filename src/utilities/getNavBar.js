@@ -6,8 +6,8 @@ const createNavBar = () => {
       alt: '',
       src: 'img/logo.svg',
       srcDark: 'img/logo.svg',
-      // width: 32,
-      // height: 32,
+      width: 32,
+      height: 32,
       href: '/',
     },
     items: [
@@ -26,11 +26,6 @@ const createNavBar = () => {
          */
         to: '/blog', // either `to` or `href`. href: 'https://www.facebook.com'
         label: 'Blog', // either `label` or `html`. html: '<b>Introduction</b>'
-        position: 'left'
-      },
-      {
-        to: '/projects',
-        label: 'Projects',
         position: 'left'
       },
       {
@@ -54,7 +49,7 @@ const createNavBar = () => {
          *   ]
          * }
          */
-        label: 'Me',
+        label: 'Me 💩',
         position: 'left',
       },
       {
@@ -74,11 +69,6 @@ const createNavBar = () => {
           },
         ],
         position: 'right',
-      },
-      {
-        to: '/docs/learn/tutorial-basics/how-to-use',
-        label: '💩',
-        position: 'right'
       },
       // {
       //   /**

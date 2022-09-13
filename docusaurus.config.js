@@ -1,31 +1,29 @@
 // @ts-check
 // Note: type annotations allow type checking and IDEs autocompletion
-const { createNavBar } = require('./src/utilities/getNavBar');
-const { creatFooter } = require('./src/utilities/getFooter');
+const { getLocale } = require('./src/utilities/getLocalization');
 const { getDocs } = require('./src/utilities/getDocs');
 const { getBlog } = require('./src/utilities/getBlog');
-const { getPrism } = require('./src/utilities/getPrism');
-const { getLocale } = require('./src/utilities/getLocalization');
-const { getAnnouncementBar } = require('./src/utilities/getAnnouncmentBar');
 const { getTheme } = require('./src/utilities/getTheme');
+const { createNavBar } = require('./src/utilities/getNavBar');
+const { getAnnouncementBar } = require('./src/utilities/getAnnouncmentBar');
+const { creatFooter } = require('./src/utilities/getFooter');
+const { getPrism } = require('./src/utilities/getPrism');
 
+const i18n = getLocale();
 const docs = getDocs();
 const blog = getBlog();
-const i18n = getLocale();
 const theme = getTheme({});
+const navbar = createNavBar();
 const announcementBar = getAnnouncementBar();
 const footer = creatFooter();
-const navbar = createNavBar();
 const prism = getPrism();
-const baseUrl = process.env.BASE_URL ?? '/';
 
-// hi
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'Chào mừng',
   tagline: 'hế nhô',
   url: 'https://your-docusaurus-test-site.com',
-  baseUrl,
+  baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
