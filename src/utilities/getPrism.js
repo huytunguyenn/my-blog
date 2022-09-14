@@ -5,6 +5,28 @@ const getPrism = () => {
   return {
     theme: lightCodeTheme,
     darkTheme: darkCodeTheme,
+    additionalLanguages: [
+      'python',
+      'go',
+    ],
+    magicComments: [
+      // Remember to extend the default highlight class name as well!
+      {
+        className: 'theme-code-block-highlighted-line',
+        line: 'highlight',
+        block: {start: 'highlight-start', end: 'highlight-end'},
+      },
+      {
+        className: 'code-block-highlight-line',
+        line: '-highlight',
+        block: {start: '-highlight-start', end: '-highlight-end'},
+      },
+      {
+        className: 'code-block-error-line',
+        line: '-error',
+        block: {start: '-error-start', end: '-error-end'},
+      },
+    ],
   };
 }
 

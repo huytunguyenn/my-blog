@@ -1,5 +1,227 @@
 ---
-sidebar_position: 1
+sidebar_position: 3
 ---
 # Dynamic array
 
+Array is a collection of items of same data type stored at contiguous memory locations.
+
+In Python, it's called **list**.
+
+```python3
+// -highlight-start
+fruits = []
+fruits = ['orange', 'apple', 'strawberry']
+// -highlight-end
+```
+
+## Add element
+
+### At the end
+
+Use `append(item)`. The `item` will be pushed back at the end of array.
+
+```python3
+fruits = ['orange', 'apple', 'strawberry']
+// -highlight
+fruits.append('lemon')
+
+
+// highlight
+> fruits: ['orange', 'apple', 'strawberry', 'lemon']
+```
+
+### At anywhere
+
+Use `insert(pos, item)`. The `item` will be inserted at position `pos`.
+
+```python3
+fruits = ['orange', 'apple', 'strawberry']
+// -highlight
+fruits.insert(2, 'pineapple')
+
+
+// highlight
+> fruits: ['orange', 'apple', 'pineapple', 'strawberry']
+```
+
+## Get array size
+
+Use `len(arr)`.
+
+```python3
+fruits = ['orange', 'apple', 'strawberry']
+// -highlight
+n = len(fruits)
+
+
+// highlight
+> n: 3
+```
+
+## Access element in array
+
+Use bracket notation`[index]`.
+
+```python3
+fruits = ['orange', 'apple', 'strawberry']
+// -highlight
+my_pick = fruits[1]
+
+
+// highlight
+> my_pick: apple
+```
+
+`index` can be negative.
+
+```python3
+fruits = ['orange', 'apple', 'tangerine']
+// -highlight
+orange_variety = fruits[-1]     # fruits[2]
+
+
+// highlight
+> orange_variety: tangerine
+```
+
+## Delete element
+
+Use `pop(index)`
+
+### At the end
+
+```python3
+fruits = ['orange', 'apple', 'strawberry']
+// -highlight
+fruits.pop()
+
+
+// highlight
+> fruits: ['orange', 'apple']
+```
+
+### At anywhere
+
+```python3
+fruits = ['orange', 'apple', 'strawberry']
+// -highlight
+fruits.pop(1)
+
+
+// highlight
+> fruits: ['orange', 'strawberry']
+```
+
+### Delete all
+
+```python3
+fruits = ['orange', 'apple', 'strawberry']
+// -highlight
+fruits.clear()
+
+
+// highlight
+> fruits: []
+```
+
+## Extend array
+
+Use `list.extend(another_list)` to concat `another_list` to the end of `list`.
+
+```python3
+zeros = [0, 0, 0]
+// -highlight
+zeros.extend(2*[0])
+
+
+// highlight
+> zeros: [0, 0, 0, 0, 0]
+```
+
+## Reduce array
+
+Use slicing to get a part of the array, then assign it to itself.
+
+```python3
+nums = [0, 1, 2, 3, 4, 5]
+// -highlight
+nums = nums[0:2]
+
+
+// highlight
+> nums: [0, 1]
+```
+
+:::tip
+When do `arr[start:end]`, you can remember it as:
+
+> "get me that `arr` from `start` to `end` **but** `end`"
+:::
+
+## Useful codes
+
+### Check if an array is empty
+
+Check the `len`
+
+```python3
+arr = []
+// -highlight-start
+if len(arr) == 0:
+  print('Nothing is here!')
+else:
+  print('Array is not empty!')
+// -highlight-end
+```
+
+### Iterate over a list
+
+Use `range(len_of_arr)` to create range from 0 to len_of_arr - 1 with step = 1. Then loop through it.
+
+```python3
+arr = [4 ,8 , 2, 0, 0]
+// -highlight-start
+for i in range(len(arr)):
+  print(arr[i], end=' ')
+// -highlight-end
+
+
+// highlight
+> 4 8 2 0 0
+```
+
+### Iterate over a list in reverse order
+
+Use simple loop. Note that just like [slicing array](#reduce-array), `range(start, end, step)` is like "get me from `start` to `end` but not take that `end`".
+
+```python3
+arr = [4 ,8 , 2, 0, 0]
+// -highlight-start
+for i in range(len(arr) - 1, -1, -1):
+  print(arr[i], end=' ')
+// -highlight-end
+
+
+// highlight
+> 0 0 2 8 4
+```
+
+Or using `reversed(array)`. The `array` will not be affected.
+
+```python3
+wordList = 'Python is great!'
+// -highlight-start
+for i in reversed(wordList) :
+  print(i, end='')
+// -highlight-end
+
+
+// highlight
+> !taerg si nohtyP
+```
+
+---
+
+Oh wait, isn't `wordList` a string? Is it an array too?
+
+Well, it is. Let's go to next module. 🚗
