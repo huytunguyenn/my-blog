@@ -2,6 +2,7 @@
 https://docusaurus.io/docs/next/styling-layout#styling-your-site-with-infima
  */
 
+/* Overriding root Infima variables */
 :root {
     --ifm-color-primary: #4d21c4;
     --ifm-color-primary-dark: #451eb0;
@@ -14,7 +15,6 @@ https://docusaurus.io/docs/next/styling-layout#styling-your-site-with-infima
     --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
 }
 
-/* For readability concerns, you should choose a lighter palette in dark mode. */
 [data-theme='dark'] {
     --ifm-color-primary: #b4d0fe;
     --ifm-color-primary-dark: #89b5fd;
@@ -40,4 +40,9 @@ https://docusaurus.io/docs/next/styling-layout#styling-your-site-with-infima
     margin: 0 calc(-1 * var(--ifm-pre-padding));
     padding: 0 var(--ifm-pre-padding);
     border-left: 3px solid #7a8efa;
+}
+
+[data-theme='dark'] .code-block-highlight-line {
+    background-color: rgba(40, 6, 148, 0.3);
+    border-left: 3px solid rgba(160, 0, 94, 0.66);
 }
