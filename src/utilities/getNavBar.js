@@ -26,7 +26,7 @@ const createNavBar = () => {
          */
         to: '/blog', // either `to` or `href`. href: 'https://www.facebook.com'
         label: 'Blog', // either `label` or `html`. html: '<b>Introduction</b>'
-        position: 'left'
+        position: 'left',
       },
       {
         /**
@@ -99,6 +99,8 @@ const createNavBar = () => {
       // },
     ],
   };
-}
+};
 
-module.exports = { createNavBar };
+module.exports = {
+  createNavBar,
+};

@@ -23,6 +23,7 @@ yarn-error.log*
 .vscode/*
 !.vscode/extensions.json
 .idea
+.vs
 *.iml
 *.code-workspace
 .changelog

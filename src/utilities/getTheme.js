@@ -1,15 +1,20 @@
-const getTheme = ({ type }) => {
-    switch (type) {
-        case 'purple':
-            return {
-                customCss: require.resolve('../css/purple.css'),
-            }
-            break;
-        default:
-            return {
-                customCss: require.resolve('../css/green.css'),
-            };
-    }
-}
+const getTheme = ({style}) => {
+  switch (style) {
+    case 'purple':
+      return {
+        customCss: require.resolve('../css/purple.css'),
+      };
+      break;
+    default:
+      return {
+        customCss: require.resolve('../css/green.css'),
+      };
+  }
+};
 
-module.exports = { getTheme };
+const getMetaDataTheme = () => {};
+
+module.exports = {
+  getTheme,
+  getMetaDataTheme,
+};

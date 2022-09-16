@@ -13,20 +13,28 @@ import styles from './index.module.css';
 
 function HomepageHeader() {
   const { siteConfig: {
-    title,
-    tagline
-  } } = useDocusaurusContext(); // contains site metadata from docusaurus.config.js
+    customFields: {
+      homePage,
+    },
+    tagline,
+  }} = useDocusaurusContext(); // contains site metadata from docusaurus.config.js
+
+  const {
+    pageTitle,
+    buttonWord,
+  } = homePage;
+
 
   return (
     <header className={clsx('hero hero--primary', styles.heroBanner)}>
       <div className="container">
-        <h1 className="hero__title">{title}</h1>
+        <h1 className="hero__title">{pageTitle}</h1>
         <p className="hero__subtitle">{tagline}</p>
         <div className={styles.buttons}>
           <Link
             className="button button--secondary button--lg"
             to="/">
-            Edit at src/pages/index.js️
+            {buttonWord}
           </Link>
         </div>
       </div>
@@ -36,11 +44,18 @@ function HomepageHeader() {
 
 export default function Home() {
   const { siteConfig: {
-    title,
-  } } = useDocusaurusContext();
+    customFields: {
+      homePage,
+    },
+  }} = useDocusaurusContext(); // contains site metadata from docusaurus.config.js
+
+  const {
+    headTitle,
+  } = homePage;
+
   return (
     <Layout
-      title={`Hello from ${title}`}
+      title={headTitle}
       description="Description will go into a meta tag in <head />">
       <HomepageHeader />
       <main>

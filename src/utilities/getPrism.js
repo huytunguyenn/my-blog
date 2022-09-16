@@ -5,10 +5,7 @@ const getPrism = () => {
   return {
     theme: lightCodeTheme,
     darkTheme: darkCodeTheme,
-    additionalLanguages: [
-      'python',
-      'go',
-    ],
+    additionalLanguages: ['python', 'go'],
     magicComments: [
       // Remember to extend the default highlight class name as well!
       {
@@ -28,6 +25,8 @@ const getPrism = () => {
       },
     ],
   };
-}
+};
 
-module.exports = { getPrism };
+module.exports = {
+  getPrism,
+};

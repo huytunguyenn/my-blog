@@ -3,6 +3,8 @@ const getLocale = () => {
     defaultLocale: 'en',
     locales: ['en'],
   };
-}
+};
 
-module.exports = { getLocale };
+module.exports = {
+  getLocale,
+};

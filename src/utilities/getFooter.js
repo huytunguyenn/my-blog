@@ -2,9 +2,8 @@ const {
   stackOverflowInfo,
   discordInfo,
   twitterInfo,
-  gitHubInfo
+  gitHubInfo,
 } = require('../appConfig');
-
 
 const creatFooter = () => {
   return {
@@ -41,8 +40,10 @@ const creatFooter = () => {
         ],
       },
     ],
-    copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+    copyright: `Copyright © ${new Date().getFullYear()} huytunguyenn. Built with Docusaurus.`,
   };
-}
+};
 
-module.exports = { creatFooter };
+module.exports = {
+  creatFooter,
+};

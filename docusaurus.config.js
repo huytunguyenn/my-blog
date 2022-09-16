@@ -1,18 +1,19 @@
 // @ts-check
 // Note: type annotations allow type checking and IDEs autocompletion
-const { getLocale } = require('./src/utilities/getLocalization');
-const { getDocs } = require('./src/utilities/getDocs');
-const { getBlog } = require('./src/utilities/getBlog');
-const { getTheme } = require('./src/utilities/getTheme');
-const { createNavBar } = require('./src/utilities/getNavBar');
-const { getAnnouncementBar } = require('./src/utilities/getAnnouncmentBar');
-const { creatFooter } = require('./src/utilities/getFooter');
-const { getPrism } = require('./src/utilities/getPrism');
+const {getLocale} = require('./src/utilities/getLocalization');
+const {getDocs} = require('./src/utilities/getDocs');
+const {getBlog} = require('./src/utilities/getBlog');
+const {getTheme} = require('./src/utilities/getTheme');
+const {createNavBar} = require('./src/utilities/getNavBar');
+const {getAnnouncementBar} = require('./src/utilities/getAnnouncmentBar');
+const {creatFooter} = require('./src/utilities/getFooter');
+const {getPrism} = require('./src/utilities/getPrism');
 
+const style = 'purple';
 const i18n = getLocale();
 const docs = getDocs();
 const blog = getBlog();
-const theme = getTheme({ type: 'purple' });
+const theme = getTheme({style});
 const navbar = createNavBar();
 const announcementBar = getAnnouncementBar();
 const footer = creatFooter();
@@ -20,8 +21,15 @@ const prism = getPrism();
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'Chào mừng',
-  tagline: 'hế nhô',
+  title: 'huytu',
+  customFields: {
+    homePage: {
+      headTitle: "i'm",
+      pageTitle: 'Welcome stranger',
+      buttonWord: 'Explore more',
+    },
+  },
+  tagline: 'I share what I know',
   url: 'https://huytunguyenn.github.io',
   baseUrl: '/my-blog/',
   onBrokenLinks: 'throw',
@@ -31,7 +39,8 @@ const config = {
   trailingSlash: false, // read more: https://github.com/slorber/trailing-slash-guide
   projectName: 'my-blog',
   i18n,
-  staticDirectories: [ 'static', ],
+  staticDirectories: ['static'],
+  titleDelimiter: '👾', // Defaults to `|`
   presets: [
     [
       'classic',
@@ -44,7 +53,7 @@ const config = {
     ],
   ],
   themeConfig:
-  /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
+    /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       docs: {
         sidebar: {
