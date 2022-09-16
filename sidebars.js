@@ -12,7 +12,7 @@ const sidebars = {
         description: 'Things I\'ve learned at HCMUS 💕',
         // slug: '/not-category/not-label-name', // tạo đường dẫn custom cho page mục lục, default: /category/[categoryName] -> ở đây là /docs/category/at-school
         keywords: ['hcmus'],
-        //image: '/img/docusaurus.png', // cover or thumbnail image that will be used when displaying the link to your post
+        image: '/img/docusaurus.png', // cover or thumbnail image that will be used when displaying the link to your post
       },
       items: [ // bên trong items có thể là 1 type category nữa - sổ nhiều cấp
         {

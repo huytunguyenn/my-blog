@@ -1,10 +1,11 @@
+const { COLOR } = require('../constant');
+
 const getTheme = ({style}) => {
   switch (style) {
-    case 'purple':
+    case COLOR.PURPLE:
       return {
-        customCss: require.resolve('../css/purple.css'),
+        customCss: require.resolve(`../css/${style}.css`),
       };
-      break;
     default:
       return {
         customCss: require.resolve('../css/green.css'),
@@ -12,7 +13,20 @@ const getTheme = ({style}) => {
   }
 };
 
-const getMetaDataTheme = () => {};
+const getMetaDataTheme = ({ style }) => {
+  switch (style) {
+    case COLOR.PURPLE:
+      return {
+        favicon: `img/favicon/favicon-${style}.ico`,
+        titleDelimiter: '|',
+      };
+    default:
+      return {
+        favicon: 'img/favicon/favicon-green.ico',
+        titleDelimiter: '|',
+      };
+  }
+};
 
 module.exports = {
   getTheme,

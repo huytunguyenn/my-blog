@@ -1,11 +1,25 @@
-const createNavBar = () => {
+const { COLOR } = require('../constant');
+
+const createNavBar = ({ style }) => {
+  let src, srcDark;
+  switch (style) {
+    case COLOR.PURPLE:
+      src = `img/icon/logo-${style}.svg`;
+      srcDark = `img/icon/logo-${style}-dark.svg`;
+      break;
+    default:
+      src = `img/icon/logo-green.svg`;
+      srcDark = `img/icon/logo-green-dark.svg`;
+      break;
+  }
+
   return {
     hideOnScroll: true,
     title: 'huytu',
     logo: {
-      alt: '',
-      src: 'img/logo.svg',
-      srcDark: 'img/logo.svg',
+      alt: 'logo',
+      src,
+      srcDark,
       width: 32,
       height: 32,
       href: '/',
@@ -49,7 +63,7 @@ const createNavBar = () => {
          *   ]
          * }
          */
-        label: 'Me 💩',
+        label: 'Me',
         position: 'left',
       },
       {
