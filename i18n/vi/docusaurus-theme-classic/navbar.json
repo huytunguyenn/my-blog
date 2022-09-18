@@ -1,0 +1,22 @@
+{
+  "title": {
+    "message": "huytu",
+    "description": "The title in the navbar"
+  },
+  "item.label.Learn": {
+    "message": "Học",
+    "description": "Navbar item with label Learn"
+  },
+  "item.label.Blog": {
+    "message": "Blog",
+    "description": "Navbar item with label Blog"
+  },
+  "item.label.Me": {
+    "message": "Tui",
+    "description": "Navbar item with label Me"
+  },
+  "item.label.GitHub": {
+    "message": "GitHub",
+    "description": "Navbar item with label GitHub"
+  }
+}

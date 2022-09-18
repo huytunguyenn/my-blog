@@ -1,0 +1,126 @@
+---
+sidebar_position: 4
+---
+# String
+
+String is a collection of items of same data type stored at contiguous memory locations.
+
+~~(deja vu enough?)~~ Well, **string is array**.
+
+Python strings are "immutable" which means they cannot be changed after they are created.
+
+## Declare
+
+To declare a string, you can assign variable to empty string
+
+```python3
+// -highlight-start
+s = ''
+// -highlight-end
+```
+
+:::tip
+
+You can use `s = ''` to delete all characters of the string
+
+:::
+
+## Basics
+
+Since, string is array, it has array's basic function.
+
+### Get array size
+
+Use `len(s)`
+
+```python3
+s = 'Python'
+// -highlight-start
+len(s)
+// -highlight-end
+
+
+// highlight
+> s: 6
+```
+
+### Check empty string
+
+Check the `len`.
+
+```python3
+s = 'Python'
+// -highlight-start
+if len(s) == 0:
+  print('Nothing is here!')
+else:
+  print('String is not empty!')
+// -highlight-end
+```
+
+### Insert
+
+Use slicing array. Common pattern is `str[:pos] + something + str[pos:]`
+
+```python3
+s = 'Python'
+s2 = ' is great!'
+// -highlight-start
+s = s[:6] + s2 + s[6:]
+// -highlight-end
+
+
+// highlight
+> s: 'Python is great'
+```
+
+### Delete
+
+Same as [insert](#insert), use slicing array to delete. Common pattern is `str[:start] + str[end:]`
+
+```python3
+s = 'Python is great'
+// -highlight-start
+s = s[:6] + s[14:]
+// -highlight-end
+
+
+// highlight
+> s: 'Python'
+```
+
+### Find
+
+```python3
+// -highlight-start
+
+// -highlight-end
+
+
+// highlight
+>
+```
+
+### Get sub-string
+
+```python3
+// -highlight-start
+
+// -highlight-end
+
+
+// highlight
+>
+```
+
+### Concat
+
+```python3
+// -highlight-start
+
+// -highlight-end
+
+
+// highlight
+>
+```

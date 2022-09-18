@@ -1,0 +1,6 @@
+label: 'Freshman' # label là cái hiện ở sidebar sổ ra bên trái
+position: 2  # hcmus-intro position 1 rồi
+link:
+  type: generated-index
+  title: Freshman
+  description: (1) freshman year, and someone in their first year is a freshman. You might sometimes hear this shortened to "frosh."

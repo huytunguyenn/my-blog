@@ -1,41 +1,43 @@
 # Website
 
-This website is built using [Docusaurus 2](https://docusaurus.io/), a modern static website generator.
+**My blog** is built using [Docusaurus 2](https://docusaurus.io/), a modern static website generator.
 
-### Installation
+Visit **my blog** at: https://huytunguyenn.github.io/my-blog/
 
-```
-$ yarn
-```
+## i18n
 
-### Local Development
+### Start your site
 
-```
-$ yarn start
+```shell
+npm run start -- --locale vi
 ```
 
-This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
+### Translate data API
 
-### Build
-
-```
-$ yarn build
+```shell
+npm run write-translations -- --locale vi
 ```
 
-This command generates static content into the `build` directory and can be served using any static contents hosting service.
+### Translate Markdown files
 
-### Deployment
+#### Translate the docs
 
-Using SSH:
-
-```
-$ USE_SSH=true yarn deploy
-```
-
-Not using SSH:
-
-```
-$ GIT_USER=<Your GitHub username> yarn deploy
+```shell
+mkdir -p i18n/vi/docusaurus-plugin-content-docs/current
+cp -r docs/** i18n/vi/docusaurus-plugin-content-docs/current
 ```
 
-If you are using GitHub pages for hosting, this command is a convenient way to build the website and push to the `gh-pages` branch.
+#### Translate the blog
+
+```shell
+mkdir -p i18n/vi/docusaurus-plugin-content-blog
+cp -r blog/** i18n/vi/docusaurus-plugin-content-blog
+```
+
+#### Translate the pages
+
+```shell
+mkdir -p i18n/vi/docusaurus-plugin-content-pages
+cp -r src/pages/**.md i18n/vi/docusaurus-plugin-content-pages
+cp -r src/pages/**.mdx i18n/vi/docusaurus-plugin-content-pages
+```

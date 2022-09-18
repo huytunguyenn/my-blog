@@ -31,14 +31,7 @@ const prism = getPrism();
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'huytu',
-  customFields: {
-    homePage: {
-      headTitle: "i'm",
-      pageTitle: 'Welcome stranger 👾',
-      buttonWord: 'Explore more',
-    },
-  },
-  tagline: 'I share what I know',
+  customFields: {},
   url: 'https://huytunguyenn.github.io',
   baseUrl: '/my-blog/',
   organizationName: 'huytunguyenn',

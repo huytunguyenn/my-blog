@@ -1,0 +1,102 @@
+---
+sidebar_position: 2
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Overview
+
+Some of Go characteristics. [golang.org](https://go.dev/)
+
+**What's the problem?**
+
+|   | C++                                                | Java                                | Python                                    |
+|---|----------------------------------------------------|-------------------------------------|-------------------------------------------|
+| + | High performance <br/> Type safety                 | Rapid compilation <br/> Type safety | Ease of use                               |
+| - | Slow compilation <br/> Historically complex syntax | Complicated ecosystem               | Lack of type safety <br/> Relatively slow |
+
+=> GO:
+- fast compilation
+- fully compiled
+- strongly typed
+- concurrent *by default*
+- garbage collected
+- simplicity
+
+## Characteristics
+
+Go has a strong, static type system, better when compare to scripting languages such as JavaScript or Python.
+
+Go is inspired by C's syntax.
+
+Go is multi-paradigm programming language, a mixture of **procedural** and **object-oriented**.
+
+Go is **garbage collected** language.
+
+Go is fully compiled. Unlike *scripting languages* (which are interpreted at runtime) or languages that are compiled to some intermediate code that are interpreted by a runtime (such as Java)
+- Go applications are fully compiled down to an executable binary -> highest levels of performance possible
+- Single binary output -> simple deployment
+
+Go has rapid compilation -> better when doing TDD methodology
+
+## Philosophy and value
+
+### Simplicity
+
+For example:
+- All loops in Go are **for-loops**
+- Go doesn't make **expressions**, it is **statements** *(it evaluates all as 1 unit, whereas expression is a component of statement)*. For example:
+
+<Tabs>
+<TabItem value="code-1" label="There are some expressions">
+
+    i := 1
+    println(i++) // sometimes you may confuse
+    println(++i)
+
+</TabItem>
+<TabItem value="code-2" label="It's all statement">
+
+    i := 1
+    i++
+    println(i) // 2, obviously
+    i++
+    println(i) // 3
+
+</TabItem>
+</Tabs>
+
+
+### Network aware & concurrent apps
+
+Unlike other languages, Go was created after CPUs have multiple core and were able to run tasks concurrently -> Go adotped those designs
+
+- net and net/http packages: create web servers using only standard library
+- goroutines: start tons of concurrent tasks with minimal resources
+- channels: safely communicate between concurrent tasks
+
+### Out-of-the-box experience
+
+Standard library: string manipulation, data compression, file manipulation, networking APIS, testing, etc.
+
+Go CLI: project initialization, build, code generation, retrieve dependencies, test, profiling, documentation, report language bugs,  etc.
+
+### Cross-platform
+
+Just by changing 2 parameters - GOOS and GOARCH, don't need any specified-platform device. For example:
+
+|        | Windows | OS X   | Android |
+|--------|---------|--------|---------|
+| GOOS   | windows | darwin | android |
+| GOARCH | amd64   | amd64  | arm     |
+
+### Backward compatibility
+
+https://go.dev/doc/go1compat
+
+## Primary use cases
+
+Web services / microservices
+
+Devops

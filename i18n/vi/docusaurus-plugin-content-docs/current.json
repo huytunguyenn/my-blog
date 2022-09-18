@@ -1,0 +1,122 @@
+{
+  "version.label": {
+    "message": "Next",
+    "description": "The label for version current"
+  },
+  "sidebar.docs.category.At School": {
+    "message": "Ở trường",
+    "description": "The label for category At School in sidebar docs"
+  },
+  "sidebar.docs.category.At School.link.generated-index.title": {
+    "message": "@ HCMUS",
+    "description": "The generated-index page title for category At School in sidebar docs"
+  },
+  "sidebar.docs.category.At School.link.generated-index.description": {
+    "message": "Mấy điều học được ở HCMUS 💕",
+    "description": "The generated-index page description for category At School in sidebar docs"
+  },
+  "sidebar.docs.category.Freshman": {
+    "message": "Sinh viên năm 1",
+    "description": "The label for category Freshman in sidebar docs"
+  },
+  "sidebar.docs.category.Freshman.link.generated-index.title": {
+    "message": "Sinh viên năm 1",
+    "description": "The generated-index page title for category Freshman in sidebar docs"
+  },
+  "sidebar.docs.category.Freshman.link.generated-index.description": {
+    "message": "(1) sinh viên năm nhất được hiểu là là những học sinh vừa tốt nghiệp trung học phổ thông, tham dự kì thi tuyển sinh vào đại học, những người đang học năm học đầu tiên của các trường đại học.",
+    "description": "The generated-index page description for category Freshman in sidebar docs"
+  },
+  "sidebar.docs.category.Sophomore": {
+    "message": "Sinh viên năm 2",
+    "description": "The label for category Sophomore in sidebar docs"
+  },
+  "sidebar.docs.category.Sophomore.link.generated-index.title": {
+    "message": "Sinh viên năm 2",
+    "description": "The generated-index page title for category Sophomore in sidebar docs"
+  },
+  "sidebar.docs.category.Sophomore.link.generated-index.description": {
+    "message": "(2) sinh viên năm 2 hay còn được gọi là sinh viên đại học năm 2 là những sinh viên bước vào năm thứ 2 của môi trường đại học",
+    "description": "The generated-index page description for category Sophomore in sidebar docs"
+  },
+  "sidebar.docs.category.At Work": {
+    "message": "Ở công ty",
+    "description": "The label for category At Work in sidebar docs"
+  },
+  "sidebar.docs.category.At Work.link.generated-index.title": {
+    "message": "Học tập nơi công sở",
+    "description": "The generated-index page title for category At Work in sidebar docs"
+  },
+  "sidebar.docs.category.At Work.link.generated-index.description": {
+    "message": "Đi làm giúp tui trưởng thành hơn",
+    "description": "The generated-index page description for category At Work in sidebar docs"
+  },
+  "sidebar.docs.category.KMS": {
+    "message": "KMS",
+    "description": "The label for category KMS in sidebar docs"
+  },
+  "sidebar.docs.category.KMS.link.generated-index.title": {
+    "message": "Trải nghiệm làm việc ở KMS",
+    "description": "The generated-index page title for category KMS in sidebar docs"
+  },
+  "sidebar.docs.category.KMS.link.generated-index.description": {
+    "message": "Trải nghiệm làm việc ở KMS (ở cỡ chữ nhỏ hơn)",
+    "description": "The generated-index page description for category KMS in sidebar docs"
+  },
+  "sidebar.docs.category.BE": {
+    "message": "BE",
+    "description": "The label for category BE in sidebar docs"
+  },
+  "sidebar.docs.category.BE.link.generated-index.title": {
+    "message": "BE overview",
+    "description": "The generated-index page title for category BE in sidebar docs"
+  },
+  "sidebar.docs.category.Languages": {
+    "message": "Ngôn ngữ",
+    "description": "The label for category Languages in sidebar docs"
+  },
+  "sidebar.docs.category.Languages.link.generated-index.title": {
+    "message": "Mấy ngôn ngữ (lập trình) mà tui học",
+    "description": "The generated-index page title for category Languages in sidebar docs"
+  },
+  "sidebar.docs.category.Languages.link.generated-index.description": {
+    "message": "Me speaking",
+    "description": "The generated-index page description for category Languages in sidebar docs"
+  },
+  "sidebar.docs.category.Python": {
+    "message": "Python",
+    "description": "The label for category Python in sidebar docs"
+  },
+  "sidebar.docs.category.Python.link.generated-index.title": {
+    "message": "Tổng quan Python",
+    "description": "The generated-index page title for category Python in sidebar docs"
+  },
+  "sidebar.docs.category.Golang": {
+    "message": "Golang",
+    "description": "The label for category Golang in sidebar docs"
+  },
+  "sidebar.docs.category.Golang.link.generated-index.title": {
+    "message": "Tổng quan Golang",
+    "description": "The generated-index page title for category Golang in sidebar docs"
+  },
+  "sidebar.docs.category.Algorithms": {
+    "message": "Thuật toán",
+    "description": "The label for category Algorithms in sidebar docs"
+  },
+  "sidebar.docs.category.Algorithms.link.generated-index.title": {
+    "message": "Mấy thuật toán tui biết",
+    "description": "The generated-index page title for category Algorithms in sidebar docs"
+  },
+  "sidebar.docs.category.Algorithms.link.generated-index.description": {
+    "message": "nó khá là khó",
+    "description": "The generated-index page description for category Algorithms in sidebar docs"
+  },
+  "sidebar.myself.link.Home": {
+    "message": "Home",
+    "description": "The label for link Home in sidebar myself, linking to /"
+  },
+  "sidebar.myself.link.Facebook": {
+    "message": "Facebook",
+    "description": "The label for link Facebook in sidebar myself, linking to https://facebook.com"
+  }
+}
