@@ -7,7 +7,22 @@ import TabItem from '@theme/TabItem';
 
 # Overview
 
-Some of Go characteristics.
+Some of Go characteristics. [golang.org](golang.org)
+
+**What's the problem?**
+
+|   | C++                                                | Java                                | Python                                    |
+|---|----------------------------------------------------|-------------------------------------|-------------------------------------------|
+| + | High performance <br/> Type safety                 | Rapid compilation <br/> Type safety | Ease of use                               |
+| - | Slow compilation <br/> Historically complex syntax | Complicated ecosystem               | Lack of type safety <br/> Relatively slow |
+
+=> GO:
+- fast compilation
+- fully compiled
+- strongly typed
+- concurrent *by default*
+- garbage collected
+- simplicity
 
 ## Characteristics
 
@@ -57,31 +72,28 @@ For example:
 
 Unlike other languages, Go was created after CPUs have multiple core and were able to run tasks concurrently -> Go adotped those designs
 
-net and net/http packages: create web servers using only standard library
-
-goroutines: start lots of concurrent tasks with minimal resources
-
-channels: safely communicate between concurrent tasks
+- net and net/http packages: create web servers using only standard library
+- goroutines: start tons of concurrent tasks with minimal resources
+- channels: safely communicate between concurrent tasks
 
 ### Out-of-the-box experience
 
 Standard library: string manipulation, data compression, file manipulation, networking APIS, testing, etc.
 
-Go CLI: project initialization, build, code generation, retrieve dependencies, test, profiling, documentation, etc.
-
+Go CLI: project initialization, build, code generation, retrieve dependencies, test, profiling, documentation, report language bugs,  etc.
 
 ### Cross-platform
 
-- Windows
-    - GOOS = windows
-    - GOARCH = amd64
-- OS X
-    - GOOS = darwin
-    - GOARCH = amd64
-- Android
+Just by changing 2 parameters - GOOS and GOARCH, don't need any specified-platform device. For example:
+
+|        | Windows | OS X   | Android |
+|--------|---------|--------|---------|
+| GOOS   | windows | darwin | android |
+| GOARCH | amd64   | amd64  | arm     |
 
 ### Backward compatibility
 
+https://go.dev/doc/go1compat
 
 ## Primary use cases
 

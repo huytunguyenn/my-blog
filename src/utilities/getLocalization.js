@@ -1,7 +1,7 @@
 const getLocale = () => {
   return {
     defaultLocale: 'en',
-    locales: ['en'],
+    locales: ['en', 'vi'],
   };
 };
 
