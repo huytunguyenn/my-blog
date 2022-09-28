@@ -8,12 +8,268 @@ Data types in Go
 
 ## Declaration and primitives
 
+There are many ways to declare a variable. Most basic three initializations are:
+- explicit: declare the type + `var` or `const` syntax
+- explicit inline
+- implicit: using **`:=`**, compiler will declare the type for you <- **used most of the time**
+
+```go
+// explicit
+var i int
+i = 42
+
+// explicit inline
+var f float32 = 3.14
+
+// implicit
+someString := "Go is great!"
+```
+
+Some primitives:
+
+```go
+someString := "Go"
+// -error
+someString := 'Go' // error: more than one character in rune literal
+someBool := true
+someComplex := complex(3, 4)
+someReal, someIm := real(someComplex), imag(someComplex) // split out complex number into its real & imaginary components
+
+// highlight-start
+(3 + 4i), complex number: số phức, i^2 = -1
+> someComplex: (+3.000000e+000+4.000000e+000i)
+> someReal: +3.000000e+000
+> someIm: +4.000000e+000
+// highlight-end
+```
+
+
 ## Pointer
 
-### addressof
+Pointer holds the address of a location in memory that holds the variable.
+
+If you are not pointing the pointer to anything when declared, it will get error when assigned.
+
+```go
+var myName *string // not pointing to anything -> so it is <nil>
+
+// -error
+*myName = "huytu" // runtime error: invalid memory address or nil pointer dereference
+```
+
+Therefore, you will need to assign `new` for pointer when initialized. You can use `*` operator to reach though the pointer and grab the data back, this is call **de-referencing**.
+
+```go
+var myName *string = new(string) // not :=
+*myName = "huytu"   // de-referencing
+
+
+// highlight-start
+> b: 0xc000040250
+> *b: huytu
+// highlight-end
+```
+
+### Address of a variable
+
+```go
+myName := "huytu"
+ptr := &myName
+// change value
+myName = "zzzz"
+
+
+// highlight-start
+> ptr: 0xc000040250
+> *ptr: huytu
+after change value
+> ptr: 0xc000040250
+> *ptr: zzzz
+// highlight-end
+```
+
+*You can see, I use `:=` for implicit declare, `=` for assign operator.*
 
 ## Constant
 
+Constant is constant, it cannot be assigned after created.
+
+```go
+const pi = 3.1415
+// -error
+pi = 3 // cannot assign to pi (untyped float constant 3.1415)
+```
+
+### Implicit typed
+
+Implicit syntax means compiler will interpret type as appropriate.
+
+```go
+// implicit
+const c = 3 // not declare type, but it knows it's integer
+
+// explicit
+const c int = 3
+```
+
+Constant have to be **defined at compile time**. If you set up a constant expression and set it equal to the return value of a function, you will get an error.
+
+```go
+const c int = 3
+res1 := c + 3
+// -error
+res2 := c + 1.2 // error: (untyped float constant) truncated to int
+
+
+// highlight-start
+> res1: 6
+>
+// highlight-end
+```
+
+To fix this, you will need to convert first.
+
+```go
+const c int = 3
+res1 := c + 3
+res2 := float32(c) + 1.2
+
+
+// highlight-start
+> res1: 6
+> res2: 4.2
+// highlight-end
+
+// -error
+res1 = float32(c) + 1.2 // warning: cannot use 'float32(c) + 1.2' (type float32) as the type int
+```
+
+Note that Go is a statically typed language, which means types of variables must be known at compile time, and you can't change their type at runtime.
+
+:::tip
+
+The standard naming convention is to **use PascalCase for constants**. E.g: `MyConst` instead of `MY_CONST`.
+
+:::
+
 ### iota
 
+Look at some examples here:
+
+```go
+const (
+	first = iota
+	second
+)
+
+const (
+	third = iota
+	fourth
+)
+
+
+// highlight-start
+> first: 0
+> second: 1
+> third: 0
+> fourth: 1
+// highlight-end
+```
+
+And another example:
+
+```go
+const (
+	first  = 1
+	second = "second"
+	three  = iota
+	four   = iota
+)
+
+func main() {
+	println(three, four)
+	println(first, second)
+	println(three, four)
+}
+
+
+// highlight-start
+> 2 3
+> 1 second
+> 2 3
+// highlight-end
+```
+
+*Can you guess how `iota` works?*
+
+The `iota` keyword represents successive integer constants 0, 1, 2, ...:
+- Increments *after each usage* (aka `const` specification)
+- Resets to 0 whenever the word `const` appears
+
 ### constant expression
+
+You can use many constant expressions with `iota` as well.
+
+```go
+const (
+	first  = iota + 6
+	second = 2 << iota
+)
+
+
+// highlight-start
+> first: 6
+> second: 4 (2 << 1)
+// highlight-end
+```
+
+If you don't need to write `iota` expression on every line of constants, one on the first const means apply all for the rest.
+
+```go
+const (
+	first = iota + 6
+	second // shortcut for `second: iota + 6`
+)
+
+const (
+	third = iota
+)
+
+
+// highlight-start
+> first: 6
+> second: 7
+> third: 0
+// highlight-end
+
+// -error-start
+const (
+	first
+	second = iota // error: missing value in the const declaration
+	third
+)
+// -error-end
+```
+
+You can use the blank identifier `_` to skip a value in a list of constants.
+
+
+```go
+const (
+    first = iota + 1
+    _
+    third
+    fourth
+)
+
+
+// highlight-start
+> first: 1
+> third: 3
+> fourth: 4
+// highlight-end
+```
+
+Another common application for iota is to implement a **bitmask**, a small set of booleans, often called flags, represented by the bits in a single number. [Read more](https://yourbasic.org/golang/bitmask-flag-set-clear/)
+
+# Custom data types

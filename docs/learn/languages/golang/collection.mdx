@@ -6,8 +6,32 @@ sidebar_position: 5
 
 ## Array
 
+An array in Go is a fixed sized entity. All elements in an array must have same type.
+
+```go
+var arr [3]int
+arr[0] = 1
+arr[1] = 2
+arr[2] = 3
+fmt.Println(arr)
+
+arr2 := [3]int{1, 2, 3}
+fmt.Println(arr2)
+```
+
 ## Slice
+
+Slice is built on top of array. It is like array, but *dynamically sized* and offer up a lot of really *neat attributes* <- **used more than array**
+
+```go
+arr2 := [3]int{1, 2, 3}
+slice := arr[:] // [:] means from start to end
+````
 
 ## Map
 
+Key-value relationship.
+
 ## Struct
+
+Go doesn't have class, but it has `struct`.

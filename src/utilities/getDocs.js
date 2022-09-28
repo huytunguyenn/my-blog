@@ -1,4 +1,7 @@
-const {editUrl} = require('../appConfig');
+const math = require('remark-math');
+const katex = require('rehype-katex');
+
+const { editUrl } = require('../appConfig');
 
 const getDocs = () => {
   return {
@@ -8,6 +11,8 @@ const getDocs = () => {
     // sidebarCollapsible: false,
     // sidebarCollapsed: true,
     editUrl,
+    remarkPlugins: [math],
+    rehypePlugins: [katex],
   };
 };
 

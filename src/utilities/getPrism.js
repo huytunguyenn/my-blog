@@ -5,7 +5,7 @@ const getPrism = () => {
   return {
     theme: lightCodeTheme,
     darkTheme: darkCodeTheme,
-    additionalLanguages: ['python', 'go'],
+    additionalLanguages: ['java'],
     magicComments: [
       // Remember to extend the default highlight class name as well!
       {

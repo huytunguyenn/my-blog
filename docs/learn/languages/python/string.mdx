@@ -13,10 +13,10 @@ String is a collection of items of same data type stored at contiguous memory lo
 
 To declare a string, you can assign variable to empty string
 
-```python3
-// -highlight-start
+```python
+# -highlight-start
 s = ''
-// -highlight-end
+# -highlight-end
 ```
 
 :::tip
@@ -33,14 +33,14 @@ Since, string is array, it has array's basic function.
 
 Use `len(s)`
 
-```python3
+```python
 s = 'Python'
-// -highlight-start
+# -highlight-start
 len(s)
-// -highlight-end
+# -highlight-end
 
 
-// highlight
+# highlight
 > s: 6
 ```
 
@@ -48,9 +48,9 @@ len(s)
 
 Check the `len`.
 
-```python3
+```python
 s = 'Python'
-// -highlight
+# -highlight
 if len(s) == 0:
   print('Nothing is here!')
 else:
@@ -61,15 +61,15 @@ else:
 
 Use slicing array. Common pattern is **`str[:pos] + something + str[pos:]`**
 
-```python3
+```python
 s = 'Python'
 s2 = ' is great!'
-// -highlight-start
+# -highlight-start
 s = s[:6] + s2 + s[6:]
-// -highlight-end
+# -highlight-end
 
 
-// highlight
+# highlight
 > s: 'Python is great'
 ```
 
@@ -77,12 +77,12 @@ s = s[:6] + s2 + s[6:]
 
 Same as [insert](#insert), use slicing array to delete. Common pattern is **`str[:start] + str[end:]`**
 
-```python3
+```python
 s = 'Python is great'
-// -highlight
+# -highlight
 s = s[:6] + s[14:]
 
-// highlight
+# highlight
 > s: 'Python'
 ```
 
@@ -90,32 +90,32 @@ s = s[:6] + s[14:]
 
 Use **`find(string)`**. You can user `find(string, start, end)` to find in a specific range.
 
-```python3
+```python
 s = 'Python'
-// -highlight-start
+# -highlight-start
 f = s.find('t')
 nf = s.find('z')
 r = s.find('t', 0, 1)
-// -highlight-end
+# -highlight-end
 
 
-// highlight-start
+# highlight-start
 > f: 2
 > nf: -1
 > r: -1
-// highlight-end
+# highlight-end
 ```
 
 ### Get sub-string
 
 Use **`str[start:end]`**
 
-```python3
-// -highlight
+```python
+# -highlight
 'Python'[1:3]
 
 
-// highlight
+# highlight
 > yt
 ```
 
@@ -123,12 +123,12 @@ Use **`str[start:end]`**
 
 Use `+` operator.
 
-```python3
-// -highlight
+```python
+# -highlight
 'Python ' + 'is great' + '!'
 
 
-// highlight
+# highlight
 > Python is great!
 ```
 
@@ -136,7 +136,7 @@ Use `+` operator.
 
 ### ASCII tables
 
-Lookup for ASCII table [here](https://www.lookuptables.com/text/ascii-table) or [simply here](http://www.asciichars.com/_site_media/ascii/ascii-chars-landscape.pdf).
+Lookup for ASCII table [here](https:#www.lookuptables.com/text/ascii-table) or [simply here](http://www.asciichars.com/_site_media/ascii/ascii-chars-landscape.pdf).
 
 ### Check if character is a digit
 
@@ -144,8 +144,8 @@ You can use `ord(char)` to get ASCII decimal number of a character.
 
 Based on the ASCII table, you can see **digits** will have decimal number from `48`, which is 0 to `57`, which is 9.
 
-```python3
-// -highlight
+```python
+# -highlight
 if ord(str[0]) >= 48 and ord(str[0]) <= 57:
     # it is a digit, do something
 ```
@@ -158,12 +158,12 @@ Then, you know there is digits from 0 to 9, add more up to 9, which come up to 5
 
 You can use `chr(number)` to convert ASCII code to a character.
 
-```python3
-// -highlight
+```python
+# -highlight
 zero = chr(48)
 
 
-// highlight
+# highlight
 > 0
 ```
 
@@ -182,13 +182,13 @@ Python built-in functions can not only check a character but also a whole string
 Use built-in function **`str.isalpha()`**. It will return `true` if string is alpha, `false` if not alpha or empty.
 
 
-```python3
+```python
 str = 'Python is great!'
-// -highlight
+# -highlight
 res = str[1].isalpha()
 
 
-// highlight
+# highlight
 > res: true
 ```
 

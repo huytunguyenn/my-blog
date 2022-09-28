@@ -7,11 +7,11 @@ Array is a collection of items of same data type stored at contiguous memory loc
 
 In Python, it's called **list**.
 
-```python3
-// -highlight-start
+```python
+# -highlight-start
 fruits = []
 fruits = ['orange', 'apple', 'strawberry']
-// -highlight-end
+# -highlight-end
 ```
 
 ## Add element
@@ -20,13 +20,13 @@ fruits = ['orange', 'apple', 'strawberry']
 
 Use `append(item)`. The `item` will be pushed back at the end of array.
 
-```python3
+```python
 fruits = ['orange', 'apple', 'strawberry']
-// -highlight
+# -highlight
 fruits.append('lemon')
 
 
-// highlight
+# highlight
 > fruits: ['orange', 'apple', 'strawberry', 'lemon']
 ```
 
@@ -34,13 +34,13 @@ fruits.append('lemon')
 
 Use `insert(pos, item)`. The `item` will be inserted at position `pos`.
 
-```python3
+```python
 fruits = ['orange', 'apple', 'strawberry']
-// -highlight
+# -highlight
 fruits.insert(2, 'pineapple')
 
 
-// highlight
+# highlight
 > fruits: ['orange', 'apple', 'pineapple', 'strawberry']
 ```
 
@@ -48,13 +48,13 @@ fruits.insert(2, 'pineapple')
 
 Use `len(arr)`.
 
-```python3
+```python
 fruits = ['orange', 'apple', 'strawberry']
-// -highlight
+# -highlight
 n = len(fruits)
 
 
-// highlight
+# highlight
 > n: 3
 ```
 
@@ -62,25 +62,25 @@ n = len(fruits)
 
 Use bracket notation`[index]`.
 
-```python3
+```python
 fruits = ['orange', 'apple', 'strawberry']
-// -highlight
+# -highlight
 my_pick = fruits[1]
 
 
-// highlight
+# highlight
 > my_pick: apple
 ```
 
 `index` can be negative.
 
-```python3
+```python
 fruits = ['orange', 'apple', 'tangerine']
-// -highlight
+# -highlight
 orange_variety = fruits[-1]     # fruits[2]
 
 
-// highlight
+# highlight
 > orange_variety: tangerine
 ```
 
@@ -90,37 +90,37 @@ Use `pop(index)`
 
 ### At the end
 
-```python3
+```python
 fruits = ['orange', 'apple', 'strawberry']
-// -highlight
+# -highlight
 fruits.pop()
 
 
-// highlight
+# highlight
 > fruits: ['orange', 'apple']
 ```
 
 ### At anywhere
 
-```python3
+```python
 fruits = ['orange', 'apple', 'strawberry']
-// -highlight
+# -highlight
 fruits.pop(1)
 
 
-// highlight
+# highlight
 > fruits: ['orange', 'strawberry']
 ```
 
 ### Delete all
 
-```python3
+```python
 fruits = ['orange', 'apple', 'strawberry']
-// -highlight
+# -highlight
 fruits.clear()
 
 
-// highlight
+# highlight
 > fruits: []
 ```
 
@@ -128,13 +128,13 @@ fruits.clear()
 
 Use `list.extend(another_list)` to concat `another_list` to the end of `list`.
 
-```python3
+```python
 zeros = [0, 0, 0]
-// -highlight
+# -highlight
 zeros.extend(2*[0])
 
 
-// highlight
+# highlight
 > zeros: [0, 0, 0, 0, 0]
 ```
 
@@ -142,13 +142,13 @@ zeros.extend(2*[0])
 
 Use slicing to get a part of the array, then assign it to itself.
 
-```python3
+```python
 nums = [0, 1, 2, 3, 4, 5]
-// -highlight
+# -highlight
 nums = nums[0:2]
 
 
-// highlight
+# highlight
 > nums: [0, 1]
 ```
 
@@ -164,29 +164,29 @@ When do `arr[start:end]`, you can remember it as:
 
 Check the `len`
 
-```python3
+```python
 arr = []
-// -highlight-start
+# -highlight-start
 if len(arr) == 0:
   print('Nothing is here!')
 else:
   print('Array is not empty!')
-// -highlight-end
+# -highlight-end
 ```
 
 ### Iterate over a list
 
 Use `range(len_of_arr)` to create range from 0 to len_of_arr - 1 with step = 1. Then loop through it.
 
-```python3
+```python
 arr = [4 ,8 , 2, 0, 0]
-// -highlight-start
+# -highlight-start
 for i in range(len(arr)):
   print(arr[i], end=' ')
-// -highlight-end
+# -highlight-end
 
 
-// highlight
+# highlight
 > 4 8 2 0 0
 ```
 
@@ -194,29 +194,28 @@ for i in range(len(arr)):
 
 Use simple loop. Note that just like [slicing array](#reduce-array), `range(start, end, step)` is like "get me from `start` to `end` but not take that `end`".
 
-```python3
+```python
 arr = [4 ,8 , 2, 0, 0]
-// -highlight-start
+# -highlight-start
 for i in range(len(arr) - 1, -1, -1):
   print(arr[i], end=' ')
-// -highlight-end
+# -highlight-end
 
 
-// highlight
+# highlight
 > 0 0 2 8 4
 ```
 
 Or using `reversed(array)`. The `array` will not be affected.
 
-```python3
+```python
 wordList = 'Python is great!'
-// -highlight-start
+# -highlight-start
 for i in reversed(wordList) :
   print(i, end='')
-// -highlight-end
+# -highlight-end
 
-
-// highlight
+# highlight
 > !taerg si nohtyP
 ```
 
