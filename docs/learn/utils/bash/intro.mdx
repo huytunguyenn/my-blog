@@ -1,0 +1,74 @@
+---
+sidebar_position: 1
+---
+
+import ThemedImage from '@theme/ThemedImage';
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
+# Intro to shell
+
+*Things you've done in shell could be permanent. There's no undelete or undo.*
+
+## What is shell?
+
+It runs programs by typing command. A **command line** is a text based UI.
+
+**Bash** and **Zsh** (Z Shell) are popular shells. Bash is most popular, while Zsh is default on Mac since Catalina.
+
+Other shells are: *sh, ksh, csh, tcsh, etc.*
+
+Windows uses **cmd** & **Powershell**, but you can install Linux subsystems and run bash/zsh.
+
+## Where are they?
+
+Usually, you don't start the shell directly but run through a terminal emulator to help with fonts, colors, keystrokes, etc. (since shell is mostly limited to text).
+
+The text you see when you start the shell is called **the prompt**. E.g.:
+
+```shell
+N9TJYJCTVY:~ tuhuynguyen$
+```
+
+Usually, it will show current username, hostname and working directory.
+
+## Checking
+
+Bash starts with `$`:
+
+<ThemedImage
+  alt="Bash terminal"
+  sources={{
+    light: useBaseUrl('/img/bash-light.png'),
+    dark: useBaseUrl('/img/bash-dark.png'),
+  }}
+/>
+
+While zsh starts with `%`:
+
+<ThemedImage
+  alt="Zsh terminal"
+  sources={{
+    light: useBaseUrl('/img/zsh-light.png'),
+    dark: useBaseUrl('/img/zsh-dark.png'),
+  }}
+/>
+
+To change you terminal type, go to `System Preferences > Users & Groups`. Then right-click on your user account > `Advanced Options`.
+
+<ThemedImage
+  alt="Users and groups"
+  sources={{
+    light: useBaseUrl('/img/users-and-groups-light.png'),
+    dark: useBaseUrl('/img/users-and-groups-dark.png'),
+  }}
+/>
+
+Choose your prefer shell and click OK:
+
+<ThemedImage
+  alt="Advanced options"
+  sources={{
+    light: useBaseUrl('/img/advanced-options-light.png'),
+    dark: useBaseUrl('/img/advanced-options-dark.png'),
+  }}
+/>
