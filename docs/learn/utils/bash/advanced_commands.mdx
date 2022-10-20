@@ -12,6 +12,107 @@ Some advanced things
 
 `ls | less`: take output from `ls` and send it to input of `less`. So that you can easily browse through file list.
 
-`grep string file`: search for *string* in *file* and print only the lines
+`grep string file`: search for *string* in *file* and print only those lines.
 
-`grap string file | sort > file2`
+**Some examples**
+
+Let say I have a csv file that includes details of films that nominated Oscars:
+
+1. I want extract all the films that are in 1978 in order.
+- First I find all the lines that has "1978": `grep 1978 oscars.tsv`
+- Then I continue to sort: `grep 1978 oscars.tsv | sort`
+- Then I want to save it to another file: `grap 1978 oscars.tsv | sort > 1978films.txt`
+
+2. I want to know how many films received 4 Oscars. Suppose 3rd column is number of Oscar film received.
+- Cut the 3rd column of every line and print it: `cut -f 3 oscars.tsv`
+- Find 4: `cut -f 3 oscars.tsv | grep 4`
+- Count how many of them: `cut -f 3 oscars.tsv | grep 4 | wc -l` (wc means word count, -l is for line)
+
+## Wildcards
+
+Wildcards is the star or asterisk that bash will replace with the name of all files in the current directory.
+
+For example:
+- `ls a*`: list all files start with "a".
+- `ls *a`: list all files end with "a".
+- `ls *ab*`: list all files contain "ab".
+- `grep ab *`: search "ab" in all files.
+- `echo *`: (echo is just simply echo what you type), bash will replace "*" with all the files in the directory.
+- `mv *txt textFolder`: move all txt file to *textFolder*
+
+## Superuser do
+
+Some command that not allowed to run. To run it add `sudo` at the beginning.
+
+## Customization
+
+There are many files is used for customization. All these files should be placed at home directory.
+
+**Bash**:
+- .profile read on login -> should use for config variable
+- .bashrc read for interactive shells -> should use for running commands, aliases
+
+**Zsh**:
+- .zshenv read always
+- .zshrc read fir interactive shells
+
+### Variables
+
+`export SOMEVAR=some_value`
+
+Usually to not set this everytime you start shell, you should put it in a `.zshenv` file. For **bash**, it is `.profile`.
+
+```shell
+$ nano .zshenv
+$ export EDITOR=nano
+```
+
+**PATH** is a path variable indicate where to look for the commands. If it doesn't exist, shell will tell the command cannot be found.
+
+To see the value, use `echo` and `$`.
+
+```shell
+$ echo $PATH
+/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:
+```
+
+This means that when you use command like `grep` for e.g., the shell will go to `/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:` to find that command to execute.
+
+Let's say we have *helloworld* program in *bin* folder. Using like this won't work:
+
+```shell
+$ helloworld
+zsh: command not found: helloworld
+
+$ bin/helloworld # path from the home directory to the executable file
+# executes the file
+Hello, World!
+```
+
+To make it easier, you can add *bin* to the PATH variable.
+
+```shell
+$ export PATH=$PATH:~/bin # extend the $PATH variable with bin, colon as separator
+
+# now you can use helloworld from everywhere
+$ helloworld
+Hello, World!
+```
+
+### Aliases
+
+In macOS, the `ls` list does not show any colors. To do it, you have to use `ls -G`.
+
+Or you can simply put alias:
+
+```shell
+$ alias ls="ls -G"
+$ ls
+# show files in colors
+```
+
+### Community
+
+Check out the documentations of bash and zsh.
+
+Check out [ohmyz.sh](https://ohmyz.sh).
