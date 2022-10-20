@@ -1,0 +1,9 @@
+label: 'History'
+position: 3.5
+link:
+  type: generated-index
+  title: History
+  description: And the rest is history.
+  keywords:
+    - 'history'
+  image: '/img/banner-small.png'
