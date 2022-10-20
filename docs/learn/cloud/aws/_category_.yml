@@ -1,0 +1,9 @@
+label: AWS
+link:
+  type: generated-index
+  title: Amazon Web Service
+  description: learn about AWS
+  keywords:
+    - cloud
+    - aws
+  image: /img/banner-small.png

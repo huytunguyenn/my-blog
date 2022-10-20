@@ -1,5 +1,5 @@
 # file này đại diện cho `type: category`: là hierarchy - tạo cái trang index cho danh sách sổ ra
-label: 'my School' # chữ bên sidebar sổ ra
+label: 'mySchool' # chữ bên sidebar sổ ra
 position: 1
 link: # tự tạo ra page mục lục hiển thị mọi direct children của category đó
   type: generated-index

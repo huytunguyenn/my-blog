@@ -1,0 +1,9 @@
+label: GCP
+link:
+  type: generated-index
+  title: Google Cloud Platform
+  description: learn about GCP
+  keywords:
+    - cloud
+    - gcp
+  image: /img/banner-small.png
