@@ -153,7 +153,7 @@ if ord(str[0]) >= 48 and ord(str[0]) <= 57:
 :::tip
 Remember number for ASCII '0' is **48**.
 
-Then, you know there is digits from 0 to 9, add more up to 9, which come up to 57.
+There are digits from 0 to 9. So you can add more up to 9, which come up to 57.
 :::
 
 You can use `chr(number)` to convert ASCII code to a character.
@@ -209,12 +209,50 @@ res = str[1].isalpha()
 
 ### number to string
 
-**`str(int)`**
+**`str(value)`**: number to string
 
-###
+### case-sensitive
 
-- **`lower()`**: returns a string where all characters are lower case.
-- **`upper()`**: returns a string where all characters are upper case.
+Use built-in functions:
+
+- **`char.lower()`**: returns a string where all characters are lower case.
+- **`char.upper()`**: returns a string where all characters are upper case.
+
+or you can change its ASCII number
+
+```python
+s = "python"
+c = chr(ord(s[2]) - 32)
+
+
+# highlight
+> c: T
+```
+
+:::tip
+- `char_ascii + 32`: transform to lowercase
+- `char_ascii - 32`: transform to uppercase
+:::
 
 ## Input & output
 
+In Python,
+
+```python
+s = input() # then insert "Python is fun!"
+
+
+# highlight
+> s: Python is fun!
+```
+
+To get each word, you can use `string.split()`
+
+```python
+line = input().split() # insert "Python is fun!"
+word = line[0]
+
+
+# highlight
+> word: Python
+```
