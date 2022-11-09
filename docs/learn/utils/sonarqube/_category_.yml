@@ -1,0 +1,6 @@
+label: 'SonarQube'
+position: 2
+link:
+  type: generated-index
+  title: SonarQube
+  description: Ensure code quality

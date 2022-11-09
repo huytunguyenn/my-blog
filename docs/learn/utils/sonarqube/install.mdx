@@ -1,0 +1,300 @@
+---
+sidebar_position: 2
+---
+
+# Set up SonarQube server
+
+This guide will help you install and running SonarQube service on Ubuntu server.
+
+1️⃣ Ask IT to provide an Ubuntu server. Here’s using **Ubuntu 20.04.5 LTS** with the credentials.
+
+2️⃣ Connect KMS VPN.
+
+3️⃣ Open shell, log in to the server using SSH session:
+
+```shell
+$ ssh leverege@192.168.59.151
+```
+
+*Enter the password if it asks for.*
+
+4️⃣ One of the [prerequisites](https://docs.sonarqube.org/latest/requirements/requirements/) is to install Java:
+
+```shell
+$ sudo apt-get -y update
+$ sudo apt-get install openjdk-11-jdk
+```
+
+5️⃣ We need to install database, here’s using [PostgreSQL](https://www.postgresql.org/download/linux/ubuntu/):
+
+```shell
+$ sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
+$ wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+$ sudo apt-get update
+$ sudo apt-get -y install postgresql
+```
+
+Then we need to configure Postgres:
+
+```shell
+$ sudo passwd postgres
+```
+
+Then we create user sonar for SonarQube and log in to shell:
+
+```shell
+$ sudo su - postgres
+$ createuser sonar
+```
+
+Enter the psql shell:
+
+```shell
+$ psql
+```
+
+Now, we’re set password for the user, create database with sonar user as owner and grant all the rights to that user:
+
+```sql
+ALTER USER sonar WITH ENCRYPTED PASSWORD 'admin';
+CREATE DATABASE sonarqube OWNER sonar;
+GRANT ALL PRIVILEGES ON DATABASE sonarqube to sonar;
+```
+
+Exit psql shell and Postgres shell.
+
+```shell
+\q
+$ exit
+```
+
+Restart the server.
+
+```shell
+$ systemctl restart postgresql
+```
+
+*If the prompt ask to authenticate, choose the `leverege` identity and enter password, for example:*
+
+```shell
+Multiple identities can be used for authentication:
+ 1.  SGH719TRJY (leverege)
+ 2.  ,,, (kmsadmin)
+Choose identity to authenticate as (1-2): 1
+Password: 🔑
+```
+
+Check service’s status:
+
+```shell
+$ systemctl status postgresql
+```
+
+Make sure something like this appears: *"...PostgreSQL RDBMS ... Ative: active (exited)"*. You can also install `net-tools` package to check:
+
+```shell
+$ sudo apt install net-tools
+$ sudo netstat -tlpn
+```
+
+You can see the IP and port that service is running on.
+
+6️⃣ Next, we’re going to [set up the system limits & kernel parameters](https://docs.sonarqube.org/latest/requirements/requirements/).
+
+Edit `sysctl.conf` file:
+
+```shell
+$ sudo nano /etc/sysctl.conf
+```
+
+Add these at the end of the file, under 2 line of *“#kernel.sysrq=438”*.
+
+```shell
+vm.max_map_count=262144
+fs.file-max=65536
+ulimit -n 65536
+ulimit -u 4096
+```
+
+*Press ^X, Y then enter.*
+
+Edit `limits.conf` file:
+
+```shell
+$ nano /etc/security/limits.conf
+```
+
+Add these at the end of the file, under the line *“# End of file”*.
+
+```shell
+sonarqube   -   nofile   65536
+sonarqube   -   nproc    4096
+```
+
+Reboot server.
+
+```shell
+$ reboot
+```
+
+*If above is not working, use:*
+
+```shell
+$ systemctl reboot -i
+```
+
+7️⃣ Install and configure SonarQube:
+
+7️⃣.1️⃣ First, log in again to the server like step 3️⃣. Then, download the SonarQube zip file from [here](https://binaries.sonarsource.com/?prefix=Distribution/sonarqube/):
+
+```shell
+$ cd /opt/
+$ sudo curl -L -O https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-9.7.1.62043.zip
+```
+
+Unzip the file (you might need to install unzip) and rename destination folder:
+
+```shell
+$ sudo apt install unzip
+$ sudo unzip sonarqube-9.7.1.62043.zip
+$ sudo rm -rf sonarqube-9.7.1.62043.zip
+$ sudo mv sonarqube-9.7.1.62043/ sonarqube
+```
+
+7️⃣.2️⃣ Set up SonarQube properties:
+
+```shell
+$ sudo nano sonarqube/conf/sonar.properties
+```
+
+Go to the line *“# The schema must be created first.”*, uncomment 2 lines below and add:
+
+```shell
+sonar.jdbc.username=sonar
+sonar.jdbc.password=admin
+```
+
+Change Postgres schema: under the line *“# By default the schema named “public” is used. It can be …”*, uncomment and remove *“?currentSchema=my_schema”*.
+
+Go to *“ELASTICSEARCH”* section, uncomment line below the line *“# JVM options of Elasticsearch process”*.
+
+Save changes and exit nano by ^X, Y then enter.
+
+7️⃣.3️⃣ Now, we’re creating SonarQube service: create the `sonarqube.service` file
+
+```shell
+$ sudo nano /etc/systemd/system/sonarqube.service
+```
+
+based on the following:
+
+```shell
+[Unit]
+Description=SonarQube service
+After=syslog.target network.target
+
+[Service]
+Type=forking
+
+ExecStart=/opt/sonarqube/bin/linux-x86-64/sonar.sh start
+ExecStop=/opt/sonarqube/bin/linux-x86-64/sonar.sh stop
+
+User=sonar
+Group=sonar
+Restart=always
+
+LimitNOFILE=65536
+LimitNPROC=4096
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Save changes and exit: ^O, enter, ^X
+
+7️⃣.4️⃣ Create group for SonarQube, call it `sonar` just like username:
+
+```shell
+$ sudo groupadd sonar
+$ sudo useradd -c "sonar user" -d /opt/sonarqube/ -g sonar sonar
+$ sudo chown -R sonar:sonar /opt/sonarqube/
+```
+
+7️⃣.5️⃣ Reload Daemon and start SonarQube service.
+
+```shell
+$ systemctl daemon-reload
+$ systemctl start sonarqube.service
+```
+
+*You may be asked for credentials, choose right identity and enter the password.*
+
+*Server is now running, you can use `systemctl status sonarqube.service` and `sudo netstat -tlpn` to check the health.*
+
+7️⃣.6️⃣ Before using the server, we need to install Nginx to redirect traffic from the local IP of the server.
+
+```shell
+$ sudo apt-get install nginx
+$ sudo nano /etc/nginx/sites-enabled/sonarqube.conf
+```
+
+Add these to the file:
+
+```shell
+server {
+  listen      80;
+  server_name 10.0.100.27;
+
+  access_log  /var/log/nginx/sonar.access.log;
+  error_log   /var/log/nginx/sonar.error.log;
+
+  proxy_buffers 16 64k;
+  proxy_buffer_size 128k;
+
+  location / {
+    proxy_pass http://127.0.0.1:9000;
+    proxy_next_upstream error timeout invalid_header http_500 http_502 http_503 http_504;
+    proxy_redirect off;
+
+    proxy_set_header    Host            $host;
+    proxy_set_header    X-Real-IP       $remote_addr;
+    proxy_set_header    X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header    X-Forwarded-Proto https;
+  }
+}
+```
+
+Save changes and exit: ^O, enter, ^X.
+
+7️⃣.7️⃣ Start the Nginx.
+
+```shell
+$ systemctl daemon-reload
+$ systemctl start nginx
+```
+
+You can exit SSH session & close the shell:
+
+```shell
+$ exit
+```
+
+🎱 Now the server is running, go to [http://192.168.59.151:9000/](http://192.168.59.151:9000/) to check it out.
+
+To login, you will need to use the default credential:
+
+* Username: `admin`
+
+* Password: `admin`
+
+Then, the server will require you to change password for the first login.
+
+
+
+
+
+
+
+
+
+
