@@ -20,6 +20,8 @@ npm run write-translations -- --locale vi
 
 ### Translate Markdown files
 
+Copy file markdown from `docs/` to `i18n/${lang}/docusaurus-plugin-content-${type}` and translate them.
+
 #### Translate the docs
 
 ```shell
