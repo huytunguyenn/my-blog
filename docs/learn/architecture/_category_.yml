@@ -1,0 +1,9 @@
+label: Architecture
+position: 3
+link:
+  type: generated-index
+  title: How we know we're building something
+  description: software architecture & design
+  keywords:
+    - architecture
+  image: /img/banner-small.png

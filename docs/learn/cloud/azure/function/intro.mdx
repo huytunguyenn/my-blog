@@ -1,0 +1,35 @@
+---
+sidebar_position: 1
+description: introduction to azure functions
+---
+
+# Intro
+
+## Azure Functions
+
+Sometimes, this referred to FaaS (Functions as a Service).
+
+With this we just need to focus on writing application. Help with rapid & simple development.
+
+> Azure Function = Events (Triggers) + Code
+
+#### Differences with Azure Virtual Machine & Azure App Service
+
+> Azure Virtual Machine is IaaS (Infrastructure as a Service).
+
+-> Costly (server runs constantly), operational overhead (setup before running), patching & maintaining server, not auto-scaling.
+
+> Azure App Service is PaaS (Platform as a Service).
+
+-> **Azure Functions** is built on top of web jobs SDK & hosted on App Service platform.
+
+### Events
+
+Example:
+- Time: run task on a regular schedule
+- Data: process message in a queue, new items in blob storage
+- Web: respond to HTTP request/web-hook
+
+### Function App
+
+Azure Functions group related functions together into a function app -> share configuration & local resources.

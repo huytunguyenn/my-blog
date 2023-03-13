@@ -1,9 +1,9 @@
-label: Google Cloud Functions
+label: Azure Functions
 link:
   type: generated-index
-  title: Google Cloud Functions
+  title: Azure Functions 2
   description: serverless with functions
   keywords:
     - cloud
-    - gcp
+    - azure
   image: /img/banner-small.png

@@ -40,7 +40,7 @@ const creatFooter = () => {
         ],
       },
     ],
-    copyright: `Copyright © ${new Date().getFullYear()} Huy Tu Nguyen.`,
+    copyright: `Copyright © ${new Date().getFullYear()} HUY-TU Nguyen.`,
   };
 };
 

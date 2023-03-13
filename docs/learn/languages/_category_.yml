@@ -2,8 +2,8 @@ label: Languages
 position: 1
 link:
   type: generated-index
-  title: Languages that Ive learnt
-  description: Me speaking
+  title: Me speaking
+  description: Well, we learn to speak first, right? This is the session where I ~talk in~ programming languages that I like.
   keywords:
     - language
     - python

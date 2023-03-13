@@ -1,0 +1,9 @@
+label: Azure
+link:
+  type: generated-index
+  title: Azure
+  description: learn about Microsoft Azure
+  keywords:
+    - cloud
+    - azure
+  image: /img/banner-small.png
