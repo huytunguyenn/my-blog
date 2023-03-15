@@ -65,8 +65,8 @@ var myName *string = new(string) // not :=
 
 
 // highlight-start
-> b: 0xc000040250
-> *b: huytu
+> myName: 0xc000040250
+> *myName: huytu
 // highlight-end
 ```
 
@@ -92,7 +92,7 @@ after change value
 
 ## Constant
 
-Constant is constant, it cannot be assigned after created.
+Constant is constant, it cannot be assigned after created. Therefore, we **use `=` instead of `:=`**.
 
 ```go
 const pi = 3.1415
