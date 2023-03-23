@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkmy_website=self.webpackChunkmy_website||[]).push([[1619],{6226:e=>{e.exports=JSON.parse('{"permalink":"/my-blog/vi/blog/tags/live","page":1,"postsPerPage":1,"totalPages":1,"totalCount":1,"blogDescription":"A collection of blog written by Tu","blogTitle":"Tus blog"}')}}]);
