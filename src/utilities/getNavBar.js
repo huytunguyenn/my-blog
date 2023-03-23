@@ -31,7 +31,7 @@ const createNavBar = ({ style }) => {
          */
         type: 'doc',
         docId: 'learn-intro', // required - vì type là doc nên id sẽ ở docs/learn-intro.mdx
-        label: 'Learn',
+        label: 'Learnspace',
         position: 'left',
       },
       {

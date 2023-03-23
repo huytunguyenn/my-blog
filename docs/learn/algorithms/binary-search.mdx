@@ -1,0 +1,82 @@
+---
+sidebar_position: 8
+description: Binary search algorithm
+---
+
+# Binary search
+
+## Bài toán
+
+Tìm kiếm phần tử trong một dãy liên tiếp. Đây là bài toán đơn giản, tuy nhiên, để thực thi một cách hiệu quả (tiết kiệm chi phí) thì cần thuật toán & hướng tiếp cận cụ thể.
+
+## Ý tưởng
+
+Ta sắp xếp mảng theo thứ tự tăng dần.
+
+Sau đó, chọn điểm `mid` ở giữa mảng, xem coi nó có bằng với phần tử mình cần tìm không. Nếu có, bài toán kết thúc.
+
+Nếu không:
+- Nhỏ hơn: nghĩa là cần tìm khoảng có giá trị lớn hơn nữa -> đi về phía tay phải -> `right = mid + 1`
+- Lớn hơn: nghĩa là cần tìm khoảng có giá trị nhỏ hơn nữa -> đi về phía tay trái -> `left = mid - 1`
+
+## Code
+
+```python
+"""
+Find position of x in items from [left, right] range, if no return -1
+"""
+def binary_search(arr, x):
+  left = 0
+  right = len(arr) - 1
+
+  while left <= right:
+    mid = left + (right - left) // 2
+
+    if arr[mid] == x:
+      return mid
+    elif arr[mid] < x:
+      left = mid + 1
+    else:
+      right = mid - 1
+
+  return -1
+```
+
+Recursion way:
+
+```python
+def binray_search(arr, left, right, x):
+  if left <= right:
+    mid = left + (right - left) // 2
+    if arr[mid] == x:
+      return mid
+    elif arr[mid] > x:
+      return binary_search(arr, left, mid - 1, x)
+    return binray_search(arr, mid + 1, right, x)
+  return -1
+```
+
+** Độ phức tạp: O() **
+
+
+## Q&A
+
+**Q: What is that `mid`?**
+
+**A:** The middle number of the elements. To easily find `mid`, you can use `(left + right) / 2`.
+But you can see that the addition `left + right` could potentially cause overflow, so we can use another way:
+```
+(left + right)/2
+= left/2 + right/2
+= left - left/2 + right/2
+= left + (right-left)/2
+```
+
+**Q: **
+
+A:
+
+
+## Ứng dụng
+
+### Tìm
