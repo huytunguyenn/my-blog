@@ -1,11 +1,51 @@
 ---
 sidebar_position: 99
-sidebar_label: Notes for CP
+sidebar_label: Summary some useful code snippets for competitive programming
 ---
 
 # Notes for competitive programming
 
 *Some code snippets that I concluded so that I can do Leetcode faster.*
+
+## Input & output
+
+In some platforms like Codeforces or UVA, sometimes reading input is complicated if you're not familiar with it.
+
+### Read integer input
+
+Read an integer in a line:
+
+```python
+n = int(input())
+```
+
+Read many integers in a line:
+
+```python
+# highlight
+9, 10
+
+na,nb = map(int, input().split())
+
+# highlight
+> na: 9, nb: 10
+```
+
+Read many lines into an array, use `list(map(int, input().split()))`:
+
+```python
+# highlight-start
+2 4
+5 6
+# highlight-end
+
+a = []
+for i in range(2):
+  a.extend(list(map(int,input().split())))
+
+# highlight
+> a: [2, 4, 5, 6]
+```
 
 ## Built-in functions
 
@@ -117,6 +157,8 @@ When we do things related to 2-D array, remember divide (`//`) and module (`%`).
 
 ## Data structures
 
+## Set
+
 ### Counter
 
 When counter problems that requires counting elements repeat, etc. Example is the problem that ask for repeat of each character in a string.
@@ -133,43 +175,5 @@ cnt['o']  # 2, count of character 'c'
 cnt['o'] += 1
 ```
 
-## Input & output
-
-In some platforms like Codeforces or UVA, sometimes reading input is complicated if you're not familiar with it.
-
-### Read integer input
-
-Read an integer in a line:
-
-```python
-n = int(input())
-```
-
-Read many integers in a line:
-
-```python
-# highlight
-9, 10
-
-na,nb = map(int, input().split())
-
-# highlight
-> na: 9, nb: 10
-```
-
-Read many lines into an array, use `list(map(int, input().split()))`:
-
-```python
-# highlight-start
-2 4
-5 6
-# highlight-end
-
-a = []
-for i in range(2):
-  a.extend(list(map(int,input().split())))
-
-# highlight
-> a: [2, 4, 5, 6]
-```
+## Heap
 
