@@ -3,6 +3,7 @@ const {
   discordInfo,
   twitterInfo,
   gitHubInfo,
+  quote,
 } = require('../appConfig');
 
 const creatFooter = () => {
@@ -40,7 +41,7 @@ const creatFooter = () => {
         ],
       },
     ],
-    copyright: `Copyright © ${new Date().getFullYear()} HUY-TU Nguyen.`,
+    copyright: quote,
   };
 };
 

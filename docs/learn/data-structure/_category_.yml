@@ -1,0 +1,11 @@
+label: Data structure
+position: 2
+link:
+  type: generated-index
+  title: Data structures that I know
+  description: the first bricks
+  keywords:
+    - data structure
+    - algorithm
+    - math
+  image: /img/banner-small.png

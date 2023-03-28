@@ -1,6 +1,10 @@
+const {copyright, quotes} = require('./footerQuotes');
+
 class AppConfiguration {
   constructor() {
     // footer information
+    this.copyright = copyright;
+    this.quote = this.getQuotes();
     this.gitHubInfo = {
       label: 'GitHub',
       name: 'huytunguyenn',
@@ -19,6 +23,11 @@ class AppConfiguration {
       url: 'https://twitter.com/docusaurus',
     };
     this.editUrl = 'https://github.com/huytunguyenn/my-blog/tree/main';
+  }
+
+  getQuotes = () => {
+    const quote = quotes[Math.floor(Math.random() * quotes.length)];
+    return `${quote.quote} - ${quote.author}`;
   }
 }
 
