@@ -1,0 +1,171 @@
+# Collection
+
+## Array
+
+An array in Go is a fixed sized entity. All elements in an array must have same type.
+
+```go
+// long way
+var arr [3]int
+arr[0] = 1
+arr[1] = 2
+arr[2] = 3
+
+// short way
+arr := [3]int{1, 2, 3}
+
+
+// highlight
+> [1 2 3]
+```
+
+## Slice
+
+Slice is built on top of array. It is like array, but *dynamically sized* and offer up a lot of really *neat attributes* <- **used more than array**
+
+Therefore, you can create slice from array by using `[start:end]`.
+
+```go
+arr := [3]int{1, 2, 3}
+slice := arr[:] // [:] means from start to end
+```
+
+Slice is kind of pointer, not really, but it is pointing to underlying array. Change `arr` will change `slice` as well.
+
+```go
+arr[1] = 42
+slice[2] = 27
+
+
+// highlight-start
+> arr: [1 42 27]
+> slice: [1 42 27]
+// highlight-end
+```
+
+Otherwise, create a new slice:
+
+```go
+slice := []int{1, 2, 3}
+```
+
+Using `append(slice, elements...)` to add new `elements` to `slice`.
+
+```go
+slice = append(slice, 4, 5, 6)
+
+
+// highlight
+> slice: [1 2 3 4 5 6]
+```
+
+Just like create slice from array, we can also create sub slices from slice using `[start:end]`
+
+```go
+s2 := slice[1:]
+s3 := slice[:2]
+s4 := slice[1:2]
+
+
+// highlight-start
+> s2: [2 3 4 5 6]
+> s3: [1 2]
+> s4: [2]
+// highlight-end
+```
+
+## Map
+
+Map represents key-value relationship. To create map, use `map` keyword.
+
+```go
+m := map[string]int{ "foo" : 42 }
+
+
+// highlight-start
+> m: map[foo:42]
+> m["foo"]: 42
+// highlight-end
+```
+
+All the keys had to be the same type, same with all the values.
+
+```go
+m["foo"] = 27
+// -error
+m["foo"] = "bar" // error: (type string) cannot be represented by the type int
+```
+
+You can delete a pair using `delete(map, key)`.
+
+```go
+delete(m, "foo")
+
+
+// highlight
+> m: map[]
+```
+
+## Struct
+
+Go doesn't have class, but it has `struct`.
+
+This is the only collection type that allows **associate disparate data types together**.
+
+In `struct`, field is fixed at compile time. To declare a `struct`:
+
+```go
+type user struct {
+  ID        int
+  FirstName string
+  LastName  string
+}
+```
+
+To add the value to field:
+
+```go
+var u user
+
+
+// highlight
+> u: {0  } // struct initialized with 0 value (0 in int is 0, 0 in string in blank)
+```
+
+```go
+u.ID = 1
+u.FirstName = "Huy"
+u.LastName = "Tu"
+
+
+// highlight
+> u: {1 Huy Tu}
+```
+
+Note that the fields are fixed at compile time, means it cannot be dynamically added or removed.
+
+There's also an implicit way to declare `struct`:
+
+```go
+u := user{ID: 1, FirstName: "Huy", LastName: "Tu"}
+
+
+// highlight
+> u: {1 Huy Tu}
+```
+
+:::caution
+
+If you use multiple lines declaration, you will need to **add a comma at the end**.
+
+Below declaration will get error:
+
+```go
+u := user{ ID: 1,
+  FirstName: "Huy",
+  // -error
+  LastName: "Tu" // error: Need a trailing comma before a newline in the composite literal
+}
+```
+
+:::

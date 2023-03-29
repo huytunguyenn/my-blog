@@ -1,0 +1,97 @@
+---
+sidebar_label: setup
+description: Setup environment
+---
+
+# Environment setup
+
+## Java Development Kit (JDK)
+
+### It is
+
+insert image
+
+### Installation
+
+Install the Java SE (the standard edition JDK)
+
+:::note Steps:
+- Download the latest JDK at [jdk.java.net](https://jdk.java.net)
+- Setup `JAVA_HOME` variable
+- Update `PATH` variable
+- Verify correct installation `java --version`
+:::
+
+### Windows
+
+#### macOS
+
+Download and unpack it into `/Library/Java/JavaVirtualMachine/` and setting `JAVA_HOME` and path variables.
+
+Or using `Homebrew`:
+
+```bash
+brew tap homebew/cask-versions  # install Homebrew Cask
+brew cask install java
+```
+
+### Linux
+
+`/opt`
+
+Ubuntu:
+```bash
+apt update
+apt install openjdk-13-jdk
+update-alternatives --config java
+```
+
+## Integrated Development Environment (IDE)
+
+### Native way
+
+Use `javac` and `java`
+
+```bash
+javac Hello.java # <- Java compiler takes the code and turn it into Java bytecode (create Hello.class)
+java Hello # JVM runs the .class file
+```
+
+Other way is to use a popular Java IDE like:
+- IntelliJ IDEA, JetBrains
+- Eclipse, Eclipse Foundation
+- NetBeans, Apache Foundation (before: Oracle)
+
+### IntelliJ
+
+Use it!
+
+## Packing Java Application
+
+Java applications are packaged into JAR (**J**ava **AR**chive) files, which contains application classes and metadata.
+
+We can create launch-able JAR file in many ways:
+
+### Native way
+
+`c`: create, `v`: verbose, `f`: filename, `m`:
+
+```bash
+jar cvmf TC-MANIFEST.MF MyApplication.jar
+```
+
+Create TC-MANIFEST.MF
+```
+Main-Class: com.hahaha.Main
+```
+
+Run:
+
+```bash
+java -jar MyApplication.jar
+```
+
+### Build tools
+
+- Maven
+- Gradle
