@@ -8,7 +8,7 @@ const getBlog = () => {
     editUrl,
     blogTitle: 'Tus blog',
     blogDescription: 'A collection of blog written by Tu',
-    blogSidebarTitle: 'All my thoughts',
+    blogSidebarTitle: 'All my blogs',
     postsPerPage: 'ALL',
     blogSidebarCount: 'ALL',
   };
