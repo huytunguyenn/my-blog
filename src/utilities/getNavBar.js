@@ -38,8 +38,13 @@ const createNavBar = ({ style }) => {
         /**
          * type: 'default' - Navbar link: regular link, đi tới link bth
          */
-        to: '/blog', // either `to` or `href`. href: 'https://www.facebook.com'
+        to: '/more-of-technical-blogs', // either `to` or `href`. href: 'https://www.facebook.com'
         label: 'Blog', // either `label` or `html`. html: '<b>Introduction</b>'
+        position: 'left',
+      },
+      {
+        to: '/more-of-my-thoughts', // this should be match with routeBasePath at plugins in docusaurus.config.js
+        label: 'Journal',
         position: 'left',
       },
       {

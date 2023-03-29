@@ -1,0 +1,11 @@
+label: framework / library
+position: 5
+link:
+  type: generated-index
+  title: Frameworks and Libraries
+  description: put you in frame 🖼️
+  keywords:
+    - framework
+    - library
+    - architecture
+  image: /img/banner-small.png

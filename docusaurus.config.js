@@ -9,6 +9,7 @@ const { getAnnouncementBar } = require('./src/utilities/getAnnouncmentBar');
 const { creatFooter } = require('./src/utilities/getFooter');
 const { getPrism } = require('./src/utilities/getPrism');
 const { COLOR } = require('./src/constant');
+const {editUrl} = require('./src/appConfig');
 
 const style = COLOR.PURPLE;
 const { favicon, titleDelimiter } = getMetaDataTheme({ style });
@@ -71,6 +72,21 @@ const config = {
       footer,
       prism,
     }),
+  plugins: [
+    [
+      '@docusaurus/plugin-content-blog',
+      {
+        id: 'second-blog', // Required for any multi-instance plugin
+        routeBasePath: 'more-of-my-thoughts', // URL route for the blog section of your site. *DO NOT* include a trailing slash.
+        path: './blog-thoughts', // Path to data on filesystem relative to site dir.
+        editUrl,
+        blogTitle: 'Tus thoughts',
+        postsPerPage: 'ALL',
+        blogSidebarCount: 'ALL',
+        blogSidebarTitle: 'All',
+      },
+    ],
+  ],
 };
 
 module.exports = config;

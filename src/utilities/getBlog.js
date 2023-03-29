@@ -2,7 +2,7 @@ const {editUrl} = require('../appConfig');
 
 const getBlog = () => {
   return {
-    // routeBasePath: '/', // Serve the docs at the site's root
+    routeBasePath: '/more-of-technical-blogs',
     archiveBasePath: 'archive',
     showReadingTime: true,
     editUrl,

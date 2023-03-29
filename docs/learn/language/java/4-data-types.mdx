@@ -1,1 +1,105 @@
+---
+sidebar_label: data types
+---
+
 # Variables, data types & math operations
+
+## Variables
+
+Use only letters & numbers, camelCase. First character cannot be a number.
+
+```java
+int total;
+int totalStudent;
+int 2much; // <- error
+```
+
+Variables can be declared final, means the value cannot be changed once set.
+
+```java
+final int maxStudents = 25;
+
+final int someVar;
+int someDummyVar = 100;
+someVar = someDummyVar
+```
+
+## Primitive Data Types
+
+Primitive types are stored by value, means each variable's values are unrelated to any others.
+
+These are foundation of all other types:
+
+### Integer
+
+| Type  | Bits | Min value            | Max value           | Literal form |
+|-------|------|----------------------|---------------------|--------------|
+| byte  | 8    | -128                 | 127                 | 0            |
+| short | 16   | -32768               | 32767               | 0            |
+| int   | 32   | -2147483648          | 2147483647          | 0            |
+| long  | 64   | -9223372036854775808 | 9223372036854775807 | 0L           |
+
+```java
+byte a = 25;
+short b = 5280;
+int c = 92960000;
+long d = 5879000000000L;
+```
+
+### Floating Point
+
+| Type   | Bits | Smallest positive value | Largest positive value | Literal form |
+|--------|------|-------------------------|------------------------|--------------|
+| float  | 32   | 1.4 x 10^-45            | 3.4 x 10^38            | 0.0f         |
+| double | 64   | 4.9 x 10^-324           | 1.7 x 10^308           | 0.0 or 0.0d  |
+
+```java
+float a = 42.195f;
+float b = -273.15f;
+double c = 0.0000000001d;
+```
+
+### Character
+
+```java
+char a = 'B';
+char b = '\u00DA';  // Ú (for Unicode code points, use \u + 4-digit hex value)
+```
+
+### Boolean
+
+```java
+boolean a = true;
+```
+
+## Type Conversion
+
+### Implicit type conversion
+
+Conversion automatically performed by the compiler.
+
+```java
+int a = 50;
+long b = a;
+```
+
+Implicit widening conversions are automatically done:
+- Mixed integer sizes: use largest integer
+- Mixed floating point sizes: use double
+- Mixed integer and floating point: use largest floating point
+
+Compiler cannot automatically do narrowing conversions $\rightarrow$ explicit by developers.
+
+### Explicit type conversion
+
+Conversion performed explicitly in code with *cast operator*.
+
+```java
+long b = 50;
+int a = (int) b;
+```
+
+Consider with explicit conversions:
+- Narrowing: significant bits may be discarded
+- Floating point $\rightarrow$ integer: fractional portion may be discarded
+- Integer $\rightarrow$ floating point: precision may be lost (10000 may be 9999,9999)

@@ -1,0 +1,167 @@
+---
+sidebar_label: statements
+---
+
+# Statement
+
+## Arithmetic Operators
+
+### Basic
+
+Produce a result, no impact on values used.
+
+```java
+1 + 2 = 3
+5 - 4 = 1
+4 * 2 = 8
+13.0 / 5.0 = 2.6
+13 / 5 - 2
+13 % 5 = 3
+```
+
+### Prefix / postfix
+
+Increase or decrease a value, replace original value.
+
+```java
+int a = 5;
+System.out.println(++a);  // 6
+System.out.println(a);    // 6
+
+int b = 5;
+System.out.println(b++);  // 5
+System.out.println(b);    // 6
+```
+
+### Compound assignment
+
+Operate on a value, replace original value.
+
+```java
++= -= *= /= %=
+```
+
+### Operator precedence
+
+Postfix (`X++`, `X--`) $\rightarrow$ Prefix (`++X`, `--X`) $\rightarrow$ Multiplicative (`*` `/` `%`) $\rightarrow$ Additive (`+` `-`)
+
+## Logical Operators
+
+|                    | Operator | What resolves to true                      |
+|--------------------|----------|--------------------------------------------|
+| AND                | &        | true & true                                |
+| OR                 | \|       | false \| true  true \| false  true \| true |
+| XOR (exclusive or) | ^        | false ^ true  true ^ false                 |
+| NOT                | !        | false                                      |
+
+### Conditional Logical Operators
+
+Similar to standard logical operators. Right side executes only when needed:
+- `&&` executes right only when left is `true`
+- `||` executes right only when left is `false`
+
+|     | Operator | What resolves to true           |
+|-----|----------|---------------------------------|
+| AND | &&       | true && true                    |
+| OR  | \|\|     | false \|\| true  true \|\| ---- |
+
+*Q: So what's so different?*
+A: When you use `&`, both sides are executed. With `&&`, right side is not always be executed. Consider below examples:
+```java
+if ( denom != 0 & numer/denom > 10 ) {   // this could crash if denom == 0, cause divided by 0 is not allowed
+}
+
+// so, you should do this
+if ( denom != 0 && numer/denom > 10 ) {
+}
+```
+
+## Condition logic
+
+### Relational Operators
+
+```bash
+> >= < <= == !=
+```
+
+### Conditional Assignment
+
+```bash
+result = condition ? true-value : false-value;
+```
+
+### If-else
+
+```bash
+if ( condition ) {
+  statement;
+}
+else if ( condition ) {
+  statement;
+}
+else {
+  statement;
+}
+```
+
+## Block statements
+
+Use `{` and `}` to create block.
+
+### Block and Variable Scope
+
+Variable scope is limited to block.
+
+## Switch statements
+
+Only primitive types supported (byte, short, int, long, char)
+
+```bash
+switch (value-to-test) {
+  case matching-value-1:
+    statements
+    break;
+  .
+  .
+  .
+  case matching-value-N:
+    statements
+    break;
+  default:
+    statements
+}
+```
+
+## Looping
+
+### While
+
+```bash
+while ( condition ) {
+  statement;
+}
+```
+
+### Do-while
+
+```bash
+do {
+  statment;
+} while ( condition );
+```
+
+### For
+
+```bash
+for (initialize; condition; update) {
+  statement;
+}
+```
+
+### For-each
+
+```bash
+for ( loop-variable : array ) {
+  statement;
+}
+```
