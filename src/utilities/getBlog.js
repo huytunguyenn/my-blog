@@ -2,7 +2,7 @@ const {editUrl} = require('../appConfig');
 
 const getBlog = () => {
   return {
-    routeBasePath: '/more-of-technical-blogs',
+    routeBasePath: 'more-of-technical-blogs',
     archiveBasePath: 'archive',
     showReadingTime: true,
     editUrl,
