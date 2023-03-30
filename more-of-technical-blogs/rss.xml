@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+    <channel>
+        <title>huytu Blog</title>
+        <link>https://huytunguyenn.github.io/my-blog/more-of-technical-blogs</link>
+        <description>huytu Blog</description>
+        <lastBuildDate>Thu, 23 Mar 2023 00:00:00 GMT</lastBuildDate>
+        <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
+        <generator>https://github.com/jpmonette/feed</generator>
+        <language>en</language>
+        <item>
+            <title><![CDATA[Vượt qua thử thách]]></title>
+            <link>https://huytunguyenn.github.io/my-blog/more-of-technical-blogs/my-first-blog</link>
+            <guid>https://huytunguyenn.github.io/my-blog/more-of-technical-blogs/my-first-blog</guid>
+            <pubDate>Thu, 23 Mar 2023 00:00:00 GMT</pubDate>
+            <description><![CDATA[Post about c]]></description>
+            <content:encoded><![CDATA[<p>Luc nao cung so thi sao</p><p>This is my first post on Docusaurus 2.</p><p>A whole bunch of exploration to follow.</p>]]></content:encoded>
+            <category>live</category>
+            <category>career</category>
+        </item>
+    </channel>
+</rss>

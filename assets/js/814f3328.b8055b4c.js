@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkmy_website=self.webpackChunkmy_website||[]).push([[2535],{5641:e=>{e.exports=JSON.parse('{"title":"All my blogs","items":[{"title":"V\u01b0\u1ee3t qua th\u1eed th\xe1ch","permalink":"/my-blog/more-of-technical-blogs/my-first-blog"}]}')}}]);

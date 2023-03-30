@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkmy_website=self.webpackChunkmy_website||[]).push([[2535],{5641:t=>{t.exports=JSON.parse('{"title":"All my thoughts","items":[{"title":"V\u01b0\u1ee3t qua th\u1eed th\xe1ch","permalink":"/my-blog/blog/my-first-blog"}]}')}}]);
