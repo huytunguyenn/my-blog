@@ -2,7 +2,7 @@
 sidebar_label: data types
 ---
 
-# Variables, data types & math operations
+# Variables, Data Types & Math Operations
 
 ## Variables
 
@@ -74,7 +74,7 @@ boolean a = true;
 
 ## Type Conversion
 
-### Implicit type conversion
+### Implicit Type Conversion
 
 Conversion automatically performed by the compiler.
 
@@ -90,7 +90,7 @@ Implicit widening conversions are automatically done:
 
 Compiler cannot automatically do narrowing conversions $\rightarrow$ explicit by developers.
 
-### Explicit type conversion
+### Explicit Type Conversion
 
 Conversion performed explicitly in code with *cast operator*.
 
@@ -103,3 +103,52 @@ Consider with explicit conversions:
 - Narrowing: significant bits may be discarded
 - Floating point $\rightarrow$ integer: fractional portion may be discarded
 - Integer $\rightarrow$ floating point: precision may be lost (10000 may be 9999,9999)
+
+## Time and Date
+
+- Time of events: primarily interested in sequencing and timestamp.
+- Human-friendly time: date and/or time of day.
+- Global human-friendly time: date and time of day, understands time zone.
+
+### Instant
+
+```java
+Instant nowInstant = Instant.now();
+Instant otherInstant
+
+otherInstant.compareTo(nowInstant) // > < = 0
+```
+
+### LocalTime
+
+09:15:10.000000
+
+### LocalDate
+
+2023-12-3
+
+### LocalDateTime
+
+### ZonedDateTime
+
+### DateTimeFormatter
+
+```java
+LocalDate today = LocalDate.now();  // 2023-03-30
+
+DateTimeFormatter usDateFormat = DateTimeFormatter.ofPattern("MM-dd-yyyy");
+String output = today.format(usDateFormat); // 03-30-2023
+```
+
+## Primitive Type Wrapper Class
+
+Primitive data types represent data only, they are unable to provide methods for operating.
+
+$\rightarrow$ **Wrapper classes**. Each primitive type has a wrapper class:
+- byte, short, int, long: `Byte`, `Short`, `Integer`, `Long`
+- float, double: `Float`, `Double`
+- char: `Character`
+- boolean: `Boolean`
+
+
+## Classes and Interfaces

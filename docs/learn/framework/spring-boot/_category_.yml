@@ -1,8 +1,8 @@
-label: spring
+label: spring boot
 link:
   type: generated-index
-  title: Spring
-  description: learn about Spring framework
+  title: Spring Boot
+  description: learn to create application with Spring Boot
   keywords:
     - spring
     - framework
