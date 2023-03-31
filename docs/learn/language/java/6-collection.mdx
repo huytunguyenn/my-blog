@@ -53,7 +53,7 @@ if (s1.equals(s2)) { // true
 }
 ```
 
-#### Interning string
+### Interning string
 
 Interning a string will canonicalize value and enable reliable `==`.
 
@@ -66,15 +66,17 @@ if ( s3 == s4 ){ // true
 }
 ```
 
+What it actually does:
+
 ```bash
 s1 --- abc
 s2 --- abc
 
-s3 --- abc (it search for interned version of s1, if no, create)
+s3 --- abc (first time, search for interned version of s1, if no, create)
     /
-s4 /       (reference to that interned version)
+s4 /       (next time, only need to reference to that interned version)
 ```
-We only should use `intern` when we compare strings frequently.
+We only should use `intern` when we compare strings **frequently**.
 
 ### Methods
 

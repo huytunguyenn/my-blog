@@ -2,3 +2,450 @@
 sidebar_label: stack, queue
 description: Stack and queue
 ---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Stack & Queue
+
+## Stack
+
+LIFO (Last In First Out)
+
+```bash
+ 0  1  2
+[4, 7, 8]
+
+| 8 | 2
+| 7 | 1
+|_4_| 0
+```
+
+### Declare
+
+<Tabs groupId="stack">
+<TabItem value="py" label="Python">
+
+```py
+s = []
+```
+
+</TabItem>
+<TabItem value="java" label="Java">
+
+```java
+import java.util.Stack;
+  
+Stack<Integer> variable = new Stack<Integer>();
+```
+
+</TabItem>
+<TabItem value="cpp" label="C++">
+
+```cpp
+#include <stack>
+using namespace std;
+
+stack<int> s;
+```
+
+</TabItem>
+</Tabs>
+
+### Add elements
+
+<Tabs groupId="stack">
+<TabItem value="py" label="Python">
+
+```py
+s = []
+s.push(1)
+```
+
+</TabItem>
+<TabItem value="java" label="Java">
+
+```java
+Stack<Integer> s = new Stack<Integer>();
+s.push(1);
+```
+
+</TabItem>
+<TabItem value="cpp" label="C++">
+
+```cpp
+stack<int> s;
+s.push(1);
+```
+
+</TabItem>
+</Tabs>
+
+### Delete the most above element
+
+<Tabs groupId="stack">
+<TabItem value="py" label="Python">
+
+```py
+value = s.pop();
+```
+
+</TabItem>
+<TabItem value="java" label="Java">
+
+```java
+int value = s.pop();
+```
+
+</TabItem>
+<TabItem value="cpp" label="C++">
+
+```cpp
+s.pop();  // note that this doesn't return popped value
+```
+
+</TabItem>
+</Tabs>
+
+### Get value of most above element
+
+<Tabs groupId="stack">
+<TabItem value="py" label="Python">
+
+```py
+value = s[-1]
+```
+
+</TabItem>
+<TabItem value="java" label="Java">
+
+```java
+int value = s.peek();
+```
+
+</TabItem>
+<TabItem value="cpp" label="C++">
+
+```cpp
+int value = s.top();
+```
+
+</TabItem>
+</Tabs>
+
+### Get stack's size
+
+<Tabs groupId="stack">
+<TabItem value="py" label="Python">
+
+```py
+n = len(s)
+```
+
+</TabItem>
+<TabItem value="java" label="Java">
+
+```java
+int n = s.size();
+```
+
+</TabItem>
+<TabItem value="cpp" label="C++">
+
+```cpp
+int n = s.size();
+```
+
+</TabItem>
+</Tabs>
+
+### Check if stack is empty
+
+<Tabs groupId="stack">
+<TabItem value="py" label="Python">
+
+```py
+if len(s) == 0:
+  # statement
+```
+
+</TabItem>
+<TabItem value="java" label="Java">
+
+```java
+if( s.empty() )
+  // statement
+```
+
+</TabItem>
+<TabItem value="cpp" label="C++">
+
+```cpp
+if( s.empt() == true)
+  // statement
+```
+
+</TabItem>
+</Tabs>
+
+### Swap 2 stacks
+
+<Tabs groupId="stack">
+<TabItem value="py" label="Python">
+
+```py
+s1, s2 = s2, s1
+```
+
+</TabItem>
+<TabItem value="java" label="Java">
+
+```java
+Stack<Integer> temp = s1;
+s1 = s2;
+s2 = temp;
+```
+
+</TabItem>
+<TabItem value="cpp" label="C++">
+
+```cpp
+s1.swap(s2);
+```
+
+</TabItem>
+</Tabs>
+
+## Queue
+
+FIFO (First In First Out)
+
+```bash
+   _________
+=>  4 3 2 1  =>
+   ---------
+```
+
+### Declare
+
+<Tabs groupId="queue">
+<TabItem value="py" label="Python">
+
+```py
+from queue import Queue
+
+q = Queue()
+```
+
+</TabItem>
+<TabItem value="java" label="Java">
+
+```java
+// Queue in Java is just interface -> implement using LinkedList
+import java.util.LinkedList;
+import java.util.Queue;
+
+Queue<Integer> q = new LinkedList<Integer>();
+```
+
+</TabItem>
+<TabItem value="cpp" label="C++">
+
+```cpp
+#include <queue>
+using namespace std;
+
+queue<int> q;
+```
+
+</TabItem>
+</Tabs>
+
+### Add elements
+
+<Tabs groupId="queue">
+<TabItem value="py" label="Python">
+
+```py
+q.put(1)
+```
+
+</TabItem>
+<TabItem value="java" label="Java">
+
+```java
+q.add(1); 
+q.offer(2);
+```
+
+</TabItem>
+<TabItem value="cpp" label="C++">
+
+```cpp
+q.push(1);
+```
+
+</TabItem>
+</Tabs>
+
+### Delete
+
+<Tabs groupId="queue">
+<TabItem value="py" label="Python">
+
+```py
+value = q.get()
+```
+
+</TabItem>
+<TabItem value="java" label="Java">
+
+```java
+int value = q.remove();
+```
+
+</TabItem>
+<TabItem value="cpp" label="C++">
+
+```cpp
+q.pop();  // doesn't return value
+```
+
+</TabItem>
+</Tabs>
+
+### Get value of the first element
+
+<Tabs groupId="queue">
+<TabItem value="py" label="Python">
+
+```py
+value = q.queue[0]
+```
+
+</TabItem>
+<TabItem value="java" label="Java">
+
+```java
+int value = q.peek();
+```
+
+</TabItem>
+<TabItem value="cpp" label="C++">
+
+```cpp
+int value = q.front();
+```
+
+</TabItem>
+</Tabs>
+
+### Get queue's size
+
+<Tabs groupId="queue">
+<TabItem value="py" label="Python">
+
+```py
+n = q.qsize()
+```
+
+</TabItem>
+<TabItem value="java" label="Java">
+
+```java
+int n = q.size();
+```
+
+</TabItem>
+<TabItem value="cpp" label="C++">
+
+```cpp
+int n = q.size();
+```
+
+</TabItem>
+</Tabs>
+
+### Check if queue is empty
+
+<Tabs groupId="queue">
+<TabItem value="py" label="Python">
+
+```py
+if q.empty():
+  # statement
+```
+
+</TabItem>
+<TabItem value="java" label="Java">
+
+```java
+if( q.isEmpty() )
+  // statement
+```
+
+</TabItem>
+<TabItem value="cpp" label="C++">
+
+```cpp
+if( q.empty() == true ) 
+  // statement
+```
+
+</TabItem>
+</Tabs>
+
+### Swap 2 queues
+
+<Tabs groupId="queue">
+<TabItem value="py" label="Python">
+
+```py
+q1, q2 = q2, q1
+```
+
+</TabItem>
+<TabItem value="java" label="Java">
+
+```java
+Queue<Integer> temp = q1;
+q1 = q2;
+q2 = temp;
+```
+
+</TabItem>
+<TabItem value="cpp" label="C++">
+
+```cpp
+q1.swap(q2);
+```
+
+</TabItem>
+</Tabs>
+
+## Dequeue
+
+<Tabs groupId="dequeue">
+<TabItem value="py" label="Python">
+
+```py
+
+```
+
+</TabItem>
+<TabItem value="java" label="Java">
+
+```java
+
+```
+
+</TabItem>
+<TabItem value="cpp" label="C++">
+
+```cpp
+
+```
+
+</TabItem>
+</Tabs>
+
+## Compare complexity
