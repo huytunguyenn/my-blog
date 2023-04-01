@@ -1,0 +1,277 @@
+---
+sidebar_label: classes & objects
+---
+
+# Classes and Objects
+
+Java is an object-oriented language.
+
+## Class
+
+Class is a template for creating objects. While object is an instance of a class.
+
+## Declare
+
+Class has fields & methods.
+
+```java
+// Name.java
+
+class Name {
+  int attribute;
+
+  Name() {  // constructor
+    atrribute = 0;
+  }
+
+  void Method() {
+  }
+}
+```
+
+## Usage
+
+Declare a variable of type of the class doesn't create the object, it just holds the reference.
+
+To create object, use `new` keyword.
+
+```java
+Student huytu = new Student();
+
+// is actually doing 2 step
+Student huytu;  // create variable hold the reference
+huytu = new Student(); // create new object instance & reference
+```
+
+## Reference Types
+
+Classes are reference types, means class variable simply hold a reference.
+
+```java
+Student tu = new Student();  // age: 0
+Student huy = new Student();  // age: 0
+tu.age += 10;
+
+// this is reference type (because both tu and huy are not primitive types)
+// both variables can reference to the same instance
+huy = tu;
+
+huy.age // 10
+huy.age += 2
+tu.age // 12
+```
+
+## Special References
+
+### this
+
+Implicit reference to current object.
+
+### null
+
+Represents an uncreated object. Sometimes, we just declare it and create after.
+
+## Access Modifier
+
+**Access modifier** is used to achieve **encapsulation**. It controls class/member visibility.
+
+| Modifier           | Visibility                                    | Usable on Classes | Usable on Members |
+|--------------------|-----------------------------------------------|-------------------|-------------------|
+| No access modifier | Only within its own package (package private) | ✅                | ✅                |
+| `public`           | Everywhere                                    | ✅                | ✅                |
+| `private`          | Only within the declaring classs              | ❌*               | ❌                |
+
+**In general, classes cannot be private. There is an exception that is nested classes*.
+
+## Field Accessors and Mutators
+
+Fields should not normally directly accessible $\rightarrow$ Getters & setters.
+
+## Initializations
+
+Summary, initialization work in this order:
+1. Field initializers
+2. Initialization blocks
+3. Constructors
+
+### Constructors
+
+Java **only** automatically provide empty constructor when we don't have any at all. This means if you have other constructor than default constructor, you have to declare it or you cannot use default constructor.
+
+### Field initializers
+
+You can set initial field values. Or the default initial state of fields:
+- byte, short, int, long: 0
+- float, double: 0.0
+- char: "\u0000"
+- bolean: false
+- reference types: null
+
+### Constructor Visibility
+
+It can be private.
+
+### Chaining Constructors
+
+One constructor can call another:
+- must be first line of constructor
+- use this keyword followed by parameter list
+
+```java
+class Person {
+  int age;
+  int house;
+  double houseFee;
+
+  Person(int house) {
+    // -highlight
+    this(house > 1 ? 10.0d : 20.0d);
+    this.house = house;
+  }
+
+  Person(int house, int age) {
+    // -highlight
+    this(house);
+    this.age = age;
+  }
+
+  Person(double houseFee) {
+    this.houseFee = houseFee;
+  }
+}
+
+Person jason = new Person(10, 20);
+```
+
+### Initialization Blocks
+
+Share code across all constructors:
+- cannot receive parameters
+- place code within brackets outside of any method or constructor
+
+A class can have multiple:
+- all always execute
+- execute in order starting at the top of the source file
+
+
+```java
+public class Flight {
+  private int passengers, int seats = 150;
+  private int flightNumber;
+  private bolean[] isSeatAvailable = new boolean[seats];
+
+  // -error-start
+  public Flight() {
+    for(int i = 0; i < seats; i++) {
+      isSeatAvailable[i] = true;
+    }
+  }
+  // -error-end
+
+  // -highlight-start
+  {
+    for(int i = 0; i < seats; i++) {
+      isSeatAvailable[i] = true;
+    }
+  }
+  // -highlight-end
+
+  public Flight(int flightNumber) {
+    // -error
+    this(); // no more needed
+    this.flightNumber = fightNumber;
+  }
+
+  // Note that, initialization blocks do not replace the default constructor.
+  public Flight() {}  // so we still need if you want a default constructor
+}
+```
+
+## Static Members
+
+Static members are shared class-wide.
+$\rightarrow$ now associated with individual instance
+
+Declared using `static` keyword.
+$\rightarrow$ accessible using class name
+
+### Static Fields
+
+A value not associated to any instance. All instances access the same value.
+
+### Static Methods
+
+Performs an action not tied to a specific instance. Has access to static members only.
+
+```java
+public class Flight {
+  private int passengers, seats = 150;
+  private static int allPassengers;
+
+  public static int getAllPassengers() {
+    return allPassengers;
+  }
+  public static void resetAllPassengers() {
+    allPassengers = 0;
+  }
+  public void add1Passenger() {
+    passsenger += 1;
+    allPassengers += 1;
+  }
+}
+```
+
+Usage:
+
+```java
+Flight.resetAllPassengers();  // allPassengers: 0
+
+Flight a = new Flight();
+a.add1Passenger();  // allPassengers: 1
+Flight b = new Flight();
+b.add1Passenger();  // allPassengers: 2
+
+Flight.getAllPassengers();  // 2
+```
+
+### Static Import Statement
+
+Import statement allows a type name to be used without being package-qualified.
+
+Static import statement is used with static methods and allows method name to be used without being class-qualified.
+
+The code above will become like this:
+```java
+import static com.example.flightapp.Flight.resetAllPassenger;
+import static com.example.flightapp.Flight.getAllPassengers;
+// or
+import static com.example.flightapp.Flight.*;
+
+// -error
+Flight.resetAllPassengers();
+// -highlight
+resetAllPassengers();
+
+// -error
+Flight.getAllPassengers();
+// -highlight
+getAllPassengers();
+```
+
+### Static Initialization Blocks
+
+It performs one-time type initialization:
+- execute before type's first use
+- has access to static members only
+
+```java
+public class Flight {
+  private static int allPassengers, maxPassengers;
+
+  // -highlight-start
+  static {
+    // do initial things
+  }
+  // -highlight-end
+}
+```
