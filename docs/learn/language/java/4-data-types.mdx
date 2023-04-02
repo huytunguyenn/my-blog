@@ -14,7 +14,7 @@ int totalStudent;
 int 2much; // <- error
 ```
 
-Variables can be declared final, means the value cannot be changed once set.
+Variables can be declared `final`, means the value cannot be changed once set.
 
 ```java
 final int maxStudents = 25;
@@ -24,7 +24,7 @@ int someDummyVar = 100;
 someVar = someDummyVar
 ```
 
-## Primitive Data Types
+## Primitive Types
 
 Primitive types are stored by value, means each variable's values are unrelated to any others.
 
@@ -72,6 +72,22 @@ char b = '\u00DA';  // Ú (for Unicode code points, use \u + 4-digit hex value)
 boolean a = true;
 ```
 
+## Reference Types
+
+Refe
+
+### Special References
+
+#### this
+
+Implicit reference to current object.
+
+#### null
+
+Represents an uncreated object. Sometimes, we just declare it and create after.
+
+
+
 ## Type Conversion
 
 ### Implicit Type Conversion
@@ -110,7 +126,7 @@ Consider with explicit conversions:
 - Human-friendly time: date and/or time of day.
 - Global human-friendly time: date and time of day, understands time zone.
 
-### Instant
+#### Instant
 
 ```java
 Instant nowInstant = Instant.now();
@@ -119,19 +135,19 @@ Instant otherInstant
 otherInstant.compareTo(nowInstant) // > < = 0
 ```
 
-### LocalTime
+#### LocalTime
 
 09:15:10.000000
 
-### LocalDate
+#### LocalDate
 
 2023-12-3
 
-### LocalDateTime
+#### LocalDateTime
 
-### ZonedDateTime
+#### ZonedDateTime
 
-### DateTimeFormatter
+#### DateTimeFormatter
 
 ```java
 LocalDate today = LocalDate.now();  // 2023-03-30
@@ -139,16 +155,3 @@ LocalDate today = LocalDate.now();  // 2023-03-30
 DateTimeFormatter usDateFormat = DateTimeFormatter.ofPattern("MM-dd-yyyy");
 String output = today.format(usDateFormat); // 03-30-2023
 ```
-
-## Primitive Type Wrapper Class
-
-Primitive data types represent data only, they are unable to provide methods for operating.
-
-$\rightarrow$ **Wrapper classes**. Each primitive type has a wrapper class:
-- byte, short, int, long: `Byte`, `Short`, `Integer`, `Long`
-- float, double: `Float`, `Double`
-- char: `Character`
-- boolean: `Boolean`
-
-
-## Classes and Interfaces

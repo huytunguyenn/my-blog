@@ -1,0 +1,43 @@
+---
+sidebar_label: wrapper
+---
+
+# Wrapper Class
+
+Primitive data types represent data only, they are unable to provide methods for operating.
+
+$\rightarrow$ **Wrapper classes**. Each primitive type has a wrapper class:
+- byte, short, int, long: `Byte`, `Short`, `Integer`, `Long`
+- float, double: `Float`, `Double`
+- char: `Character`
+- boolean: `Boolean`
+
+## Primitive Wrappers
+
+```java
+int valA = 10;
+Integer valB = 10;
+```
+
+`valA` is a primitive type, so it directly stores value of 10.
+
+`valB` is a reference type, it holds a reference, that reference refers to an instance of `Integer` class.
+
+```bash
+valA [10]
+valB [] ------> (20)
+```
+
+### Converting
+
+```java
+int valA = 10;
+Integer valB = 10;
+Integer valC = valA;  // boxing
+int valD = valB;  // unboxing
+```
+
+- **Boxing**: convert from primitive type to a wrapper class.
+- **Unboxing**: convert from a wrapper class to a primitive type.
+
+### String Wrappers

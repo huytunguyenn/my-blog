@@ -1,0 +1,101 @@
+---
+sidebar_label: methods
+---
+
+# Methods
+
+Method is mechanism for organizing code. It enables creation of reusable code.
+
+```bash
+return-type name (typed-parameter-list) {
+  statements
+}
+```
+
+## Declare & Call
+
+We can have method call above its declaration.
+
+### Command-line arguments
+
+Receives an array as parameter
+
+```java
+public static void main(String[] args) { }
+```
+Here, *Hello* and *Mary Ann* is the `args`.
+```bash
+java com.example.Main Hello "Mary Ann"
+```
+
+## Parameters
+
+Parameter receives a copy of the original value.
+
+### Primitive Type Parameters
+
+Primitive types are passed into parameter as **copies** of values.
+
+### Object Parameters
+
+Objects are passed by **copies** of references.
+
+Changes to the reference are visible **within method**, not visible outside method.
+
+Look at this example:
+
+```java
+Flight a = new Flight(10);
+Flight b = new Flight(20);
+swap(a, b);
+System.out.println(a, b);  // a: Flight(10), b: Flight(20)
+
+static void swap(Flight i, Flight j) {
+  Flight k = i;
+  i = j;
+  j = k;
+}
+```
+This is how it works:
+```bash
+a -------> Flight(10) <------ j
+b -------> Flight(20) <------ i
+                              k
+
+In the end, we swap references i, j (i points to the one that j originally pointed and vice versa)
+When exit function, all copies get cleaned up (i, j, k)
+```
+
+In fact, we want to change members of objects $\rightarrow$ using *method*, specifically **getters, setters**
+
+```java
+Flight a = new Flight(10);
+Flight b = new Flight(20);
+swapNumbers(a, b);
+System.out.println(a, b);  // a: Flight(20), b: Flight(10)
+
+static void swapNumbers(Flight i, Flight j) {      // above code:
+  int k = i.getFlightNumber();              // Flight k = i;
+  i.setFlightNumber(j.getFlightNumber());   // i = j;
+  j.setFlightNumber(k);                     // j = k;
+}
+```
+
+## Overloading
+
+Method can have many overloads, they must have a unique signature.
+
+```java
+public void func1(Param a) {}
+public void func1(int a, int b) {}
+public void func1(Param a, int b) {
+  func1(10, 20);
+}
+```
+
+If there's no exact match overload of method, compiler could do automatically conversion.
+
+## Overriding
+
+Inheritance
+

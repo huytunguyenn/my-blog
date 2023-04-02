@@ -6,44 +6,68 @@ sidebar_label: classes & objects
 
 Java is an object-oriented language.
 
-## Class
+## Objects
 
-Class is a template for creating objects. While object is an instance of a class.
-
-## Declare
-
-Class has fields & methods.
+In Java, **everything is an object**. It is the root of Java class hierarchy:
+- an `Object` reference can reference an instance of any class
+- **every class** has characteristics of `Object`
 
 ```java
-// Name.java
+Object[] stuff = new Object[3];
 
-class Name {
-  int attribute;
+stuff[0] = new Student(123);
+stuff[1] = new MathEquation();
+stuff[2] = "a string";
 
-  Name() {  // constructor
-    atrribute = 0;
-  }
+Object o = "string";
+o = new House(1);
 
-  void Method() {
+void doWork(Object o) { }
+```
+
+### Object Class Methods
+
+| Method      | Description                                                       |
+|-------------|-------------------------------------------------------------------|
+| `clone`     | Create a new object instance that duplicates the current instance |
+| `hashCode`  | Get a hash code for current instance                              |
+| `getClass`  | Return type information for the current instance                  |
+| `finialize` | Handle special resource cleanup scenarios                         |
+| `toString`  | Return a string value representing the current instance           |
+| `equals`    | Compare another object to the current instance for equality       |
+
+One application of this is to build `equals` method:
+
+```java
+public class Person {
+  private int age;
+
+  public boolean equals(Object o) {
+    Person person = (Person) o;
+    return age == person.age;
   }
 }
 ```
 
-## Usage
-
-Declare a variable of type of the class doesn't create the object, it just holds the reference.
-
-To create object, use `new` keyword.
+But if we use `equals` with classes that aren't `Person`, it can crash the program. To prevent that, use `instanceof`:
 
 ```java
-Student huytu = new Student();
-
-// is actually doing 2 step
-Student huytu;  // create variable hold the reference
-huytu = new Student(); // create new object instance & reference
+public class Person {
+  private int age;
+  public boolean equals(Object o) {
+    // -highlight-start
+    if (!(o instanceof Person))
+      return false;
+    // -highlight-end
+    Person person = (Person) o;
+    return age == person.age;
+  }
+}
 ```
 
-## Reference Types
+## Classes
+
+Class is a template for creating objects. While object is an instance of a class.
 
 Classes are reference types, means class variable simply hold a reference.
 
@@ -61,15 +85,35 @@ huy.age += 2
 tu.age // 12
 ```
 
-## Special References
 
-### this
+### Declare
 
-Implicit reference to current object.
+Class has fields & methods.
 
-### null
+```java
+// Name.java  //  same name of class
+class Name {
+  int attribute;
+  Name() {  // constructor
+    atrribute = 0;
+  }
+  void Method() {}
+}
+```
 
-Represents an uncreated object. Sometimes, we just declare it and create after.
+### Usage
+
+Declare a variable of type of the class doesn't create the object, it just holds the reference.
+
+To create object, use `new` keyword.
+
+```java
+Student huytu = new Student();
+
+// is actually doing 2 step
+Student huytu;  // create variable hold the reference
+huytu = new Student(); // create new object instance & reference
+```
 
 ## Access Modifier
 
@@ -114,7 +158,7 @@ It can be private.
 ### Chaining Constructors
 
 One constructor can call another:
-- must be first line of constructor
+- must be **first line** of constructor
 - use this keyword followed by parameter list
 
 ```java
