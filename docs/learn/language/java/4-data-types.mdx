@@ -74,7 +74,9 @@ boolean a = true;
 
 ## Reference Types
 
-Refe
+They are used to access objects. It can refer to any object of declared/compatible type.
+
+In Java, **classes** and various type of **array* variables are reference type.
 
 ### Special References
 
@@ -154,4 +156,117 @@ LocalDate today = LocalDate.now();  // 2023-03-30
 
 DateTimeFormatter usDateFormat = DateTimeFormatter.ofPattern("MM-dd-yyyy");
 String output = today.format(usDateFormat); // 03-30-2023
+```
+
+## Enumeration Types
+
+A type with a finite list of valid values.
+
+Enums support equality tests:
+- `==` and `!=`
+- `switch` statement
+
+```java
+public enum FlightCrewJob {
+  FLIGHT_ATTENDANT,  // all upper case
+  COPILOT,
+  PILOT
+}
+
+FlightCrewJob job1 = FlightCrewJob.PILOT;
+FlightCrewJob job2 = FlightCrewJob.COPILOT;
+job1 != job2
+
+switch(job) {
+  case FLIGHT_ATTENDANT:
+    // statement
+    break;
+}
+```
+
+It can be declared in a class and access through `ClassName.EnumName.EnumValue`.
+
+### Relative Comparisons
+
+The values are not just simple a list, they are **ordered**:
+- first value is lowest
+- last value is highest
+- use `compareTo`
+
+### Enum Methods
+
+| Method   | Description                                                    |
+|----------|----------------------------------------------------------------|
+| `values` | Returns an array contain all values                            |
+| `valueOf`| Returns the value that corresponds to a string (case sensitive)|
+
+### Enum Types as Classes
+
+Enum types can be treated as classes:
+- each value is an instance of the enum type
+- declaring the value creates the instance
+
+```java
+public enum FlightCrewJob {
+  FLIGHT_ATTENDANT,
+  COPILOT,
+  PILOT;  // semicolon before adding members
+  // -highlight-start
+  private String title;
+  public String getTitle() { return title; }
+  private FlightCrewJob(String title) {
+    this.title = title;
+  }
+  // -highlight-end
+}
+```
+
+It means `FLIGHT_ATTENDANT`, `COPILOT` and `PILOT` are instances of `FlightCrewJob`. Therefore, we can leverage the enum type's constructor:
+
+```java
+public enum FlightCrewJob {
+  // -highlight-start
+  FLIGHT_ATTENDANT("Flight Attendant"),
+  COPILOT("First Officer"),
+  PILOT("Captain");
+  // -highlight-end
+  private String title;
+  public String getTitle() { return title; }
+  private FlightCrewJob(String title) {
+    this.title = title;
+  }
+}
+```
+
+## Records
+
+Some classes serve only as data carriers (data-only classes/data-transport objects):
+- initialized with required data values
+- those values never change
+$\rightarrow$ involves a lot of *boilerplate* code like this:
+
+```java
+public class Person {
+  private String name;
+  private int age;
+  public Person(String name, int age) { this.name = name; this.age = age; }
+  // getters
+  public String getName() { return name; }
+  public int getAge() { return age; }
+  // common methods
+  public boolean equals(Object o) { }
+  public int hashCode() { }
+  public String toString() { }
+}
+```
+
+`record` come to rescue:
+```java
+public record Person(String name, int age) { }
+
+Person bob = new Person("Bob", 2);
+String name = bob.name();
+int age = bob.age();
+
+bob.equals(alice);
 ```

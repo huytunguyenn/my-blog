@@ -1,5 +1,5 @@
 ---
-sidebar_label: statements
+sidebar_label: logic & statements
 ---
 
 # Conditional Logic, Block Statements and Looping
@@ -47,12 +47,12 @@ Postfix (`X++`, `X--`) $\rightarrow$ Prefix (`++X`, `--X`) $\rightarrow$ Multipl
 
 ## Logical Operators
 
-|                    | Operator | What resolves to true                      |
-|--------------------|----------|--------------------------------------------|
-| AND                | &        | true & true                                |
-| OR                 | \|       | false \| true  true \| false  true \| true |
-| XOR (exclusive or) | ^        | false ^ true  true ^ false                 |
-| NOT                | !        | false                                      |
+|                    | Operator | What resolves to true                            |
+|--------------------|----------|--------------------------------------------------|
+| AND                | &        | `true & true`                                    |
+| OR                 | \|       | `false \| true`  `true \| false`  `true \| true` |
+| XOR (exclusive or) | ^        | `false ^ true`  `true ^ false`                   |
+| NOT                | !        | `false`                                          |
 
 ### Conditional Logical Operators
 
@@ -60,19 +60,20 @@ Similar to standard logical operators. Right side executes only when needed:
 - `&&` executes right only when left is `true`
 - `||` executes right only when left is `false`
 
-|     | Operator | What resolves to true           |
-|-----|----------|---------------------------------|
-| AND | &&       | true && true                    |
-| OR  | \|\|     | false \|\| true  true \|\| ---- |
+|     | Operator | What resolves to true               |
+|-----|----------|-------------------------------------|
+| AND | &&       | `true && true`                      |
+| OR  | \|\|     | `false \|\| true`  `true \|\| ----` |
 
 *Q: So what's so different?*
-A: When you use `&`, both sides are executed. With `&&`, right side is not always be executed. Consider below examples:
-```java
-if ( denom != 0 & numer/denom > 10 ) {   // this could crash if denom == 0, cause divided by 0 is not allowed
-}
 
+**A:** When you use `&`, both sides are executed. With `&&`, right side is not always be executed. Consider below example:
+```java
+// this could crash if denom == 0, cause divided by 0 is not allowed
+if ( denom != 0 & numer / denom > 10 ) {
+}
 // so, you should do this
-if ( denom != 0 && numer/denom > 10 ) {
+if ( denom != 0 && numer / denom > 10 ) {
 }
 ```
 
