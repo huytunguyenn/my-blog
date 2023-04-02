@@ -85,7 +85,6 @@ huy.age += 2
 tu.age // 12
 ```
 
-
 ### Declare
 
 Class has fields & methods.
@@ -115,6 +114,11 @@ Student huytu;  // create variable hold the reference
 huytu = new Student(); // create new object instance & reference
 ```
 
+### Field Accessors & Mutators
+
+Fields should not normally directly accessible $\rightarrow$ Getters & setters.
+
+
 ## Access Modifier
 
 **Access modifier** is used to achieve **encapsulation**. It controls class/member visibility.
@@ -123,132 +127,32 @@ huytu = new Student(); // create new object instance & reference
 |--------------------|-----------------------------------------------|-------------------|-------------------|
 | No access modifier | Only within its own package (package private) | ✅                | ✅                |
 | `public`           | Everywhere                                    | ✅                | ✅                |
-| `private`          | Only within the declaring classs              | ❌*               | ❌                |
-| `protected`        ||||
+| `private`          | Only within the declaring class               | ❌*               | ❌                |
+| `protected`        | Only within its package and all subclasses    |||
 
-**In general, classes cannot be private. There is an exception that is nested classes*.
+**In general, classes cannot be `private`. There is an exception, that is [nested classes](#nested-classes)*.
 
 ## Non-access Modifier
 
-final, abstract, strictfp
+- `static`
+- `final`
+- `abstract`
+- `strictfp`
+- `synchronized`
 
-## Field Accessors and Mutators
-
-Fields should not normally directly accessible $\rightarrow$ Getters & setters.
-
-## Initializations
-
-Summary, initialization work in this order:
-1. Field initializers
-2. Initialization blocks
-3. Constructors
-
-### Constructors
-
-Java **only** automatically provide empty constructor when we don't have any at all. This means if you have other constructor than default constructor, you have to declare it or you cannot use default constructor.
-
-### Field initializers
-
-You can set initial field values. Or the default initial state of fields:
-- byte, short, int, long: 0
-- float, double: 0.0
-- char: "\u0000"
-- bolean: false
-- reference types: null
-
-### Constructor Visibility
-
-It can be private.
-
-### Chaining Constructors
-
-One constructor can call another:
-- must be **first line** of constructor
-- use this keyword followed by parameter list
-
-```java
-class Person {
-  int age;
-  int house;
-  double houseFee;
-
-  Person(int house) {
-    // -highlight
-    this(house > 1 ? 10.0d : 20.0d);
-    this.house = house;
-  }
-
-  Person(int house, int age) {
-    // -highlight
-    this(house);
-    this.age = age;
-  }
-
-  Person(double houseFee) {
-    this.houseFee = houseFee;
-  }
-}
-
-Person jason = new Person(10, 20);
-```
-
-### Initialization Blocks
-
-Share code across all constructors:
-- cannot receive parameters
-- place code within brackets outside of any method or constructor
-
-A class can have multiple:
-- all always execute
-- execute in order starting at the top of the source file
-
-
-```java
-public class Flight {
-  private int passengers, int seats = 150;
-  private int flightNumber;
-  private bolean[] isSeatAvailable = new boolean[seats];
-
-  // -error-start
-  public Flight() {
-    for(int i = 0; i < seats; i++) {
-      isSeatAvailable[i] = true;
-    }
-  }
-  // -error-end
-
-  // -highlight-start
-  {
-    for(int i = 0; i < seats; i++) {
-      isSeatAvailable[i] = true;
-    }
-  }
-  // -highlight-end
-
-  public Flight(int flightNumber) {
-    // -error
-    this(); // no more needed
-    this.flightNumber = fightNumber;
-  }
-
-  // Note that, initialization blocks do not replace the default constructor.
-  public Flight() {}  // so we still need if you want a default constructor
-}
-```
-
-## Static Members
+### Static Members
 
 Static members are shared class-wide.
 $\rightarrow$ now associated with individual instance
 
-Declared using `static` keyword.
+Declared using `static` keyword (non-access modifier).
 $\rightarrow$ accessible using class name
 
-### Static Fields
+#### Static Fields
 
 A value not associated to any instance. All instances access the same value.
 
-### Static Methods
+#### Static Methods
 
 Performs an action not tied to a specific instance. Has access to static members only.
 
@@ -283,7 +187,7 @@ b.add1Passenger();  // allPassengers: 2
 Flight.getAllPassengers();  // 2
 ```
 
-### Static Import Statement
+#### Static Import Statement
 
 Import statement allows a type name to be used without being package-qualified.
 
@@ -307,7 +211,7 @@ Flight.getAllPassengers();
 getAllPassengers();
 ```
 
-### Static Initialization Blocks
+#### Static Initialization Blocks
 
 It performs one-time type initialization:
 - execute before type's first use
@@ -324,3 +228,33 @@ public class Flight {
   // -highlight-end
 }
 ```
+
+## Nested Classes
+
+```java
+class Outer {
+   int num;
+   // inner class
+   private class Inner {
+      public void print() {
+         System.out.println("This is an inner class");
+      }
+   }
+   // Accessing he inner class from the method within
+   void display_Inner() {
+      Inner inner = new Inner();
+      inner.print();
+   }
+}
+
+public class Main {
+   public static void main(String args[]) {
+      Outer outer = new Outer();  // outer first
+      Outer.Inner inner = outer.new Inner();  // then inner
+      outer.display_Inner();
+      inner.print();
+   }
+}
+```
+
+A static inner class is a nested class which is a static member of the outer class. It can be accessed without instantiating the outer class, using other static members.

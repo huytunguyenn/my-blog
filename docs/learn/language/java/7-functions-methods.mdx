@@ -99,3 +99,117 @@ If there's no exact match overload of method, compiler could do automatically co
 
 Inheritance
 
+
+## Initializations
+
+Summary, initialization work in this order:
+1. Field initializers
+2. Initialization blocks
+3. Constructors
+
+### Constructors
+
+Java **only** automatically provide empty constructor when we don't have any at all. This means if you have other constructor than default constructor, you have to declare it or you cannot use default constructor.
+
+### Field initializers
+
+You can set initial field values. Or the default initial state of fields:
+- byte, short, int, long: 0
+- float, double: 0.0
+- char: "\u0000"
+- bolean: false
+- reference types: null
+
+### Constructor Visibility
+
+It can be private.
+
+### Chaining Constructors
+
+One constructor can call another:
+- must be **first line** of constructor
+- use this keyword followed by parameter list
+
+```java
+class Person {
+  int age;
+  int house;
+  double houseFee;
+
+  Person(int house) {
+    // -highlight
+    this(house > 1 ? 10.0d : 20.0d);
+    this.house = house;
+  }
+
+  Person(int house, int age) {
+    // -highlight
+    this(house);
+    this.age = age;
+  }
+
+  Person(double houseFee) {
+    this.houseFee = houseFee;
+  }
+}
+
+Person jason = new Person(10, 20);
+```
+
+### Initialization Blocks
+
+Share code across all constructors:
+- cannot receive parameters
+- place code within brackets outside of any method or constructor
+
+A class can have multiple:
+- all always execute
+- execute in order starting at the top of the source file
+
+
+```java
+public class Flight {
+  private int passengers, int seats = 150;
+  private int flightNumber;
+  private bolean[] isSeatAvailable = new boolean[seats];
+
+  // -error-start
+  public Flight() {
+    for(int i = 0; i < seats; i++) {
+      isSeatAvailable[i] = true;
+    }
+  }
+  // -error-end
+
+  // -highlight-start
+  {
+    for(int i = 0; i < seats; i++) {
+      isSeatAvailable[i] = true;
+    }
+  }
+  // -highlight-end
+
+  public Flight(int flightNumber) {
+    // -error
+    this(); // no more needed
+    this.flightNumber = fightNumber;
+  }
+
+  // Note that, initialization blocks do not replace the default constructor.
+  public Flight() {}  // so we still need if you want a default constructor
+}
+```
+
+## Finalizations
+
+### Garbage Collector
+
+### Finalize
+
+```java
+class Database {
+  protected void finalize() {
+  }
+}
+```
+
