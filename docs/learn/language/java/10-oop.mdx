@@ -4,17 +4,21 @@ sidebar_label: oop
 
 # Object-oriented Programming
 
-4 main theoretical principles: abstraction, encapsulation, polymorphism, and inheritance.
+4 main theoretical principles:
+- abstraction, and encapsulation
+- polymorphism, and inheritance
 
 ## Abstraction
 
-A lot of programming is about **types**.
-
-A types can tell you:
+A lot of programming is about **types**. A types can tell you:
 - what the variable looks like (e.g. boolean is a simple flag)
 - what you can do with that variable (e.g. you cannot )
 
 Java has had primitives type already, and you can define new type with OOP (type == class). **Defining new types** and **creating objects out of them** is called abstraction.
+
+:::note a wise man once said
+*Abstraction can be thought of as a natural extension of encapsulation.*
+:::
 
 ## Encapsulation
 
@@ -35,18 +39,90 @@ Usually, we want to make fields private (so it cannot be normally directly acces
 
 $\rightarrow$ **getters & setters.**
 
-#### HELLO
+## Inheritance
 
-##### HELLO 2
+Copy & paste code is a bad idea $\rightarrow$ we should reuse the common logic and extract the unique logic into a separate class
+
+$\rightarrow$ make some classes *inherits* another class
+
+:::note a wise man once said
+*Inheritance and polymorphism work together to make powerful weapons*
+:::
+
+### Subclassing
+
+Use `extends`.
+
+```java
+public class Student extends Person {
+  private final int age;
+  public Student(int age) { this.age = age; }
+  public int getAge() { return age; }
+}
+```
+
+### Superclass
+
+Constructor is meant to guarantee that objects are initialized correctly.
+
+$\rightarrow$ we have to call superclass constructor. Use `super()` to call the superclass constructor.
+
+```java
+public class Student extends Person {
+  public Student(string name, int age) {
+    // -highlight
+    super(name);  // this must come first
+    this.age = age;
+  }
+}
+```
+
+*If the superclass constructor is default constructor (the constructor with no parameter), Java can automatically call it for us.*
+
+### Overriding
+
+
 
 ## Polymorphism
 
+:::note not so funny story
+*Polymorphism means “many shapes” in Greek.*
+:::
 
+### Is-A
 
-## Inheritance
+### Interfaces
 
-## SOLID
+###
+
+## Best Practices
+
+:::caution
+These are just guidelines! Not absolute rules.
+:::
+
+Design Guidelines:
+- More private is better than less private
+- if no need, keep it private $\rightarrow$ keep interfaces small
+- Encapsulated fields are good
+- make fields private & only write needed setters
+- Final fields are also good
+- make it final, make them less changeable (no surprises, no bugs)
+- field contains an immutable object is great (e.g. string)
+
+## SOLID principles
+
+### Single Responsibility
+
+### Open-closed
+
+### Liskov Substitution
+
+### Interface Segregation
+
+### Dependency Inversion
 
 ## Design Patterns
 
-## Best Practices
+See more at
+
