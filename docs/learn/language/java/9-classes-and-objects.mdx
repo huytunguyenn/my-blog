@@ -8,7 +8,13 @@ Java is an object-oriented language.
 
 ## Objects
 
-In Java, **everything is an object**. It is the root of Java class hierarchy:
+In Java, **everything is an object**. It is the root of Java class hierarchy.
+
+*For example, look at the below image, it is hierarchy of classes to deal with input, output stream, it has the root of `Object` class.*
+
+![InputOutputStreamClass](img/file_io.jpg)
+
+Object has some characteristics:
 - an `Object` reference can reference an instance of any class
 - **every class** has characteristics of `Object`
 
@@ -24,6 +30,14 @@ o = new House(1);
 
 void doWork(Object o) { }
 ```
+
+### Memory
+
+When create object, Java allocates it in **heap** memory. But not only that, Java returns a reference to the object (object's address). And usually, we assign that to a variable.
+
+So unlike [Primitives](/learn/language/java/4-data-types.mdx#primitive-types) (contain a value), Object variables contain a reference to the object.
+
+We never interact with the object directly but through reference.
 
 ### Object Class Methods
 
@@ -100,6 +114,17 @@ class Name {
 }
 ```
 
+Final fields need to be initialized when create objects.
+
+```java
+// this will get error from compiler
+class Person {
+  // -error
+  final int age;
+  Person() { }  // to fix, we need to init it in constructor
+}
+```
+
 ### Usage
 
 Declare a variable of type of the class doesn't create the object, it just holds the reference.
@@ -109,25 +134,20 @@ To create object, use `new` keyword.
 ```java
 Student huytu = new Student();
 
-// is actually doing 2 step
+// it's actually doing 2 step
 Student huytu;  // create variable hold the reference
 huytu = new Student(); // create new object instance & reference
 ```
-
-### Field Accessors & Mutators
-
-Fields should not normally directly accessible $\rightarrow$ Getters & setters.
-
 
 ## Access Modifier
 
 **Access modifier** is used to achieve **encapsulation**. It controls class/member visibility.
 
-| Modifier           | Visibility                                    | Usable on Classes | Usable on Members |
-|--------------------|-----------------------------------------------|-------------------|-------------------|
-| No access modifier | Only within its own package (package private) | ✅                | ✅                |
-| `public`           | Everywhere                                    | ✅                | ✅                |
-| `private`          | Only within the declaring class               | ❌*               | ❌                |
+| Modifier           | Visibility                                                    | Usable on Classes | Usable on Members |
+|--------------------|---------------------------------------------------------------|-------------------|-------------------|
+| No access modifier | Only within its own package (aslo called **package private**) | ✅                | ✅                |
+| `public`           | Everywhere                                                    | ✅                | ✅                |
+| `private`          | Only within the declaring class                               | ❌*               | ❌                |
 | `protected`        | Only within its package and all subclasses    |||
 
 **In general, classes cannot be `private`. There is an exception, that is [nested classes](#nested-classes)*.

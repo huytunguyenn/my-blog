@@ -14,21 +14,55 @@ int totalStudent;
 int 2much; // <- error
 ```
 
+### Instantiate & Initialize
+
+- **Instantiation**: creating an object by using the `new` keyword.
+```java
+Person p = new Person();
+```
+- **Initialization**: assigning a value to a variable is called initialization.
+```java
+int a = 10;
+// or
+Person p = new Person();
+p.setName("Alice");
+p.setAge(30);
+```
+
+### Constants
+
 Variables can be declared `final`, means the value cannot be changed once set.
 
 ```java
 final int maxStudents = 25;
-
+// you declare it first
 final int someVar;
 int someDummyVar = 100;
-someVar = someDummyVar
+someVar = someDummyVar;
+// -error
+someVar = 100;  // <- error
 ```
+
+With object, the reference is constant, but not the object, so you still call method to change fields.
+```java
+final Person jennie = new Person("Jennie");
+// -error-start
+jennie = new Person("Lisa");  // <- error
+jennie = null;  // <- error
+// -error-end
+jennie.changeName("Lisa");  // can call method to change fields
+```
+
+*Read more about [Objects](/learn/language/java/9-classes-and-objects.mdx#objects).*
+
+#### Constants vs. Immutable
+
+- Constants: applies to **variables**, including object references. It means that you can't reassign the variable.
+- Immutable: applies to **objects** (e.g. strings). It means that you can't change the state of the object.
 
 ## Primitive Types
 
-Primitive types are stored by value, means each variable's values are unrelated to any others.
-
-These are foundation of all other types:
+Primitive types are stored by value, means each variable's values are unrelated to any others. These are foundation of all other types:
 
 ### Integer
 
@@ -72,23 +106,25 @@ char b = '\u00DA';  // Ú (for Unicode code points, use \u + 4-digit hex value)
 boolean a = true;
 ```
 
-## Reference Types
+## Objects
 
-They are used to access objects. It can refer to any object of declared/compatible type.
+Read more about [Objects](/learn/language/java/9-classes-and-objects.mdx#objects).
 
-In Java, **classes** and various type of **array* variables are reference type.
+### Reference Types
+
+They are used to access objects, which are addresses of the objects in memory (4 or 8 bytes). It can refer to any object of declared/compatible type.
+
+In Java, **classes** and various type of **array** variables are reference type.
 
 ### Special References
 
 #### this
 
-Implicit reference to current object.
+Implicit reference to current object. This is optional to use in class.
 
 #### null
 
-Represents an uncreated object. Sometimes, we just declare it and create after.
-
-
+Represents an uncreated object. Sometimes, we just declare it and create after. Null Exception is a common error, to avoid that using initialization.
 
 ## Type Conversion
 
@@ -203,8 +239,7 @@ The values are not just simple a list, they are **ordered**:
 ### Enum Types as Classes
 
 Enum types can be treated as classes:
-- each value is an instance of the enum type
-- declaring the value creates the instance
+- each value is an instance of the enum type:
 
 ```java
 public enum FlightCrewJob {
@@ -216,6 +251,7 @@ public enum FlightCrewJob {
   public String getTitle() { return title; }
   private FlightCrewJob(String title) {
     this.title = title;
+    System.out.println("count");
   }
   // -highlight-end
 }
@@ -234,9 +270,29 @@ public enum FlightCrewJob {
   public String getTitle() { return title; }
   private FlightCrewJob(String title) {
     this.title = title;
+    System.out.println("count");
   }
 }
 ```
+
+- declaring the value creates the instance:
+
+```java
+public static void main(String[] args){
+  System.out.println(FlightCrewJob.COPILOT.getTitle());
+  System.out.println(FlightCrewJob.PILOT.getTitle());
+}
+
+// highlight-start
+> count
+> count
+> count
+> First Officer
+> Captain
+// highlight-end
+```
+
+*Note that, enum declaration can be done outside a Class or inside a Class but not inside a Method.*
 
 ## Records
 
@@ -270,3 +326,9 @@ int age = bob.age();
 
 bob.equals(alice);
 ```
+
+## Collections
+
+They are collections of similar data elements stored at contiguous memory locations.
+
+They are different from primitives type, since they are references. See more at [Collections](/learn/language/java/6-collections.mdx).

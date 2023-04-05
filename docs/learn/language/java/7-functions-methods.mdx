@@ -34,16 +34,15 @@ Parameter receives a copy of the original value.
 
 ### Primitive Type Parameters
 
-Primitive types are passed into parameter as **copies** of values.
+Primitive types are passed into parameter as **copies of values**.
+
+*So with primitives, you can know that there's nothing changes. But with object, the method could change the object.*
 
 ### Object Parameters
 
-Objects are passed by **copies** of references.
+Objects are passed by **copies of references**.
 
-Changes to the reference are visible **within method**, not visible outside method.
-
-Look at this example:
-
+Changes to the reference are visible within method, not visible outside method. Look at this example:
 ```java
 Flight a = new Flight(10);
 Flight b = new Flight(20);
@@ -68,6 +67,7 @@ When exit function, all copies get cleaned up (i, j, k)
 
 In fact, we want to change members of objects $\rightarrow$ using *method*, specifically **getters, setters**
 
+*Passing objects as references is actually a good idea. It prevents copying large object from ome place to another.*
 ```java
 Flight a = new Flight(10);
 Flight b = new Flight(20);
@@ -83,7 +83,7 @@ static void swapNumbers(Flight i, Flight j) {      // above code:
 
 ## Overloading
 
-Method can have many overloads, they must have a unique signature.
+Overloading means the class can have multiple methods with the same name, as long as they have a unique signature (which is their parameters).
 
 ```java
 public void func1(Param a) {}
@@ -98,7 +98,6 @@ If there's no exact match overload of method, compiler could do automatically co
 ## Overriding
 
 Inheritance
-
 
 ## Initializations
 
@@ -204,12 +203,26 @@ public class Flight {
 
 ### Garbage Collector
 
-### Finalize
+Java runs on JVM, a virtual machine that can track reference.
+
+If an object has no reference pointing to, it is unreachable. And JVM will release its memory automatically with *garbage collector*.
+The garbage collector is unpredictable, makes Java isn't an ideal language for strict runtime computations.
+
+### Finalizer
+
+Thanks to garbage collection, there's no need for destructor. But garbage collection is only about **memory**, not other resources.
+Finalizer is called before the garbage collection.
 
 ```java
 class Database {
-  protected void finalize() {
+  protected void finalize() { // clean up, close connection for e.g
   }
 }
 ```
 
+**Finalizer should be avoided:**
+- Crash: we cannot know when a finalizer runs since garbage collection may occur anytime $\rightarrow$ crash when resources run out before clean-up happens
+- Performance: cost is expensive
+- Exception: if a finalizer throws an exception, the finalization process stops, leaving the object in a corrupted state without any notification.
+
+**`finalize` has been deprecated starting with Java 9 – and will eventually be removed.**

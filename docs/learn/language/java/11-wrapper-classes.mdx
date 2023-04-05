@@ -38,3 +38,19 @@ int valD = valB;  // unboxing
 
 - **Boxing**: convert from primitive type to a wrapper class.
 - **Unboxing**: convert from a wrapper class to a primitive type.
+
+The wrappers have methods to convert, but Java compiler helps to do these conversions automatically with **auto(un)boxing**. Instead of doing this,
+```java
+int aPrimitive = 42;
+Integer anObject = new Integer(aPrimitive);
+myList.add(anObject);  // suppose this method only accepts object parameter
+```
+
+you can just do this:
+```java
+int aPrimitive = 42;
+myList.add(aPrimitive);  // auto: myList.add(new Integer(aPrimitive));
+
+Integer anObject = aPrimitive;  // auto: = new Integer(aPrimitive);
+int anotherPrimitive = anObject;  // auto: = anObject.intValue();
+```
