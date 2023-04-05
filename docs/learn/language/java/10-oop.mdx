@@ -1,5 +1,7 @@
 ---
 sidebar_label: oop
+description: object-oriented programming with Java features & examples
+toc_max_heading_level: 4
 ---
 
 # Object-oriented Programming
@@ -35,19 +37,15 @@ By making some members private, we split fields & methods into 2 groups:
 - **interface**: public members, means it's visible from the outside to use
 - **implementation**: private members, contains internal details, we can easily change implementation without affect interface
 
-Usually, we want to make fields private (so it cannot be normally directly accessed), but if we need to expose that
+Usually, we want to make fields private (so it cannot be normally directly accessed). But sometimes, we need to expose that (when encapsulation meets [inheritance](#inheritance))
 
-$\rightarrow$ **getters & setters.**
+$\rightarrow$ public/protected **getters & setters** for private fields
 
 ## Inheritance
 
 Copy & paste code is a bad idea $\rightarrow$ we should reuse the common logic and extract the unique logic into a separate class
 
 $\rightarrow$ make some classes *inherits* another class
-
-:::note a wise man once said
-*Inheritance and polymorphism work together to make powerful weapons*
-:::
 
 ### Subclassing
 
@@ -60,6 +58,10 @@ public class Student extends Person {
   public int getAge() { return age; }
 }
 ```
+
+:::info
+Every class in Java inherits `Object` class.
+:::
 
 ### Superclass
 
@@ -81,7 +83,102 @@ public class Student extends Person {
 
 ### Overriding
 
+Override the methods from superclass. The code in subclass could be duplicated as well. To avoid that we can call method of superclass using `super`.
 
+```java
+class Person {
+  public String getAge(boolean uppercase) {
+    if (isAlive()) {
+      if (uppercase)
+        return this.age.toUpperCase();
+      else
+        return this.age;
+    }
+    return "";
+  }
+}
+
+class Student {
+  @Override
+  public String getAge(boolean uppercase) {
+    // -error-start
+    // this still duplicates a lot
+    if (isAlive()) {
+      if (uppercase)
+        return "Student age: " + this.age.toUpperCase();
+      else
+        return "Student age: " + this.age;
+    }
+    return "";
+    // -error-end
+    // -highlight-start
+    // call super class instead
+    String age = super.getAge(uppercase);
+    if (age.isEmpty())
+      return "Student age: " + age;
+    else
+      return "Student age: " + age;
+    // -highlight-end
+  }
+}
+```
+
+### Prevent Overriding
+
+`final` can be used with methods or classes. If a method is declared with `final`, it means the method cannot be overridden in a subclass. The same with `final` class, it cannot be inherited.
+
+*Q: The question is why would you want to `final` a method?* **A:** To prevent bugs, looks at below example:
+
+```java
+class Parent {
+  Parent() {
+    someInitMethod();
+  }
+  protected void someInitMethod() {
+    // do esstential initializations
+  }
+}
+class Child extends Parent {
+  /**
+   * subclass can refine someInitMethod() and cause bug
+   * if that method is private then it's okay (but here, it's protected)
+  **/
+}
+```
+
+A good safety rule is if **methods called by constructor should be either `private` or `final`**.
+
+```java
+class Parent {
+  // -highlight
+  protected final void someInitMethod() { }
+}
+```
+
+:::caution
+Don't overuse `final`. The best way to use it is when you know what to do and prevent bugs.
+:::
+
+### Sealed Classes
+
+In Java 17. It can decide exactly which other classes inherit from it. All sealed class subclasses must either be `final`, `sealed` or `non-sealed`.
+
+```java
+public sealed class Person permits Student, Worker { }
+
+// subclass can be sealed (means it permitteed subclasses)
+public sealed class Worker extends Person permits FullTimeWorker { }
+// or non-sealed (means it's just a regular class that you can inherit from)
+public non-sealed class Student { }
+// or final
+public final class Student extends Person { }
+
+public non-sealed class FullTimeWorker extends Worker { }
+```
+
+:::caution
+Don't overuse `sealed` classes either.
+:::
 
 ## Polymorphism
 
@@ -89,26 +186,177 @@ public class Student extends Person {
 *Polymorphism means “many shapes” in Greek.*
 :::
 
-### Is-A
+### Is-A Relationship
+
+```bash
+Object <|---- Animal <|---- Cat <---- Cat butter = new Cat();
+```
+
+*Example: `butter` is a special case of Cat and also a special case of Animal, and Object as well. The class inheritance is also described as the `is-a` relationship.*
+
+Subclass can add stuff to superclass, maybe tweak it, but it **cannot take things away from superclass**. That would violate this notion that "subclass `is-a` special case".
+
+### Upcasting
+
+Java creates object in the heap and return a reference. We usually take that reference and assign it to a variable, and we cannot assign to a different type variable. But we can assign to a superclass variable.
+
+Casting means a type conversion. Upcasting is putting a **reference** into a variable whose type is a superclass of that reference ***(we're not changing the object from one type to another, we only effect on reference)***.
+
+```java
+Student student = new Student();
+// -highlight
+Person person = student;  // upcasting: cast this upper
+Object greetings = "Hello, world!";  // string is a subclass of Object
+```
+
+When upcasting, you lose the specific functionality, in other words, you **forget specific subclass**. Sounds bad, but it turns out the cool things in Java for [polymorphism](#polymorphism-by-inheritance).
+
+```java
+// -error
+person.goToSchool();  // you can't, this is a Student class method
+```
+
+### Downcasting / `instanceof`
+
+Java cannot do downcasting automatically because it only has ability to forget about specific subclass ([upcasting](#upcasting)). We downcast by converting reference.
+
+```java
+Person person = new Student();
+Student student = (Student)person;  // down cast Person type -> Student type
+student.goToSchool();  // now you can use Student method
+```
+
+What if we change: `Person person = new Worker();`? then, we'll get `NullPointerException` followed by `ClassCastException`.
+
+:::caution
+Because ClassCastException & NullPointerException, we should:
+- use `instanceof`: checking before downcasting
+- **avoid downcasting**: improve design to remove unnecessary type conversion
+:::
+
+### Polymorphism by Inheritance
+
+:::note a wise man once said
+*Inheritance and polymorphism work together to make powerful weapons*
+:::
+
+Polymorphism is the ultimate skill for everything above.
+
+#### An example
+
+Works with whatever you pass to it. The doesn't know and doesn't care what animal it's dealing with.
+
+It just *talks* to animal. It can do that because the feature allow we forgot the specific type of animal.
+
+There are many examples of polymorphism in the core Java libraries. One of that is the `System.out.print()`, the first ever thing we code when approaching Java.
+
+:::info
+Not all polymorphism in Java is based on inheritance. Other ways is using `abstract class` and `interface`.
+:::
+
+### Abstract Classes
+
+You cannot create an instance of an abstract class directly. But we can create its subclass and [upcast](#upcasting) it.
+
+```java
+public abstract class Person {
+  public abstract void walk(){ }
+}
+public class Student extends Person {
+  public void walk(){ }
+}
+// main
+// -error-start
+Person person = new Person();  // cannot create instance of abstract class
+person.walk();
+// -error-end
+Person person = new Student();
+person.walk();
+```
+
+A class inherits from abstract class must follow rule:
+- if that class wants to be concrete (non-abstract), it must **provide an implementation for all its methods** (including those defined and those that inherits from its superclass)
+- otherwise, if any method is still abstract, then the class itself must be abstract.
+
+$\rightarrow$ abstract classes only make sense in context of upcasting for polymorphism
 
 ### Interfaces
 
-###
+The problem of abstract class is the *updating the hierarchy*.
+
+```bash
+Student ----|> Person <|---- Worker
+
+> What if we need more method `exist`, `live`
+> -> create `Entity` and `Creature`
+> But you cannot inherit 2 classes
+
+Entity            Creature
+  \                 \
+  Creature          Entity
+    \                 \
+    Person            Person
+
+>  Here it is        But how about this?
+```
+
+Interface came to resolve **one object, multiple roles** problem. They are like extreme abstract class:
+- *nearly* everything in `interface` has to be `abstract`, *usually*, interface has **no field**
+- a class can only narrate from 1 superclass *(except class `Object`)*, but it can implement all the interfaces at once
+
+```java
+public interface Entity {
+  public abstract void exist();
+  void exist();  // or we don't need to specify (they are abstract by default)
+}
+
+public class Student extends Person implements Entity, Creature {
+  // implements all the methods
+  @Override
+  public void exist() { }
+}
+// if this is abstract class then no need to implement
+public abstract class Person implements Entity, Creature {
+  // this class is abstract, duh!
+}
+```
+
+#### Limitations
+
+The point of interfaces exist because Java doesn't want to give you multiple inheritance* (it creates confusing edge cases, horrible hierarchy).
+
+There are some limitations of interfaces:
+- interface cannot inherit from a class (it can inherit an interface)
+- no constructor in interface
+- **fields** need to be `public static final`, in other words, **global constant**
+- **methods** need to be `public abstract`. But there are special cases that methods can be concrete:
+  - static methods *(since they have nothing to do with polymorphism)*
+  - default methods** *(methods supposed to be abstract, but they came with default implementation)*
+  ```java
+  public interface Entity {
+    // we can override this or take the default
+    default boolean doSomething() { return true; }
+  }
+  ```
+  (\*)(\*\*)* We don't have multiple inheritances, so we cannot put code in an interface, except that now we can* 🫠 *Having default method is make it more convenient by loosening inheritance a bit.*
+
 
 ## Best Practices
 
-:::caution
+:::tip
 These are just guidelines! Not absolute rules.
 :::
 
-Design Guidelines:
+Design guidelines:
 - More private is better than less private
-- if no need, keep it private $\rightarrow$ keep interfaces small
+- If no need, keep it private $\rightarrow$ keep interfaces small
 - Encapsulated fields are good
-- make fields private & only write needed setters
+- Make fields private & only write needed setters
 - Final fields are also good
-- make it final, make them less changeable (no surprises, no bugs)
-- field contains an immutable object is great (e.g. string)
+- Make it final, make them less changeable (no surprises, no bugs)
+-   Field contains an immutable object is great (e.g. string)
+
+
 
 ## SOLID principles
 

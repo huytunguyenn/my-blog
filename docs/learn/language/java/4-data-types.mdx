@@ -32,6 +32,13 @@ p.setAge(30);
 
 ### Constants
 
+`final` keyword when it is used on:
+- variable/field: means cannot reassign
+- method: means cannot override
+- class: means cannot inherit
+
+#### Usage
+
 Variables can be declared `final`, means the value cannot be changed once set.
 
 ```java
@@ -45,6 +52,7 @@ someVar = 100;  // <- error
 ```
 
 With object, the reference is constant, but not the object, so you still call method to change fields.
+
 ```java
 final Person jennie = new Person("Jennie");
 // -error-start
@@ -55,6 +63,8 @@ jennie.changeName("Lisa");  // can call method to change fields
 ```
 
 *Read more about [Objects](/learn/language/java/9-classes-and-objects.mdx#objects).*
+
+`final` can also be used on classes & methods. Read more at [final class/method](/learn/language/java/10-oop.mdx#final).
 
 #### Constants vs. Immutable
 
