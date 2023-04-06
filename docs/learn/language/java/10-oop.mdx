@@ -18,13 +18,15 @@ A lot of programming is about **types**. A types can tell you:
 
 Java has had primitives type already, and you can define new type with OOP (type == class). **Defining new types** and **creating objects out of them** is called abstraction.
 
+Abstraction can also be achieved by encapsulation (**hide details**), so it **only shows interfaces**. See [below](#field-accessors--mutators).
+
 :::note a wise man once said
 *Abstraction can be thought of as a natural extension of encapsulation.*
 :::
 
 ## Encapsulation
 
-**Hiding information** inside the class. It helps classes:
+**Hiding information** inside the class is called encapsulation. It helps classes:
 - easier to use: only care about interface, not the implementation
 - harder to misuse: protect object from inconsistent changes
 - easier to change: change the implementation without breaking clients
@@ -46,6 +48,11 @@ $\rightarrow$ public/protected **getters & setters** for private fields
 Copy & paste code is a bad idea $\rightarrow$ we should reuse the common logic and extract the unique logic into a separate class
 
 $\rightarrow$ make some classes *inherits* another class
+
+#### A Summary
+
+- Inheritance is (mostly) when you want to [upcasting](#upcasting).
+- Inheritance can be used to share code, but there are other better ways to do that (e.g. include a new field type in class a.k.a **delegation**).
 
 ### Subclassing
 
@@ -186,6 +193,16 @@ Don't overuse `sealed` classes either.
 *Polymorphism means “many shapes” in Greek.*
 :::
 
+*Read the below subsections first to understand polymorphism.*
+
+#### A Summary
+
+The reason why we do polymorphism & inheritance is to just about upcasting.
+
+We design the hierarchy just to some point in the code, we can take object of subclass and cast it to a superclass ([upcasting](#upcasting)).
+
+Why we would want to upcast? Because we wrote the code that **talks to the superclass/interface** to make it easier of extension & maintenance, like this [example](#an-example).
+
 ### Is-A Relationship
 
 ```bash
@@ -209,7 +226,7 @@ Person person = student;  // upcasting: cast this upper
 Object greetings = "Hello, world!";  // string is a subclass of Object
 ```
 
-When upcasting, you lose the specific functionality, in other words, you **forget specific subclass**. Sounds bad, but it turns out the cool things in Java for [polymorphism](#polymorphism-by-inheritance).
+When upcasting, you lose the specific functionality, in other words, you **forget specific subclass**. Sounds like bad things, but it turns out the cool things in Java for [polymorphism](#polymorphism).
 
 ```java
 // -error
@@ -240,15 +257,56 @@ Because ClassCastException & NullPointerException, we should:
 *Inheritance and polymorphism work together to make powerful weapons*
 :::
 
-Polymorphism is the ultimate skill for everything above.
+```java
+Person person = new Student("Tu");
+person.sleep();  // call sleep() of `Student` class, not `Person`
+```
 
 #### An example
 
-Works with whatever you pass to it. The doesn't know and doesn't care what animal it's dealing with.
+```java
+class Dashboard {
+  /**
+  * Works with whatever you pass to it
+  * It doesn't know and doesn't care what subclass it's dealing with
+  * It just talks to superclass. It allow we forgot the specific type
+  * -> future-proof, means no matter what new class you add to the hierarchy, code still works
+  **/
+  public void add(Alarm alarm) {
+    tool1.method(alarm.turnOn());
+    tool2.method(alarm.plug());
+    // ...
+  }
+}
 
-It just *talks* to animal. It can do that because the feature allow we forgot the specific type of animal.
+public static void main(String[] args) {
+  Dashboard dashboard = new Dashboard();
+  // the dashboard works with any alarm, it talks with Alarm
+  dashboard.add(new NoisyAlarm("zzz"));
+  dashboard.add(new TimeAlarm(100));
+}
+```
 
 There are many examples of polymorphism in the core Java libraries. One of that is the `System.out.print()`, the first ever thing we code when approaching Java.
+
+```java
+/**
+ * System.out.println() take many param type, include Object type
+ * Object is the root of every class
+ * => println() can print anything
+ * It turns out println() call toString() method of the passed-in object
+ * -> so we only need to override toString() method
+**/
+class Student {
+  @Override
+  public String toString() { return "I am student"; }
+}
+public static void main(String[] args) {
+  Person person = new Student();
+  System.out.println(person);
+  // this make easier of extension of println()
+}
+```
 
 :::info
 Not all polymorphism in Java is based on inheritance. Other ways is using `abstract class` and `interface`.
@@ -353,9 +411,10 @@ Design guidelines:
 - Encapsulated fields are good
 - Make fields private & only write needed setters
 - Final fields are also good
-- Make it final, make them less changeable (no surprises, no bugs)
--   Field contains an immutable object is great (e.g. string)
-
+- Make it final, make them less changeable (no surprises, no bugs). Field contains an immutable object is great (e.g. string)
+- Avoid chains of `instanceof` and downcasts: use polymorphism instead
+- Inheritance vs. Delegation: Inheritance is not always a good way to share code among classes $\rightarrow$ prefer **delegation**, means create a new class/type to handle that for us.
+- Don't overuse `static`: it leads to procedural code
 
 
 ## SOLID principles
@@ -371,6 +430,4 @@ Design guidelines:
 ### Dependency Inversion
 
 ## Design Patterns
-
-See more at
 

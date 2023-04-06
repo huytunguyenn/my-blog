@@ -163,15 +163,29 @@ huytu = new Student(); // create new object instance & reference
 
 ### Static Members
 
-Static members are shared class-wide.
-$\rightarrow$ now associated with individual instance
+This is the least objec-oriented feature of Java. Static members are shared class-wide.
+$\rightarrow$ not associated with individual instance.
 
-Declared using `static` keyword (non-access modifier).
-$\rightarrow$ accessible using class name
+Using `static` keyword $\rightarrow$ accessible using class name.
+
+*This is why the class has default static `main`, we can call them directly without creating object of that class.*
+
+```java
+public class Program {
+    public static void main(String[] args) {
+      System.out.println("Hello, world!");
+    }
+}
+// highlight-start
+JVM call: Program.main(new String[] {});
+// highlight-end
+```
 
 #### Static Fields
 
 A value not associated to any instance. All instances access the same value.
+
+Global variables are easier to cause bugs $\rightarrow$ better prefer global constant (`public static final` > `public static`)
 
 #### Static Methods
 
@@ -208,6 +222,10 @@ b.add1Passenger();  // allPassengers: 2
 Flight.getAllPassengers();  // 2
 ```
 
+**Limitation**
+- You cannot call static method in non-static method $\rightarrow$ you have to create object first
+- You cannot override static method.
+
 #### Static Import Statement
 
 Import statement allows a type name to be used without being package-qualified.
@@ -216,16 +234,19 @@ Static import statement is used with static methods and allows method name to be
 
 The code above will become like this:
 ```java
+import static java.lang.Math.PI;
 import static com.example.flightapp.Flight.resetAllPassenger;
 import static com.example.flightapp.Flight.getAllPassengers;
-// or
-import static com.example.flightapp.Flight.*;
+import static com.example.flightapp.Flight.*;  // import all
 
+// -error
+double a = Math.PI;
+// -highlight
+double a = PI;
 // -error
 Flight.resetAllPassengers();
 // -highlight
 resetAllPassengers();
-
 // -error
 Flight.getAllPassengers();
 // -highlight
@@ -234,6 +255,8 @@ getAllPassengers();
 
 #### Static Initialization Blocks
 
+*Read more about [Initialization Blocks](/learn/language/java/7-functions-methods.mdx#initialization-blocks)*.
+
 It performs one-time type initialization:
 - execute before type's first use
 - has access to static members only
@@ -241,10 +264,10 @@ It performs one-time type initialization:
 ```java
 public class Flight {
   private static int allPassengers, maxPassengers;
-
   // -highlight-start
+  // called once the first time you use the class
   static {
-    // do initial things
+    allPassengers = loadFromFile();
   }
   // -highlight-end
 }
