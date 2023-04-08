@@ -72,9 +72,11 @@ Every class in Java inherits `Object` class.
 
 ### Superclass
 
-Constructor is meant to guarantee that objects are initialized correctly.
+Constructors are not members, so they are not inherited by subclasses, but it can be invoked.
 
-$\rightarrow$ we have to call superclass constructor. Use `super()` to call the superclass constructor.
+Constructor is meant to guarantee that objects are initialized correctly $\rightarrow$ we have to call superclass constructor.
+
+Use `super()` to call the superclass constructor.
 
 ```java
 public class Student extends Person {
@@ -398,6 +400,15 @@ There are some limitations of interfaces:
   ```
   (\*)(\*\*)* We don't have multiple inheritances, so we cannot put code in an interface, except that now we can* 🫠 *Having default method is make it more convenient by loosening inheritance a bit.*
 
+#### Tagging Interfaces
+
+Interfaces that do not contain any methods or constants but are used to mark or tag a class with some special meaning or behavior.
+
+```java
+public interface Serializable { }
+// tag MyClass has been serialized so that we can put it in stream
+public class MyClass implements Serializable { }
+```
 
 ## Best Practices
 

@@ -1,0 +1,13 @@
+label: database
+position: 4
+link:
+  type: generated-index
+  title: Database
+  description: its icon looks like a chemical barrel
+  keywords:
+    - database
+    - sql
+    - nosql
+    - mysql
+    - postgresql
+  image: /img/banner-small.png

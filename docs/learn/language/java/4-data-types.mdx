@@ -121,7 +121,7 @@ boolean a = true;
 
 Read more about [Objects](/learn/language/java/9-classes-and-objects.mdx#objects).
 
-### Reference Types
+## Reference Types
 
 They are used to access objects, which are addresses of the objects in memory (4 or 8 bytes). It can refer to any object of declared/compatible type.
 
@@ -310,12 +310,16 @@ public static void main(String[] args){
 Some classes serve only as data carriers (data-only classes/data-transport objects):
 - initialized with required data values
 - those values never change
-$\rightarrow$ involves a lot of *boilerplate* code like this:
+$\rightarrow$ involves a lot of *boilerplate* code.
+
+`record` come to rescue:
 
 ```java
+// -error-start
 public class Person {
   private String name;
   private int age;
+  // constructor
   public Person(String name, int age) { this.name = name; this.age = age; }
   // getters
   public String getName() { return name; }
@@ -325,25 +329,19 @@ public class Person {
   public int hashCode() { }
   public String toString() { }
 }
-```
+// -error-end
 
-`record` come to rescue:
-```java
+// -highlight-start
 public record Person(String name, int age) { }
 
+// constructor
 Person bob = new Person("Bob", 2);
+// getters
 String name = bob.name();
 int age = bob.age();
-
+// common methods
 bob.equals(alice);
-```
-
-## Generics
-
-Types that has another types as parameter.
-
-```java
-List<Student> allStudents = new ArrayList<Student>();
+// -highlight-end
 ```
 
 ## Collections

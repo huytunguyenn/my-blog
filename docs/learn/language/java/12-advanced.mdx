@@ -1,0 +1,306 @@
+---
+sidebar_label: advanced
+toc_max_heading_level: 4
+---
+
+# Advanced
+
+## Annotations
+
+Annotations are special types that act as metadata:
+- It has no direct affect on target behavior
+- Annotation have to interpreted by things like tools (IntelliJ), execution environment (XML and JSON processors), any program
+- Can be applied to a type or its members
+
+Common Java core platform annotations:
+- `@Override`: indicate we override an inherited method
+- `@Deprecated`: indicate which method is no longer used
+- `@SuppressWarnings`: tell compiler to not generate some kind of warnings (e.g. `@SuppressWarnings("deprecation")`)
+
+Others:
+- `@FunctionalInterface`: [functional interfaces](#functional-interfaces)
+
+## Generics
+
+:::info
+A **generic type** is a type with **type parameters**, which is instantiated into a **parameterized type** by supplying **type arguments** to fill in its type parameters.
+:::
+
+:::note tóm tắt
+Nôm na là với type bình thường, mình gọi "instantiate" là create (instance of) new object, còn với generic type, create new instance of object được gọi là "instantiating generic type into parameterized type"
+
+Dùng toán tử diamond `<>`, cứ coi nó giống như `new`, dùng để create a new object from a parameterized type
+:::
+
+#### Type Inference
+
+Compiler automatically knows the type.
+
+#### An Example
+
+```java
+public interface TreeNode<T> {
+    T getValue();
+    TreeNode<T> getLeft();
+    TreeNode<T> getRight();
+}
+
+public class LeafNode<T> implements TreeNode<T> {
+    private final T value;
+
+    public LeafNode(T value) { this.value = value; }
+    @Override public T getValue() { return value; }
+    @Override public TreeNode<T> getLeft() { return null; }
+    @Override public TreeNode<T> getRight() { return null; }
+    @Override public String toString() { return String.format("[%s]", value); }
+}
+
+public class InnerNode<T> implements TreeNode<T> {
+    private final TreeNode<T> left, right;
+
+    public InnerNode(TreeNode<T> left, TreeNode<T> right) {
+        this.left = left;
+        this.right = right;
+    }
+    @Override public T getValue() { return null; }
+    @Override public TreeNode<T> getLeft() { return left; }
+    @Override public TreeNode<T> getRight() { return right; }
+    @Override public String toString() { return String.format("{%s, %s}", left, right); }
+}
+// main
+public static void main(String[] args){
+  var three = new LeafNode<Integer>(3);
+  // type inference: compiler can automatically understand as well
+  var five = new LeafNode<>(5);
+  var tree = new InnerNode<>(new LeafNode<>(2), new InnerNode<>(three, five));
+  System.out.println(tree);
+}
+```
+
+### Generic Types
+
+`InnerNode` is a **generic type**. Because it has **type parameter** `<T>` (`public class InnerNode<T> implements TreeNode<T>`).
+
+### Type Parameters
+
+A placeholder for an actual concrete type:
+- Usually use single capital letter for convention. `<T>` stands for type, `<K, V>` stands for key and value.
+- Cannot use [primitive type](/learn/language/java/4-data-types.mdx#primitive-types) as type arguments $\rightarrow$ use [wrapper type](learn/language/java/11-wrapper-classes.mdx).
+- Cannot use on *anonymous inner classes, enums and exception classes*.
+
+Inside the generic type, you can use type parameter as it's an actual type. E.g `T getValue();` like when you use `Integer getValue();`
+
+### Type Arguments
+
+```java
+var three = new LeafNode<Integer>(3);
+```
+
+`Integer` is **type argument**. Above, you use a generic type with specific type arguments, which is "instantiating a **generic** type into a **parameterized type**".
+
+The term "instantiating" at level of values means create a `new` object. At type level:
+
+| Value level                                                                        | Type level                                                         |
+|------------------------------------------------------------------------------------|--------------------------------------------------------------------|
+| Define methods/constructors with **value parameters**. E.g. `int a, String b`      | Define generic types with **type parameters**. E.g. `<K, V>`       |
+| Call methods/constructors with **arguments** = actual values. E.g. `(23, "hello")` | Supply **type arguments** = actual types. E.g. `<Integer, String>` |
+| This is instantiate a type into an object                                          | This is instantiate a generic type into a parameterized type       |
+
+*Read again about [Instantiate](/learn/language/java/4-data-types.mdx#instantiate--initialize).*
+
+### Generic Methods
+
+```java
+public record Pair<T, U>(T first, U second) {
+    /**
+      - <V, W>: type param, comes before return type
+      we need this even inside record has type params (Pair<T, U>)
+      because this is static method (cannot access instance/instantiating of their enclosing type)
+      - Pair<V, W>: return type
+      - of: method name
+     **/
+    public static <V ,W> Pair<V, W> of(V first, W second) {
+        return new Pair<>(first, second);
+    }
+
+    /**
+      this is regular non-generic methods
+      because it can access the type parameters of the enclosing record
+      unlike static, it will always be called on a particular object
+    **/
+    public Pair<T, U> withFirst(T newFirst) {
+      return Pair.of(newFirst, second);
+    }
+
+    /**
+      BiFunction represents an arbitrary function with 2 paramters and returns a value
+      here, it can use <T, U> because it's an instance method
+    **/
+    public <V, W> Pair<V, W> map(BiFunction<T, U, Pair<V, W>> fn) {
+      return fn.apply(first, second);
+    }
+}
+
+// main
+public static void main(String[] args){
+  /**
+    explicit way
+    `Pair.`: we're calling static method
+    <Integer, String>: type arguments
+  **/
+  var p1 = Pair.<Integer, String>of(1, "one");
+  /**
+    implicit way
+    call `of` withoud type params
+    we don't even need use <> like usual
+  **/
+  var p2 = Pair.of(2, "two");
+
+  // short-hand
+  var p3 = p2.map((left, right) -> Pair.of(right, left);
+  // long-hard
+  var p4 = p2.<String, Integer>map((Integer left, String right) -> Pair.<String, Integer>of(right, left));
+}
+```
+
+
+### Bounded Type Parameters
+
+Put restrictions on the types that can be used as type arguments.
+
+### Raw Types
+
+### Works with Inheritance
+
+### Works with Array
+
+### Wildcards
+
+#### Unbounded
+
+#### Upper bounded
+
+#### Lower bounded
+
+### Type erasure
+
+### Heap Pollution
+
+## Lambda Expressions
+
+Lambda expression is an anonymous method. Allows you to pass a block of code as an argument to a method/constructor.
+
+Lambda expression & method references make it possible to functional programming style in Java:
+- No side effects
+
+Cannot assign a lambda expression to `var`.
+
+```java
+/**
+normal syntax:
+access modifier - return type - method name - paramater list - body
+**/
+public int compare(String first, String second) {
+  return Integer.compare(first.length(), second.length());
+}
+/**
+lambda expression syntax:
+parameter list - arrow - body
+**/
+// -error-start
+// the types are optional
+(String first, String second) -> {
+// -error-end
+// -highlight
+(first, second) -> Integer.compare(first.length(), second.length());
+```
+
+### Functional Interfaces
+
+A functional interface is an interface has exactly 1 abstract method.
+
+A lambda expression implements a functional interface.
+
+
+
+#### Standard Functional Interfaces
+
+Package `java.util.function`: commonly used functional interfaces.
+
+*E.g. Interface `Comparator` is a functional interface (it only has 1 abstract `compare` method).*
+
+`Function`
+
+`Consumer`
+
+`Supplier`
+
+### Method References
+
+Also implements a functional interface. Use `::` operator. It can reference to:
+- Static methods: `TypeName::staticMethodName`
+- Instance methods of particular objects: `objectRef::instanceMethodName`
+- Instance methods of an arbitrary object of a particular type: `TypeName::instanceMethodName`
+- Constructor: `TypeName::new`
+
+Method reference can help use handle parameter passing. Used with [collections](/learn/language/java/6-collections.mdx), such as with `forEach()`:
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        var names = List.of("Sana", "Momo", "Mina");
+        // -error-start
+        // lambda expression
+        names.forEach(name -> System.out.println(name));
+        // -error-end
+        // -highlight-start
+        // method reference
+        names.forEach(System.out::println);
+        // -highlight-end
+
+        List<Shape> shapes = new ArrayList<>();
+        shapes.add(new Rectangle());
+        shapes.add(new Circle());
+        // -error-start
+        // lambda expression
+        shapes.forEach((shape) -> {
+            shape.draw();
+        });
+        // -error-end
+        // -highlight-start
+        // method reference
+        shapes.forEach(Shape::draw);
+        // -highlight-end
+    }
+}
+```
+
+## Java Reflection
+
+Java reflection is a feature that allows a program to inspect and modify the behavior of objects at runtime.
+
+With reflection, a program can obtain information about `Class`, `Field`, `Method`, `Constructor`, as well as access and modify their values, invoke their methods, and create new instances of the class.
+
+```java
+Class<?> clazz = Class.forName("MyClass");
+
+// Create a new instance of the MyClass class using reflection
+Object obj = clazz.newInstance();
+
+// Get a reference to the foo field of the MyClass class using reflection
+Field field = clazz.getDeclaredField("foo");
+
+// Set the value of the foo field using reflection
+field.setAccessible(true);
+field.set(obj, "Hello, world!");
+
+// Invoke the bar method of the MyClass class using reflection
+Method method = clazz.getDeclaredMethod("bar");
+method.setAccessible(true);
+method.invoke(obj);
+
+// Get all public methods of the class
+Method[] methods = clazz.getMethods();
+```
+
+## Varargs
