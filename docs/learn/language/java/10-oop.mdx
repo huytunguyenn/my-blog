@@ -49,10 +49,12 @@ Copy & paste code is a bad idea $\rightarrow$ we should reuse the common logic a
 
 $\rightarrow$ make some classes *inherits* another class
 
-#### A Summary
+:::note**Summary**
 
 - Inheritance is (mostly) when you want to [upcasting](#upcasting).
 - Inheritance can be used to share code, but there are other better ways to do that (e.g. include a new field type in class a.k.a **delegation**).
+:::
+
 
 ### Subclassing
 
@@ -197,13 +199,15 @@ Don't overuse `sealed` classes either.
 
 *Read the below subsections first to understand polymorphism.*
 
-#### A Summary
+:::note**Summary**
 
 The reason why we do polymorphism & inheritance is to just about upcasting.
 
 We design the hierarchy just to some point in the code, we can take object of subclass and cast it to a superclass ([upcasting](#upcasting)).
 
 Why we would want to upcast? Because we wrote the code that **talks to the superclass/interface** to make it easier of extension & maintenance, like this [example](#an-example).
+
+:::
 
 ### Is-A Relationship
 

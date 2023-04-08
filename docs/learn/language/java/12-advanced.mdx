@@ -32,11 +32,9 @@ Nôm na là với type bình thường, mình gọi "instantiate" là create (in
 Dùng toán tử diamond `<>`, cứ coi nó giống như `new`, dùng để create a new object from a parameterized type
 :::
 
-#### Type Inference
+**Type Inference:** compiler automatically knows the type.
 
-Compiler automatically knows the type.
-
-#### An Example
+**An Example**
 
 ```java
 public interface TreeNode<T> {
@@ -333,15 +331,13 @@ public static void main(String[] args){
 
 ### Functional Interfaces
 
-*We need to know this to understand better about [lambda expressions](#lambda-expressions) and [method references](#method-references).*
+A functional interface is an interface has **exactly 1 abstract method**. *E.g. Interface `Comparator` is a functional interface (it only has 1 abstract `compare` method).*
 
-A functional interface is an interface has exactly 1 abstract method. Lambda expression & method reference implements functional interface.
+[Lambda expression](#lambda-expressions) & [method reference](#method-references) implements functional interface.
 
 #### Standard Functional Interfaces
 
 Package `java.util.function`: commonly used functional interfaces.
-
-*E.g. Interface `Comparator` is a functional interface (it only has 1 abstract `compare` method).*
 
 - `Function<T, R>`: accept T, return R
 - `Consumer<T>`: accept T, no return
@@ -356,9 +352,20 @@ Package `java.util.function`: commonly used functional interfaces.
 
 ### Lambda Expressions
 
-Lambda expression is an anonymous method. Allows you to pass a block of code as an argument to a method/constructor.
+Lambda expression is an anonymous method. It implements a [functional interface](#functional-interfaces).
+It allows you to pass a block of code as an argument to a method/constructor.
 
-A lambda expression implements a [functional interface](#functional-interfaces). There's always a functional interface involved which determines the exact type of the lambda expression.
+There's always a functional interface involved which determines the exact type of the lambda expression. You cannot assign a lambda expression to `var`, must explicitly specify the variable type.
+
+```java
+@FunctionalInterface
+interface Hello {
+    public String sayHello();
+}
+
+Hello lambdaExp = () -> "Hello Lambda.";
+System.out.println(lambdaExp.sayHello());
+```
 
 ```java
 /**
@@ -372,28 +379,65 @@ public int compare(String first, String second) {
 lambda expression syntax:
 parameter list - arrow - body
 **/
-// -error-start
+// highlight-start
 // the types are optional
 (String first, String second) -> {
-// -error-end
+// highlight-end
 // -highlight
 (first, second) -> Integer.compare(first.length(), second.length());
-
+// highlight
+}  // only return doesn't need bracket
 /**
-the `Integer.compare(first.length(), second.length());` implements
+implements
 public interface Comparator<T> {
   int compare(T o1, T o2);
 }
 **/
 ```
 
-Cannot assign a lambda expression to `var`, must explicitly specify the variable type.
-
 #### Capturing Local Variables
 
-Local variables referenced by lambda expression must be `final` $\rightarrow$ no modify.
+Local variables referenced by lambda expression must be `final` $\rightarrow$ no allow modification inside or outside lambda expression.
 
-Lambda expression & method reference makes it possible to functional programming style in Java: **no side effects**. You can but you shouldn't.
+So not always lambda expression is better:
+
+```java
+var names = List.of("Ronaldo", "Messi", "Neymar");
+var count = 0;
+// -error-start
+// doesn't work
+names.forEach(name -> System.out.println(++count + ": " + name));
+// -error-end
+// -highlight-start
+// works
+for (String name : names) {
+  System.out.println(++count + ": " + name);
+}
+// -highlight-end
+```
+
+Lambda expression & method reference makes it possible to functional programming style in Java: **no side effects**. You can but you shouldn't, it should be a pure function.
+
+```java
+var names = List.of("A", "B", "C");
+// highlight-start
+// normal way
+var result1 = new ArrayList<String>();
+for(String name: names){
+  resutl1.add(name.toUpperCase());
+}
+// highlight-end
+// -error-start
+// side effect way
+var result2 = new ArrayList<String>();
+names.forEach(name -> result2.add(name.toUpperCase()));  // modify names
+// -error-end
+// -highlight-start
+// no side effect way
+var result3 = names.stream().map(name -> name.toUpperCase()).toList();
+// -highlight-end
+```
+
 
 ### Method References
 

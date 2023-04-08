@@ -124,19 +124,6 @@ String message = sb.toString();  // "I am a software engineering student at 18"
 
 ### Formatting
 
-Stream with no side effect
 
-```java
-var names = List.of("A", "B", "C");
+Stream with no side effect at Capturing Local Variables
 
-var result1 = new ArrayList<String>();
-for(String name: names){
-  resutl1.add(name.toUpperCase());
-}
-
-// side effect
-var result2 = new ArrayList<String>();
-names.forEach(name -> result2.add(name.toUpperCase()));
-// no side effect
-var result3 = names.stream().map(name -> name.toUpperCase()).toList();
-```
