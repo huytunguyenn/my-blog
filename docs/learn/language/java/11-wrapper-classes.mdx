@@ -2,7 +2,9 @@
 sidebar_label: wrapper
 ---
 
-# Wrapper Class
+# Wrapper Classes
+
+## Primitive Wrappers
 
 Primitive data types represent data only, they are unable to provide methods for operating.
 
@@ -12,7 +14,6 @@ $\rightarrow$ **Wrapper classes**. Each primitive type has a wrapper class:
 - char: `Character`
 - boolean: `Boolean`
 
-## Primitive Wrappers
 
 ```java
 int valA = 10;
@@ -54,3 +55,110 @@ myList.add(aPrimitive);  // auto: myList.add(new Integer(aPrimitive));
 Integer anObject = aPrimitive;  // auto: = new Integer(aPrimitive);
 int anotherPrimitive = anObject;  // auto: = anObject.intValue();
 ```
+
+## Strings
+
+### String Class
+
+```java
+String name = "Tu";
+String greeting = "Hello " + name;
+greeting += " good to see you!";
+```
+
+String variables do not directly hold the string value, it hold **a reference** to the instance of string.
+
+String are immutable. So when we change the value, it actually creates a entirely new instance of the string.
+
+This is how above code work under the hood:
+```bash
+name  --------  | T | u |
+                | H | e | l | l | o |
+                | H | e | l | l | o | | T | u |
+greeting -----  | H | e | l | l | o | | T | u | | g | o | o | d | | t | o | s | e | e | | y | o | u | ! |
+```
+
+### Equality
+
+Equality operator `==` check if both string variables reference the same string instance.
+
+To perform character-by-character comparision, use `s.equal()`.
+
+```java
+String s1 = "I love";
+s1 += " you";
+String s2 = "I";
+s2 += " love you";
+
+if( s1 == s2 ) { // false, this compare reference
+}
+if (s1.equals(s2)) { // true, compare value
+}
+```
+
+### Interning string
+
+Interning a string will canonicalize value and enable reliable `==`.
+
+```java
+// above example
+String s3 = s1.intern();
+String s4 = s2.intern();
+
+if ( s3 == s4 ){ // true
+}
+```
+
+What it actually does:
+
+```bash
+s1 --- abc
+s2 --- abc
+
+s3 --- abc (first time, search for interned version of s1, if no, create)
+    /
+s4 /       (next time, only need to reference to that interned version)
+```
+We only should use `intern` when we compare strings **frequently**.
+
+### Methods
+
+| Operation                          | Methods                                                                 |
+|------------------------------------|-------------------------------------------------------------------------|
+| Length                             | `length`                                                                |
+| Create new string(s) from existing | `concat` `replace` `toLowerCase` `toUpperCase` `trim` `split`           |
+| Extract substring                  | `charAt` `substring`                                                    |
+| Test substring                     | `contains` `endsWith` `startsWith` `indexOf` `lastIndexOf`              |
+| Comparison                         | `equals` `equalsIgnoreCase` `isEmpty` `compareTo` `compareToIgnoreCase` |
+| Formatting                         | `format`                                                                |
+| String for non-string              | `valueOf`                                                               |
+
+### Conversions
+
+
+### StringBuilder
+
+Strings are immutable. So we have `StringBuilder`, it provides mutable string buffer.
+
+`StringBuilder` itself is not a string, we need to convert it to a string.
+
+```java
+String title = "student";
+int age = 18;
+
+StringBuilder sb = new StringBuilder(34);
+sb.append("I am a ");
+sb.append(title);
+sb.append(" at ");
+sb.append(age);
+
+String str = sb.toString();  // "I am a student at 18"
+
+String major = "software engineering";
+int pos = sb.indexOf(" student");
+sb.insert(pos, major);
+sb.insert(pos, " ");
+String message = sb.toString();  // "I am a software engineering student at 18"
+```
+
+### Formatting

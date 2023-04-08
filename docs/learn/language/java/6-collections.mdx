@@ -10,120 +10,71 @@ In Java, array variables are references. See more at [References](/learn/languag
 
 ## Arrays
 
-Arrays provide an ordered collection of elements
+Arrays provide an ordered collection of elements. They're immutable.
 
 ```java
 float[] theVals = new float[3];
 float[] theVals = { 10.0f, 20.0f, 15.0f };
 ```
 
-## Strings
-
-### String Class
+## Problems
 
 ```java
-String name = "Tu";
-String greeting = "Hello " + name;
-greeting += " good to see you!";
-```
-
-String variables do not directly hold the string value, it hold **a reference** to the instance of string.
-
-String are immutable. So when we change the value, it actually creates a entirely new instance of the string.
-
-This is how above code work under the hood:
-```bash
-name  --------  | T | u |
-                | H | e | l | l | o |
-                | H | e | l | l | o | | T | u |
-greeting -----  | H | e | l | l | o | | T | u | | g | o | o | d | | t | o | s | e | e | | y | o | u | ! |
-```
-
-### Equality
-
-Equality operator `==` check if both string variables reference the same string instance.
-
-To perform character-by-character comparision, use `s.equal()`.
-
-```java
-String s1 = "I love";
-s1 += " you";
-String s2 = "I";
-s2 += " love you";
-
-if( s1 == s2 ) { // false, this compare reference
+private static Product[] add(Product product, Product[] array){
+  int length = array.length;
+  var newArray = Arrays.copyOf(array, length + 1);
+  newArray[length] = product;
+  return newArray;
 }
-if (s1.equals(s2)) { // true, compare value
-}
+var door = new Product("Wooden Door", 35);
+var floorPanel = new Product("Floor Panel", 25);
+var window = new Product("Glass Window", 10);
+
+// Create
+Product[] products = { door, floorPanel };
+// 1. Print
+// highlight
+System.out.println(products);
+// -highlight
+System.out.println(Arrays.toString(products));
+// 2. Add - complex code
+// -error
+products[2] = window;  // array is immutable
+// -highlight
+products = add(window, products);
+// 3. Duplicates - no way
+// highlight
+products = add(window, products);
 ```
 
-### Interning string
+Implementing data structures is hard.
 
-Interning a string will canonicalize value and enable reliable `==`.
+## Collection of Collections
 
-```java
-// above example
-String s3 = s1.intern();
-String s4 = s2.intern();
+Each collection has more than 2 different components.
 
-if ( s3 == s4 ){ // true
-}
-```
+| Interfaces                         | Implementation              |
+|------------------------------------|-----------------------------|
+| Multiple data structures           | Specific data structures    |
+| Functional characteristics         | Performance characteristics |
+| Prefer as variable type            | Concrete and instantiable   |
+| Often has a popular implementation |                             |
 
-What it actually does:
+![collections' components](img/collections-component.png)
 
-```bash
-s1 --- abc
-s2 --- abc
+### What to use?
 
-s3 --- abc (first time, search for interned version of s1, if no, create)
-    /
-s4 /       (next time, only need to reference to that interned version)
-```
-We only should use `intern` when we compare strings **frequently**.
+![collection decision tree](img/collection-decision-tree.png)
 
-### Methods
+## Lists - Collections with Iteration Order
 
-| Operation                          | Methods                                                                 |
-|------------------------------------|-------------------------------------------------------------------------|
-| Length                             | `length`                                                                |
-| Create new string(s) from existing | `concat` `replace` `toLowerCase` `toUpperCase` `trim` `split`           |
-| Extract substring                  | `charAt` `substring`                                                    |
-| Test substring                     | `contains` `endsWith` `startsWith` `indexOf` `lastIndexOf`              |
-| Comparison                         | `equals` `equalsIgnoreCase` `isEmpty` `compareTo` `compareToIgnoreCase` |
-| Formatting                         | `format`                                                                |
-| String for non-string              | `valueOf`                                                               |
+## Maps - Collections of Pairs
 
-### Conversions
-
-
-### StringBuilder
-
-Strings are immutable. So we have `StringBuilder`, it provides mutable string buffer.
-
-`StringBuilder` itself is not a string, we need to convert it to a string.
-
-```java
-String title = "student";
-int age = 18;
-
-StringBuilder sb = new StringBuilder(34);
-sb.append("I am a ");
-sb.append(title);
-sb.append(" at ");
-sb.append(age);
-
-String str = sb.toString();  // "I am a student at 18"
-
-String major = "software engineering";
-int pos = sb.indexOf(" student");
-sb.insert(pos, major);
-sb.insert(pos, " ");
-String message = sb.toString();  // "I am a software engineering student at 18"
-```
-
-### Formatting
-
+## Java Streams
 
 Stream with no side effect at Capturing Local Variables
+
+## Collection Operations & Factories
+
+## Sets - Collection with Uniqueness
 
