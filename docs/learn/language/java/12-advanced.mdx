@@ -18,7 +18,7 @@ Common Java core platform annotations:
 - `@SuppressWarnings`: tell compiler to not generate some kind of warnings (e.g. `@SuppressWarnings("deprecation")`)
 
 Others:
-- `@FunctionalInterface`: [functional interfaces](#functional-interfaces)
+- `@FunctionalInterface`: [functional interfaces](#functional-interfaces).
 
 ## Generics
 
@@ -81,7 +81,7 @@ public static void main(String[] args){
 
 `InnerNode` is a **generic type**. Because it has **type parameter** `<T>` (`public class InnerNode<T> implements TreeNode<T>`).
 
-### Type Parameters
+#### Type Parameters
 
 A placeholder for an actual concrete type:
 - Usually use single capital letter for convention. `<T>` stands for type, `<K, V>` stands for key and value.
@@ -90,7 +90,7 @@ A placeholder for an actual concrete type:
 
 Inside the generic type, you can use type parameter as it's an actual type. E.g `T getValue();` like when you use `Integer getValue();`
 
-### Type Arguments
+#### Type Arguments
 
 ```java
 var three = new LeafNode<Integer>(3);
@@ -98,7 +98,14 @@ var three = new LeafNode<Integer>(3);
 
 `Integer` is **type argument**. Above, you use a generic type with specific type arguments, which is "instantiating a **generic** type into a **parameterized type**".
 
-The term "instantiating" at level of values means create a `new` object. At type level:
+| Generic type | $\rightarrow$ Parameterized type |
+|-|-|
+|`List<T>`|$\rightarrow$` List<String>`|
+|Generic type|$\rightarrow$ Concrete parameterized type|
+
+**Instantiate at Value and Type level**
+
+They are the same at 2 levels, just different at the way of speaking. The term "instantiating" at level of values means create a `new` object. At type level:
 
 | Value level                                                                        | Type level                                                         |
 |------------------------------------------------------------------------------------|--------------------------------------------------------------------|
@@ -109,6 +116,9 @@ The term "instantiating" at level of values means create a `new` object. At type
 *Read again about [Instantiate](/learn/language/java/4-data-types.mdx#instantiate--initialize).*
 
 ### Generic Methods
+
+- Declare: place [type parameters](#type-parameters) before return.
+- Call: place [type arguments](#type-arguments) before method name, or ditch it thanks to [type inference](#type-inference).
 
 ```java
 public record Pair<T, U>(T first, U second) {
@@ -133,6 +143,7 @@ public record Pair<T, U>(T first, U second) {
     }
 
     /**
+      Read more at Functional Interface to know about BiFunction
       BiFunction represents an arbitrary function with 2 paramters and returns a value
       here, it can use <T, U> because it's an instance method
     **/
@@ -166,34 +177,188 @@ public static void main(String[] args){
 
 ### Bounded Type Parameters
 
-Put restrictions on the types that can be used as type arguments.
+Put restrictions on the types that can be used as type arguments. Use `extends` in type parameter `<>`.
+
+```java
+// note that Comparable itself a generic type
+// -highlight
+public interface TreeNode<T extends Comparable<T>> { }
+
+// T in LeafNode<T> is passed into TreeNode<T>
+// -error
+public class LeafNode<T> implements TreeNode<T> { }
+// -highlight
+public class LeafNode<T extends Comparable<T>> implements TreeNode<T> { }
+```
+
+**Multiple Type Parameter Bounds:** use `&`, `|`.
+
+```java
+public interface HasId { long id(); }
+public interface HasName { String name(); }
+public record Product(long id, String name, String description) implements HasId, HasName { }
+
+// -error-start
+// make this function more general by sort anything has id and name
+static List<String> sortByIdAndExtractNames(List<Product> list) {
+  return list.stream().sorted(Comparator.comparing(Product::id)).map(Product::name).toList();
+}
+// -error-end
+// -highlight-start
+//     add type parameter & extends                    List<Product> -> List<T>
+static <T extends HasId & HasName> List<String> sortByIdAndExtractNames(List<T> list) {
+  return list.stream().sorted(Comparator.comparing(HasId::id)).map(HasName::name).toList();
+}
+// -highlight-end
+
+// main
+public static void main(String[] args) {
+  var products = List.of(
+    new Product(100346L, "Bread", "Whole-whear loaf"),
+    new Product(100252L, "Cheese", "Gouda cheese"),
+    new Product(100123L, "Apples", "Tasty red apples"));
+  var names = sortByIdAndExtractNames(products);
+}
+```
 
 ### Raw Types
 
-### Works with Inheritance
+Generic type that is used without type arguments.
 
-### Works with Array
+```java
+List objects = new ArrayList();  // no <...>
+objects.add("Hello");
+objects.add(123);
+
+// -error
+String text = (String) objects.get(1);  // ClassCastException
+```
+
+:::caution
+They are useless, and you should **avoid using raw types**. They only exist for backward compatibility.
+:::
 
 ### Wildcards
 
-#### Unbounded
+A wildcard is a way to refer to a family of types. A wildcard stands for a particular, but unknown type.
 
-#### Upper bounded
+Wildcards are used to declare wildcard parameterized types.
 
-#### Lower bounded
+| Generic type | Parameterized type |
+|-|-|
+|`List<T>`|$\rightarrow$ Concrete parameterized type: `List<String>`|
+|`List<T>`|$\rightarrow$ Wildcard parameterized type: `List<?>`|
 
-### Type erasure
+**Matching**
+
+E.g.
+- `List<String>`, `List<Integer>`, `List<Map<?, ?>>` matches `List<?>`
+- `List<Dog>`, `List<Cat>`, `List<Animal>` matches `List<? extends Animal>`
+
+#### Unbounded Wildcard
+
+`?`: family of all types.
+
+#### Upper Bounded Wildcard
+
+`? extends SomeType`: family of types that are subtypes of the specified type, including the type itself.
+
+#### Lower Bounded Wildcard
+
+`? super SomeType`: family of types that are super types of the specified type, including the type itself.
+
+#### Wildcard Matching
+
+See this [example](#working-with-inheritance).
+
+### Usage
+
+- Define methods that take parameters of parameterized types: avoid unnecessary restrictions.
+  - Upper bounded wildcard for **in** params
+  - Lower bounded wildcard for **out** params
+  - Unbounded wildcard for param that is both **in** and **out**
+
+```java
+// this requires `dest` and `src` to have the exact same element type
+public static <T> void copy(List<T> dest, List<T> src)
+// using wildcard                 out                       in
+public static <T> void copy(List<? super T> dest, List<? extends T> src)
+
+List<Dog> dogs = List.of(new Dog("a"), new Dog("b"));
+List<Animal> animals = new ArrayList<>();
+copy(animals, dogs);  // possible with wildcard
+
+public static int size(List<?> list)
+```
+
+### Working with Inheritance
+
+Generic types are **invariant**. If "a dog `is-a` animal", so "a list of dogs is a list of animals" is **covariance**. Java does this to prevent shit happens.
+
+**Wildcard matching**
+
+```java
+interface Animal {}
+record Dog(String name) implements Animal {}
+record Cat(String name) implements Animal {}
+
+public static void main(String[] args){
+  Animal animal = new Dog("Max");
+  List<Dog> dogs = new ArrayList<>(new Dog("Daisy"));
+  // -error-start
+  // a List that can contain any kind of object of type Animal
+  List<Animal> animals = dogs;
+  animals.add(new Cat("Luna"));  // invariant avoid things like this happens
+  // -error-end
+  // highlight-start
+  // a List of objects of a particular, but unknown type that extends Animal
+  List<? extends Animal> animals = dogs;
+  // highlight-end
+  // -error-start
+  animals.add(new Cat("Boba"));
+  animals.add(new Dog("Max"));
+  // -error-end
+  // you cannot add specific (known) type to `unknown type`
+}
+```
+
+### Works with Array
+
+### Type Erasure
 
 ### Heap Pollution
 
+
 ## Lambda Expressions
+
+### Functional Interfaces
+
+*We need to know this to understand better about [lambda expressions](#lambda-expressions) and [method references](#method-references).*
+
+A functional interface is an interface has exactly 1 abstract method. Lambda expression & method reference implements functional interface.
+
+#### Standard Functional Interfaces
+
+Package `java.util.function`: commonly used functional interfaces.
+
+*E.g. Interface `Comparator` is a functional interface (it only has 1 abstract `compare` method).*
+
+- `Function<T, R>`: accept T, return R
+- `Consumer<T>`: accept T, no return
+- `Supplier<T>`: no args, return value (opposite `Consumer`)
+- `Runnable`: no input, no output
+- `BiFunction<T, U ,R>`: accept T & U, return R
+- `BiConsumer<T, U>`: accept T & U, no return
+- `Predicate<T>`: accept T, return boolean
+- `BiPredicate<T, U>`: accept T & U, return boolean
+- `UnaryOperator<T>`: accept T, return T
+- `BinaryOperator<T>`: accept T & T, return T
+
+### Lambda Expressions
 
 Lambda expression is an anonymous method. Allows you to pass a block of code as an argument to a method/constructor.
 
-Lambda expression & method references make it possible to functional programming style in Java:
-- No side effects
-
-Cannot assign a lambda expression to `var`.
+A lambda expression implements a [functional interface](#functional-interfaces). There's always a functional interface involved which determines the exact type of the lambda expression.
 
 ```java
 /**
@@ -213,31 +378,26 @@ parameter list - arrow - body
 // -error-end
 // -highlight
 (first, second) -> Integer.compare(first.length(), second.length());
+
+/**
+the `Integer.compare(first.length(), second.length());` implements
+public interface Comparator<T> {
+  int compare(T o1, T o2);
+}
+**/
 ```
 
-### Functional Interfaces
+Cannot assign a lambda expression to `var`, must explicitly specify the variable type.
 
-A functional interface is an interface has exactly 1 abstract method.
+#### Capturing Local Variables
 
-A lambda expression implements a functional interface.
+Local variables referenced by lambda expression must be `final` $\rightarrow$ no modify.
 
-
-
-#### Standard Functional Interfaces
-
-Package `java.util.function`: commonly used functional interfaces.
-
-*E.g. Interface `Comparator` is a functional interface (it only has 1 abstract `compare` method).*
-
-`Function`
-
-`Consumer`
-
-`Supplier`
+Lambda expression & method reference makes it possible to functional programming style in Java: **no side effects**. You can but you shouldn't.
 
 ### Method References
 
-Also implements a functional interface. Use `::` operator. It can reference to:
+Also implements a [functional interface](#functional-interfaces). Use `::` operator. It can reference to:
 - Static methods: `TypeName::staticMethodName`
 - Instance methods of particular objects: `objectRef::instanceMethodName`
 - Instance methods of an arbitrary object of a particular type: `TypeName::instanceMethodName`
