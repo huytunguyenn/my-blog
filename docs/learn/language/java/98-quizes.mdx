@@ -5,6 +5,45 @@ description: quizzes
 
 # Q & A
 
-## Method overloading & method overriding
+```java
+public class Animal {
+    private String name;
 
+    public Animal (String name) { this.name = name; }
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+    public static void main(String args[]) {
+        List<Animal> animals = Arrays.asList(
+                new Animal("cat"),
+                new Animal("dog"),
+                new Animal("chicken"));
+
+        // these will print out false, false, false if you not implement `equals` and `hashCode`
+        System.out.println(animals.contains(new Animal("cat")));
+        System.out.println(animals.contains(new Animal("dog")));
+        System.out.println(animals.contains(new Animal("foo")));
+    }
+}
+```
+
+Add these 2, then it will print out `true`, `true`, `false`.
+
+```java
+    @Override
+    public boolean equals(Object object) {
+        if(this == object)
+            return true;
+        if(object == null || getClass() != object.getClass())
+            return false;
+        Animal animal = (Animal) object;
+        return Objects.equals(name, animal.name);
+    }
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
+    }
+```
+
+
+- Method overloading & method overriding
 https://www.geeksforgeeks.org/difference-between-method-overloading-and-method-overriding-in-java/
