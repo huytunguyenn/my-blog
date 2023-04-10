@@ -134,8 +134,22 @@ class Student {
 }
 ```
 
-Attempting to assign weaker access privileges ('protected'); was 'public'.
+**Attempting to assign weaker access privileges**
 
+Error occurs when you try to reduce the visibility of a method or variable in a subclass. This error occurs because the subclass cannot have a lower visibility than the superclass it is extending.
+
+```java
+public class Superclass {
+    protected void myMethod() { }
+}
+
+public class Subclass extends Superclass {
+    // -error
+    private void myMethod() { }  // fix: public or protected or leave it
+    // make sense vì tự nhiên thằng này chiếm luôn cái hàm này làm private cho riêng nó thì sao
+}
+```
+Another example:
 ```java
 interface Philosopher {
     void talk();

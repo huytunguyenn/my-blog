@@ -478,6 +478,7 @@ Avoid using wildcards in the return type of a method
 
 **More Examples**
 
+Wildcard in rescue:
 ```java
 // use generic method
 public <T extends Person > void saveAll(List<T> persons) { }
@@ -485,9 +486,7 @@ public <T extends Person > void saveAll(List<T> persons) { }
 // -error
 public void saveAll(List<Person> persons) { }
 // -highlight
-public void saveAll(List<? extends Person> persons) {
-  // note that you can't call methods of persons, because it is unknown type
-}
+public void saveAll(List<? extends Person> persons) { }
 
 // main
 List<Player> persons = new ArrayList<>();
@@ -497,7 +496,7 @@ persons.add(messi);
 // we can do this without error
 saveAll(persons);
 ```
-
+You cannot add a known things to unknown thing:
 ```java
 List<?> lo;
 
@@ -515,9 +514,21 @@ List<?> objs = new ArrayList<>();
 this is a list of objects of a specific unknown type
 you cannot add elements to this list because the type is unknown
 **/
-objs.add(1);  // specified for List<String>
-objs.add("vnd");  //  specified for List<Integer>
+objs.add(1);
+objs.add("vnd");
 // -error-end
+```
+Again, wildcards allows you to pass in a list that contains objects of type Number or any superclass of Number, but it does not guarantee that the list will actually contain any Number objects.
+So if you use `<? extends>`, it works, because if it guarantees the list contains only objects that are convertible to Number:
+```java
+public static void func(List<? super Number> nums) {
+    // -error
+    for(Number num: nums) { } // nums may include other class that's not Number convertiable
+}
+
+public static void func(List<? extends Number> nums){
+    for (Number num: nums) { }
+}
 ```
 
 ### Type Erasure & Limitations
