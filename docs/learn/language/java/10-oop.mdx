@@ -134,6 +134,20 @@ class Student {
 }
 ```
 
+Attempting to assign weaker access privileges ('protected'); was 'public'.
+
+```java
+interface Philosopher {
+    void talk();
+}
+
+public class Aristotle implements Philosopher {
+    @Override
+    // -error
+    protected void talk() { } // this must be public
+}
+```
+
 ### Prevent Overriding
 
 `final` can be used with methods or classes. If a method is declared with `final`, it means the method cannot be overridden in a subclass. The same with `final` class, it cannot be inherited.

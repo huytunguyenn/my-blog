@@ -4,20 +4,18 @@ sidebar_label: collections
 
 # Collections
 
-Data structure consisting of a collection of elements stored at contiguous memory locations.
-
-In Java, array variables are references. See more at [References](/learn/language/java/4-data-types.mdx#reference-types) to learn more.
-
 ## Arrays
 
-Arrays provide an ordered collection of elements. They're immutable.
+Arrays provide an ordered collection of elements. They're **immutable**.
 
 ```java
 float[] theVals = new float[3];
 float[] theVals = { 10.0f, 20.0f, 15.0f };
 ```
 
-## Problems
+In Java, array variables are references. See more at [References](/learn/language/java/4-data-types.mdx#reference-types) to learn more.
+
+### Problems
 
 ```java
 private static Product[] add(Product product, Product[] array){
@@ -32,7 +30,7 @@ var window = new Product("Glass Window", 10);
 
 // Create
 Product[] products = { door, floorPanel };
-// 1. Print
+// 1. Print - horrible format
 // highlight
 System.out.println(products);
 // -highlight
@@ -47,18 +45,18 @@ products = add(window, products);
 products = add(window, products);
 ```
 
-Implementing data structures is hard.
+Array is also **covariant**. So we'd better not using it. Read more at this [example](/learn/language/java/12-advanced.mdx#working-with-inheritance).
 
 ## Collection of Collections
 
 Each collection has more than 2 different components.
 
-| Interfaces                         | Implementation              |
-|------------------------------------|-----------------------------|
-| Multiple data structures           | Specific data structures    |
-| Functional characteristics         | Performance characteristics |
-| Prefer as variable type            | Concrete and instantiable   |
-| Often has a popular implementation |                             |
+| Interfaces                            | Implementation              |
+|---------------------------------------|-----------------------------|
+| Multiple data structures              | Specific data structures    |
+| Functional characteristics (behavior) | Performance characteristics |
+| Prefer as **variable type**           | Concrete and instantiable   |
+| Often has a popular implementation    |                             |
 
 ![collections' components](img/collections-component.png)
 
@@ -66,9 +64,176 @@ Each collection has more than 2 different components.
 
 ![collection decision tree](img/collection-decision-tree.png)
 
-## Lists - Collections with Iteration Order
+### Common behaviors
 
-## Maps - Collections of Pairs
+- `size()`
+- `isEmpty()`
+- `add()`
+- `addAll()`: like `add` but for many
+- `remove(element)`
+- `removeAll(collection)`
+- `retainAll(collection)`: retain: giữ lại
+- `contains(element)`
+- `containsAll(collection)`
+- `clear()`
+
+`Collection` extends `Iterable` (like `Iterator`).
+
+```java
+Collection<Product> products = new ArrayList<>();
+products.add(door);
+products.add(floorPanel);
+products.add(window);
+
+// -error-start
+for (var product : products) {
+  products.remove(product);   // you cannot modify when loop like this
+}
+// -error-end
+// -highlight
+products.removeIf(product -> product.weight() > 20);
+
+// -highlight-start
+// use iterator to remove products.
+Iterator<Product> iterator = products.iterator();
+while (iterator.hasNext()) {
+  final Product product = iterator.next();
+  if (product.weight() > 20) {
+    iterator.remove();
+  }
+}
+// -highlight-end
+```
+
+These methods pass in a [lambda expression](learn/language/java/12-advanced.mdx#lambda-expressions-1) that implements some common [functional interface](/learn/language/java/12-advanced.mdx#standard-functional-interfaces).
+
+## Lists
+
+List are collections with **iteration order**. Every element in the list has an index.
+
+### Key Features
+
+#### Basic get/set
+- `void add(int index, E e)`
+- `E get(int index)`
+- `E remove(int index)`
+- `E set(int index, E element)`
+- `boolean addAll(int index, Collection c)`
+
+#### Static Factory Methods
+
+Creates **unmodifiable** List instance
+- `List<E> of()`
+- `List<E> of(E e1, E e2)`
+- `List<E> of (E ... elements)`
+- `List<E> copyOf(Collection<E>)`: this is a shallow copy (just copies values)
+
+Overloads for 0-10 arguments. For > 10 args, there's [varargs constructor](/learn/language/java/12-advanced.mdx#varargs).
+
+#### Lookup & Split
+- `int indexOf(Object o)`: return `-1` if not found
+- `int lastIndexOf(Object o)`
+- `List subList(int fromIndex, int toIndex)`: this is a view, modifying the view also modifies the backing list itself
+
+:::info
+Modifying a **view** also affects on the backing one.
+:::
+
+#### Sorting
+Java use TimSort-based algorithm
+- `list.sort(Comparator<? Super E> comparator)`: comparator defines sort order
+
+A Comparator is an interface in Java that defines sort order.
+
+```java
+// define Comparator
+import java.util.Comparator;
+public static final Comparator<Product> BY_WEIGHT = Comparator.comparingInt(Product::weight);
+/**
+implements
+public interface Comparator<T> {
+  int compare(T o1, T o2);
+}
+**/
+products.sort(Product.BY_WEIGHT);
+```
+
+### Implementations
+
+:::cautionAvoid `List` legacy implementations
+**avoid** `Vector`, `Stack`, they're synchronized.
+:::
+
+#### ArrayList
+:::info How it works
+There is a *backing array*, where there's many space to add, remove, etc. Most of the time, JDK start with an empty backing array.
+When you add first element, it grows to the default initial collection size (10).
+
+Once you run out of 10 elements, it starts to *doubling* in size.
+:::
+
+This is good general purpose implementation, use as default. CPU cache sympathetic.
+
+#### LinkedList
+
+Has head nodes and tail nodes, they could be the same and pointer at each of them. `LinkedList` in Java is doubly linked list (có hướng ngược lại).
+
+Most of the time, worse performance. Only good when adding elements at start, adding/remove a lot.
+
+### Performance Comparison
+
+|              | get    | add                                                                                 | contains | remove             | next   |
+|--------------|--------|-------------------------------------------------------------------------------------|----------|--------------------|--------|
+| `ArrayList`  | $O(1)$ | $O(N)$ doubling strategy, copy & expand the list<br />$\Omega(1)$ with larger array | $O(N)$   | $O(N)$ delete head | $O(1)$ |
+| `LinkedList` | $O(N)$ | $O(1)$                                                                              | $O(N)$   | $O(N)$             | $O(1)$ |
+
+## Maps
+
+Maps are collections of **pairs**, like dictionaries. Key -> Value. Key are unique.
+
+Map is better because it helps you not to deal with lookup loop so much. `Map` is the only collections that don't extend or implement the `Collection` interface.
+
+:::info
+Java use "map" terms instead of "dictionary", but it's actually a class in JDK & it predates the original Java collection API & kind of deprecated at this time. So **don't use it**.
+:::
+
+### Key Features
+
+- `V put(K key, V value)`: return previous value associated with the key, if no, return null
+- `void putAll(Map<? extends K, ? extends V> values)`
+- `get(Object key)`: if no, return null
+- `boolean constainsKey(Object key)`
+- `boolean constainsValue(Object value)`
+- `V remove(Object key)`
+- `void clear()`
+
+**Use Object type rather than K key generic: if you have a local variable that is type of Object and has a string in it, you can use that variable without introducing additional cast to a specific key type*
+
+#### Views
+
+Modify it also modify backing map. All below return a view.
+
+- `var ids = map.keySet();`
+- `var values = map.values();`
+- `var entries = map.entrySet();`: entry represents a <K, V> pair. We cannot add element to entry set, but we can remove
+
+#### Immutable Map Factories
+
+```java
+Map.Entry<String, Integer> entry = Map.entry("Richard", 38);  // individual key/value pairs
+Map<String, Integer> personToAge = Map.of("Richard", 38);  // up to 10 value specific overload Factories
+personToAge = Map.ofEntries(Map.entry("Richard", 38));  // for > 10 varargs factory takes entry objects
+Map<String, Integer> copy = Map.copyOf(personToAge);  // immutable copies of existing Map
+```
+
+### Implementations
+
+`HashMap` allows null keys & values. `TreeMap` allows null values, but not keys.
+
+#### HashMap
+
+#### TreeMap
+
 
 ## Java Streams
 
@@ -76,5 +241,8 @@ Stream with no side effect at Capturing Local Variables
 
 ## Collection Operations & Factories
 
-## Sets - Collection with Uniqueness
+[here](#static-factory-methods)
+[here2](#immutable-map-factories)
+
+## Sets (Collection with Uniqueness)
 

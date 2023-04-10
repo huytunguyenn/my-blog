@@ -12,32 +12,34 @@ Annotations are special types that act as metadata:
 - Annotation have to interpreted by things like tools (IntelliJ), execution environment (XML and JSON processors), any program
 - Can be applied to a type or its members
 
-Common Java core platform annotations:
+**Common Java core platform annotations**
 - `@Override`: indicate we override an inherited method
 - `@Deprecated`: indicate which method is no longer used
 - `@SuppressWarnings`: tell compiler to not generate some kind of warnings (e.g. `@SuppressWarnings("deprecation")`)
 
 Others:
-- `@FunctionalInterface`: [functional interfaces](#functional-interfaces).
+- `@FunctionalInterface`: [functional interfaces](#functional-interfaces)
+- `@SafeVarargs`: [varargs](#varargs)
 
 ## Generics
+
+Using `<>` (diamond operator).
 
 :::info
 A **generic type** is a type with **type parameters**, which is instantiated into a **parameterized type** by supplying **type arguments** to fill in its type parameters.
 :::
 
-:::note tóm tắt
-Nôm na là với type bình thường, mình gọi "instantiate" là create (instance of) new object, còn với generic type, create new instance of object được gọi là "instantiating generic type into parameterized type"
-
-Dùng toán tử diamond `<>`, cứ coi nó giống như `new`, dùng để create a new object from a parameterized type
+:::info
+**Type Inference:** compiler automatically knows the type without us specifying it.
 :::
 
-**Type Inference:** compiler automatically knows the type.
+### Generic Class
 
-**An Example**
+**Example**
 
 ```java
 public interface TreeNode<T> {
+    // after decalre `TreeNode<T>`, all its members can use `T` as it's an actual type
     T getValue();
     TreeNode<T> getLeft();
     TreeNode<T> getRight();
@@ -77,6 +79,12 @@ public static void main(String[] args){
 
 ### Generic Types
 
+:::note tóm tắt
+Nôm na là với type bình thường, mình gọi "instantiate" là create (instance of) new object, còn với generic type, create new instance of object được gọi là "instantiating generic type into parameterized type"
+
+Dùng toán tử diamond `<>`, cứ coi nó giống như `new`, dùng để create a new object from a parameterized type
+:::
+
 `InnerNode` is a **generic type**. Because it has **type parameter** `<T>` (`public class InnerNode<T> implements TreeNode<T>`).
 
 #### Type Parameters
@@ -85,8 +93,6 @@ A placeholder for an actual concrete type:
 - Usually use single capital letter for convention. `<T>` stands for type, `<K, V>` stands for key and value.
 - Cannot use [primitive type](/learn/language/java/4-data-types.mdx#primitive-types) as type arguments $\rightarrow$ use [wrapper type](learn/language/java/11-wrapper-classes.mdx).
 - Cannot use on *anonymous inner classes, enums and exception classes*.
-
-Inside the generic type, you can use type parameter as it's an actual type. E.g `T getValue();` like when you use `Integer getValue();`
 
 #### Type Arguments
 
@@ -115,8 +121,63 @@ They are the same at 2 levels, just different at the way of speaking. The term "
 
 ### Generic Methods
 
+**Motivation**
+
+```java
+// main
+Person ronaldo = new Person("Ronaldo", 43);
+Person messi = new Person("Messi", 34);
+List<Person> players = new ArrayList<>();
+players.add(ronaldo);
+players.add(messi);
+// suppose we want to find youngest one
+
+// highlight-start
+final Person youngest = (Person) min(players, new AgeComparator());
+
+public static Object min(List values, Comparator comparator) {
+  if(values.isEmpty()) { throw Exception("..."); }
+  Object lowestElement = values.get(0);
+  for (int i = 1; i < values.size(); i++) {
+    final Object element = values.get(i);
+    if (comparator.compare(element, lowestElement) < 0) {
+      lowestElement = element;
+    }
+  }
+  return lowestElement;
+}
+/**
+Problems:
+- We have to cast `(Person)` because we're not using generic
+- Compiler don't warn ClassCastException at compile-time -> fail at runtime. e.g.
+**/
+// -error
+final Person youngest = (Person) min(players, new Comparator<Integer>(){  // error in runtime
+  publbic int compare(final Integer o1, final Integer o2) { return 0; }
+});
+// highlight-end
+
+// -highlight-start
+/**
+declare the part `...<T> return type...` first, then you can use it in `List<T>` and `Comparator<T>`
+something like `public static foo(T value)` is not working
+**/
+public static <T> T min (List<T> values, Comparator<T> comparator {
+  // replace all Object with T
+}
+// -highlight-end
+// now you can even use method reference
+List<Integer> numbers = new ArrayList<>();
+numbers.add(1); numbers.add(2); numbers.add(3);
+System.out.println(min(numbers, Integer::compare));
+```
+
+**Usage**
+
 - Declare: place [type parameters](#type-parameters) before return.
 - Call: place [type arguments](#type-arguments) before method name, or ditch it thanks to [type inference](#type-inference).
+
+**Example**
 
 ```java
 public record Pair<T, U>(T first, U second) {
@@ -172,7 +233,6 @@ public static void main(String[] args){
 }
 ```
 
-
 ### Bounded Type Parameters
 
 Put restrictions on the types that can be used as type arguments. Use `extends` in type parameter `<>`.
@@ -182,26 +242,58 @@ Put restrictions on the types that can be used as type arguments. Use `extends` 
 // -highlight
 public interface TreeNode<T extends Comparable<T>> { }
 
-// T in LeafNode<T> is passed into TreeNode<T>
-// -error
+// -error-start
+/**
+T in LeafNode<T> is passed into TreeNode<T>
+and compiler checks it may not be subclass of Comparable
+**/
 public class LeafNode<T> implements TreeNode<T> { }
+// -error-end
 // -highlight
 public class LeafNode<T extends Comparable<T>> implements TreeNode<T> { }
 ```
 
-**Multiple Type Parameter Bounds:** use `&`, `|`.
+:::note
+`TreeNode<T extends Comparable>` is less safer than `TreeNode<T extends Comparable<T>>`, it bypasses the type safety checks of the compiler (note that `Comparable` is a generic).
+This is also known as [raw type](#raw-types).
+```java
+/**
+this means T is bounded to the Comparable interface, but without a specific type argument
+**/
+TreeNode<T extends Comparable>
+// highlight-end
+// -highlight-start
+/**
+type T must be a subclass of Comparable with the same type argument T
+this allows the TreeNode class to use the compareTo method defined in the Comparable interface,
+which can be called on objects of type T to compare them with each other.
+**/
+TreeNode<T extends Comparable<T>>
+// -highlight-end
+// highlight-start
+
+// method
+T left, T right
+left.compareTo(right)  // works correctly
+left.compareTo(new Object())  // if you've not told it what it's generic on, compiler won't warn, but you will get error
+```
+:::
+
+#### Multiple Type Parameter Bounds
+
+Use `&`, `|`.
 
 ```java
 public interface HasId { long id(); }
 public interface HasName { String name(); }
 public record Product(long id, String name, String description) implements HasId, HasName { }
 
-// -error-start
+// highlight-start
 // make this function more general by sort anything has id and name
 static List<String> sortByIdAndExtractNames(List<Product> list) {
   return list.stream().sorted(Comparator.comparing(Product::id)).map(Product::name).toList();
 }
-// -error-end
+// highlight-end
 // -highlight-start
 //     add type parameter & extends                    List<Product> -> List<T>
 static <T extends HasId & HasName> List<String> sortByIdAndExtractNames(List<T> list) {
@@ -221,79 +313,28 @@ public static void main(String[] args) {
 
 ### Raw Types
 
-Generic type that is used without type arguments.
+Generic type that is used without [type arguments](#type-arguments).
 
 ```java
 List objects = new ArrayList();  // no <...>
 objects.add("Hello");
 objects.add(123);
-
 // -error
 String text = (String) objects.get(1);  // ClassCastException
+
+TreeNode<T extends Comparable>  // no Comparable<T>
+T left
+// -error
+left.compareTo(new Object())   // ClassCastException
 ```
 
 :::caution
 They are useless, and you should **avoid using raw types**. They only exist for backward compatibility.
 :::
 
-### Wildcards
-
-A wildcard is a way to refer to a family of types. A wildcard stands for a particular, but unknown type.
-
-Wildcards are used to declare wildcard parameterized types.
-
-| Generic type | Parameterized type |
-|-|-|
-|`List<T>`|$\rightarrow$ Concrete parameterized type: `List<String>`|
-|`List<T>`|$\rightarrow$ Wildcard parameterized type: `List<?>`|
-
-**Matching**
-
-E.g.
-- `List<String>`, `List<Integer>`, `List<Map<?, ?>>` matches `List<?>`
-- `List<Dog>`, `List<Cat>`, `List<Animal>` matches `List<? extends Animal>`
-
-#### Unbounded Wildcard
-
-`?`: family of all types.
-
-#### Upper Bounded Wildcard
-
-`? extends SomeType`: family of types that are subtypes of the specified type, including the type itself.
-
-#### Lower Bounded Wildcard
-
-`? super SomeType`: family of types that are super types of the specified type, including the type itself.
-
-#### Wildcard Matching
-
-See this [example](#working-with-inheritance).
-
-### Usage
-
-- Define methods that take parameters of parameterized types: avoid unnecessary restrictions.
-  - Upper bounded wildcard for **in** params
-  - Lower bounded wildcard for **out** params
-  - Unbounded wildcard for param that is both **in** and **out**
-
-```java
-// this requires `dest` and `src` to have the exact same element type
-public static <T> void copy(List<T> dest, List<T> src)
-// using wildcard                 out                       in
-public static <T> void copy(List<? super T> dest, List<? extends T> src)
-
-List<Dog> dogs = List.of(new Dog("a"), new Dog("b"));
-List<Animal> animals = new ArrayList<>();
-copy(animals, dogs);  // possible with wildcard
-
-public static int size(List<?> list)
-```
-
 ### Working with Inheritance
 
-Generic types are **invariant**. If "a dog `is-a` animal", so "a list of dogs is a list of animals" is **covariance**. Java does this to prevent shit happens.
-
-**Wildcard matching**
+Generic types are **invariant**. If "a dog `is-a` animal", so "a list of dogs is a list of animals" is **covariance**. Generics have this characteristic to prevent bad things happen.
 
 ```java
 interface Animal {}
@@ -303,29 +344,230 @@ record Cat(String name) implements Animal {}
 public static void main(String[] args){
   Animal animal = new Dog("Max");
   List<Dog> dogs = new ArrayList<>(new Dog("Daisy"));
-  // -error-start
-  // a List that can contain any kind of object of type Animal
+  // -error
   List<Animal> animals = dogs;
-  animals.add(new Cat("Luna"));  // invariant avoid things like this happens
-  // -error-end
-  // highlight-start
-  // a List of objects of a particular, but unknown type that extends Animal
-  List<? extends Animal> animals = dogs;
-  // highlight-end
-  // -error-start
-  animals.add(new Cat("Boba"));
-  animals.add(new Dog("Max"));
-  // -error-end
-  // you cannot add specific (known) type to `unknown type`
+  // highlight
+  animals.add(new Cat("Luna"));  // invariant avoid things like this could happen
 }
 ```
 
-### Works with Array
+### Wildcards
 
-### Type Erasure
+**Motivation:** Read [this example](#problems).
+
+Because of type-safe, generics prevents polymorphism $\rightarrow$ wildcard helps us a little more flexibility but still safety.
+
+:::caution
+A wildcard stands for a **particular, but unknown type**.
+
+It is **not** a list that contains objects of **arbitrary different types** (that would be `List<Object>`).
+:::
+
+Wildcards are used to declare wildcard parameterized types:
+
+| Generic type | Parameterized type                                       |
+|--------------|----------------------------------------------------------|
+| `List<T>`    | $\rightarrow$ Concrete parameterized type: `List<String>`|
+| `List<T>`    | $\rightarrow$ Wildcard parameterized type: `List<?>`     |
+
+A wildcard is a way to refer to a family of types. **Wildcard Matching**:
+- `List<String>`, `List<Integer>`, `List<Map<?, ?>>` matches `List<?>`
+- `List<Dog>`, `List<Cat>`, `List<Animal>` matches `List<? extends Animal>`
+
+:::info
+
+**Substitution principle**: whenever we pass in argument to a method, we can pass in a subclass/implement of interface.
+
+Java supports **subtyping**, means if you have a variable of type T and S is a subtype of T, then you can assign an object of type S to the variable.
+
+It also works with wildcard parameterized type.
+
+:::
+
+E.g.
+
+```java
+Animal animal = new Dog("Max");  // subtyping
+// -error
+List<Animal> animals = dogs;  // generic types are invariant
+// -highlight-start
+/**
+cái này OK vì subtyping
+wildcard là vd che 1 nửa bên thì sẽ không biết chính xác là type gì
+(mặc dù nhờ vế bên trái, ta biết đó là type Dog)
+**/
+List<? extends Animal> anmials = dogs;
+// -highlight-end
+
+/**
+List<Animal>: A List that can contain any kind of object of type Animal, it can contain both Dog and Cat objects
+List<? extends Animal>: A List of objects of a particular, but unknown type that extends Animal
+**/
+// -error-start
+/**
+chứ wildcard không phải là 1 list của nhiều loại object
+vd như ở dưới đây cả 2 dòng đều error
+The compiler expects us to supply a value that is of the capture type of the wildcard (some unknown type which extends Animal)
+but here it's Dog/Cat -> error
+**/
+animals.add(new Cat("Luna"));  // error: Cat cannot be converted to capture#1 of ? extends Animal
+animals.add(new Dog("Max"));  // error: Dog cannot be converted to capture#1 of ? extends Animal
+// -error-end
+```
+:::note
+The capture of the wildcard is a particular **unknown** type that captures wildcard.
+:::
+
+#### Unbounded Wildcard
+
+`?`: family of all types.
+
+#### Upper Bounded Wildcard
+
+`? extends SomeType`: family of types that are subtypes of the specified type, including the type itself.
+
+It is used to get data out of the parameter: **covariance**.
+
+#### Lower Bounded Wildcard
+
+`? super SomeType`: family of types that are super types of the specified type, including the type itself.
+
+It is used to put data into of the parameter: **contravariance**.
+
+#### Usage
+
+:::note
+- Use `<T extends >` when you want to restrict the and refer the type elsewhere in code.
+- Use `<? extends >` like a parameter on a method when you want flexibility but don't really need those type parameter.
+:::
+
+##### Problems
+
+```java
+// highlight-start
+// this requires dest and src to have exact same element type
+public static <T> void copy(List<T> dest, List<T> src)
+// highlight-end
+
+// main
+List<Dog> dogs = List.of(new Dog("Daisy"), new Dog("Lucky"));
+List<Animal> animals = new ArrayList<>();
+// -error
+copy(animals, dogs);  // type mismatch error
+
+// -highlight-start
+// use wildcard
+//                                  out                    in
+public static <T> void copy(List<? super T> dest, List<? extends T> src)
+// -highlight-end
+copy(animals, dogs);  // OK
+```
+
+Use when define methods that take **parameters** of **parameterized types** (because using concrete type would cause unnecessary restrictions).
+- Upper bounded wildcard for **in** params
+- Lower bounded wildcard for **out** params
+- Unbounded wildcard for param that is both **in** and **out**. E.g.
+```java
+// work with list of any type & doesn't do anything with elements of the list than counting
+public static int size(List<?> list)
+```
+
+:::caution
+Avoid using wildcards in the return type of a method
+:::
+
+**More Examples**
+
+```java
+// use generic method
+public <T extends Person > void saveAll(List<T> persons) { }
+// use wildcard (less clumsy)
+// -error
+public void saveAll(List<Person> persons) { }
+// -highlight
+public void saveAll(List<? extends Person> persons) {
+  // note that you can't call methods of persons, because it is unknown type
+}
+
+// main
+List<Player> persons = new ArrayList<>();
+persons.add(ronaldo);
+persons.add(messi);
+
+// we can do this without error
+saveAll(persons);
+```
+
+```java
+List<?> lo;
+
+List<String> ls = new ArrayList<>();
+ls.add("vnd");
+ls.add("10000");
+
+lo = ls;
+System.out.println(lo);  // [vnd, 10000]
+System.out.println(ls);  // [vnd, 10000]
+
+List<?> objs = new ArrayList<>();
+// -error-start
+/**
+this is a list of objects of a specific unknown type
+you cannot add elements to this list because the type is unknown
+**/
+objs.add(1);  // specified for List<String>
+objs.add("vnd");  //  specified for List<Integer>
+// -error-end
+```
+
+### Type Erasure & Limitations
+
+Generics are a *compile-time only* feature. Generic and parameterized types, type parameters and type arguments do not exist at runtime:
+- Type parameters are replaced by Object or the leftmost bound (if they have bounds)
+- Type arguments are discarded
+- Parameterized types are replaced by raw types
+- Type casts are added where necessary
+
+Type erasure causes **limitations in generic**:
+- Cannot use primitive type as type arguments: because primitive types are not objects
+- Cannot create a new instance of a type parameter: `new T()` doesn't work
+- `instaceof` does not work with **non-reifiable types** (type information is lost during type erasure, they are parameterized types with at least one concrete or bounded wildcard type argument):
+  ```java
+  // -error
+  obj instaceof List<String>  // Error
+  obj instanceof List<?>  // OK
+  ```
+- No **class literals** for parameterized types:
+  ```java
+  // -error
+  Class<?> cls = List<String>.class;  // Error
+  static class A <T extends B> { }  // this is fine
+  // -error
+  static class A <? extends B> { }
+  ```
+- Operations where *type safety* cannot be guaranteed cause *unchecked* warnings
+- Cannot **overload methods** with the same **method signature** after type erasure:
+  ```java
+  // -error-start
+  // they're the same after type erasure
+  void print(List<String> strings)  // void print(List strings)
+  void print(List<Integer> integers)  // void print(List integers)
+  // -error-end
+  ```
 
 ### Heap Pollution
 
+Java's type system is not perfect. There are situations where it can be happen that a variable of a parameterized type refers to an object that is actually of a different type.
+
+Means you can get a value in your heap that's a different type to the one that compiler thinks it should be $\rightarrow$ cause runtime problems.
+
+### Working with Array
+
+In Java, generics and arrays don't play nice together.
+
+### Working with varargs
+
+Variable arguments are really just syntactic sugar for arrays $\rightarrow$ not good with generics as well.
 
 ## Lambda Expressions
 
@@ -355,8 +597,6 @@ Package `java.util.function`: commonly used functional interfaces.
 Lambda expression is an anonymous method. It implements a [functional interface](#functional-interfaces).
 It allows you to pass a block of code as an argument to a method/constructor.
 
-There's always a functional interface involved which determines the exact type of the lambda expression. You cannot assign a lambda expression to `var`, must explicitly specify the variable type.
-
 ```java
 @FunctionalInterface
 interface Hello {
@@ -364,8 +604,28 @@ interface Hello {
 }
 
 Hello lambdaExp = () -> "Hello Lambda.";
-System.out.println(lambdaExp.sayHello());
+lambdaExp.sayHello()  // returns "Hello Lambda."
 ```
+
+There's always a functional interface involved which determines the exact type of the lambda expression. E.g:
+
+```java
+public boolean replace(Product oldProduct, Product newProduct) {
+  List<Product> products = new ArrayList<>();
+  products.replaceAll(product -> {
+      if(product == oldProduct)
+        return newProduct;
+      else
+        return product;
+  });
+}
+/**
+`replaceAll(UnaryOperator<E> operator)`
+-> the passed-in lambda expression is actually implement an functional interface `UnaryOperator`
+**/
+```
+
+You cannot assign a lambda expression to `var`, must explicitly specify the variable type.
 
 ```java
 /**
@@ -508,3 +768,31 @@ Method[] methods = clazz.getMethods();
 ```
 
 ## Varargs
+
+Varargs means variable arity arguments. These are arguments that can take a variable number of values.
+
+```java
+public static <T> T[] arrayOf(T ... values) {
+  return values;
+}
+// main
+Integer[] integers = arrayOf(1, 2);
+Arrays.toString(integers);  // returns [1, 2]
+```
+
+### Heap pollution from parameterized vararg type
+
+```java
+public static <T> T[] arrayOf(T ... values) { return values; }
+public static <T> T[] pair(T t) { return arrayOf(t, t); }
+
+// main
+Object[] strs = pair("a");
+Arrays.toString(strs)  // [a, a]
+// -error-start
+Integer[] pair = pair(1);  // ClassCastException, it's look like an Integer array, but it's actually Object array
+Arrays.toString(pair)
+// -error-end
+```
+
+Use annotation `@SafeVarargs`, but use it correctly.
