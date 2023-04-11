@@ -27,6 +27,12 @@ Integer valB = 10;
 valA [10]
 valB [] ------> (20)
 ```
+### Implementation
+
+E.g.
+- `int` is a primitive value, it is stored on the object field or on the **stack**, takes up 4 bytes directly (`| 4 byte int |`).
+- `Integer` is boxed numerics, it is the whole object lies on the **heap**, so it needs a **pointer**, takes up 24 bytes or 64bit JVM (`| Object Header | 4 byte int | Padding |`).
+
 
 ### Converting
 

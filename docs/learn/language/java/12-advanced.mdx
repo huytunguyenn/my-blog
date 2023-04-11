@@ -782,6 +782,8 @@ Method[] methods = clazz.getMethods();
 
 Varargs means variable arity arguments. These are arguments that can take a variable number of values.
 
+There's effectively an array that gets create under the hood, passed over a mythical boundary, and then thrown away afterward.
+
 ```java
 public static <T> T[] arrayOf(T ... values) {
   return values;
