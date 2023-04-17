@@ -1,8 +1,35 @@
 
+### Create App
 
-
-Create packages under your main package.
+Go to `main/java/com.example`. Create packages under your main package.
 - `controllers`: API controllers
 - `models`: JPA entities & other persistence info
 - `repositories`: JPA repositories
 - `services`: logic-based code
+
+### Connect to database
+
+Add Data JPA library & connect it to Postgres.
+Add Postgres JDBC driver dependency to pom.xml
+```xml
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+```
+
+Add `src/main/resources/application.properties`
+
+```
+spring.datasource.url=jdbc:postgresql://localhost:5432/conference_app
+spring.datasource.username=
+spring.datasource.password=
+spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
+spring.jpa.hibernate.ddl-auto=none
+spring.jpa.hibernate.show-sql=true
+```

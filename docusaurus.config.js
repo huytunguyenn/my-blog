@@ -81,10 +81,10 @@ const config = {
         path: './blog-thoughts', // Path to data on filesystem relative to site dir.
         showReadingTime: false,
         editUrl,
-        blogTitle: 'Tus thoughts',
+        blogTitle: 'Tus\' thoughts',
         postsPerPage: 'ALL',
         blogSidebarCount: 'ALL',
-        blogSidebarTitle: 'All',
+        blogSidebarTitle: 'All my blogs (but it\'s more personal)',
       },
     ],
   ],

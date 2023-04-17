@@ -68,7 +68,7 @@ const createNavBar = ({ style }) => {
          *   ]
          * }
          */
-        label: 'Me',
+        label: '我',
         position: 'left',
       },
       {
@@ -84,7 +84,7 @@ const createNavBar = ({ style }) => {
         dropdownItemsAfter: [
           {
             to: 'https://my-site.com/help-us-translate',
-            label: 'Help us translate',
+            label: 'Help me translate',
           },
         ],
         position: 'right',
