@@ -1,10 +1,12 @@
 label: spring boot
+position: 2
 link:
   type: generated-index
   title: Spring Boot
   description: learn to create application with Spring Boot
   keywords:
     - spring
+    - spring boot
     - framework
     - java
   image: /img/banner-small.png

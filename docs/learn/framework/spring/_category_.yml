@@ -1,0 +1,11 @@
+label: spring
+position: 1
+link:
+  type: generated-index
+  title: Spring
+  description: learn to create application with Spring
+  keywords:
+    - spring
+    - framework
+    - java
+  image: /img/banner-small.png
