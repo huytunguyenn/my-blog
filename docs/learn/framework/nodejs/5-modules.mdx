@@ -1,0 +1,92 @@
+---
+sidebar_label: modules
+---
+
+# Modules
+
+Fancy word for a file/folder that contains code.
+
+## Node Modules
+
+`arguments` keyword:
+
+```javascript
+function func() { console.log(arguments) }
+func(3, 4, 5, 6)
+```
+
+Node is not only executing a line of code, it actually wraps the file with a function:
+
+```javascript
+console.log(arguments); // suppose this is at top level of the file
+```
+
+it's actually like this:
+
+```javascript
+// -highlight
+function _(exports, module, require, __filename, __dirname) {
+  console.log(arguments);
+  // -highlight
+  return module.exports;
+// -highlight
+}
+```
+
+We usually use `exports` keyword to export things, it's actually not a global keyword or something, it's just the first argument to the hidden wrapping function. Also, variables declared at top level are not global as well.
+
+Browser don't like Node, it doesn't have hidden wrapping function, so variables declared at top level is global.
+
+`exports` is just alias of `module.exports`.
+
+
+```javascript
+(exports, module, ...) { // Node does this wrap (module.exports, module, ...)
+  exports.a = 1
+  module.exports.b = 99
+  // if we do like this, we're not changing the module object, we just assign new pointer that no longer point to module.exports
+  exports = ...
+  // -error
+  exports = () => {}  // break the assignment reference
+  // -highlight
+  module.exports = () => {}  // ok because module.exports is actually what is being returned
+}
+```
+
+## Types of API objects
+
+### Object
+
+Top-level API is a simple object. So, no need to use `module.exports`
+
+```javascript
+exports.name = 'Tu'
+exports.age = 23
+
+const me = require('./me')
+console.log(me.name, me.age)
+```
+
+### Array, String, Function
+
+Use `module.exports`.
+
+```javascript
+module.exports = [2, 3, 4, 7]
+```
+
+## Global Object
+
+```javascript
+setTimeout()  // implies global.setTimeout()
+```
+
+You can actually make object globally by attaching it to `global`.
+
+:::caution
+Avoid doing that!
+:::
+
+## Errors & Exceptions
+
+Error is "problem", exception is "condition".

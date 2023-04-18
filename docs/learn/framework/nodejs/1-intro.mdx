@@ -3,3 +3,75 @@ sidebar_label: intro
 ---
 
 # Introduction
+
+## What
+
+Node.js is an asynchronous event driven JavaScript runtime, Node is designed to build scalable network applications.
+
+Commonly known as server-side JavaScript *(in fact, the execution of JavaScript on the server is done with a virtual machine (V8/Chakra), Node is like a coordinator, a wrapper)*.
+
+But it is used more than that, it has:
+- many built-in modules (fs, http, crypto, zip, ...)
+- provides asynchronous APIs (without needing to deal with threads) $\rightarrow$ biggest benefit
+- C++ addons
+
+## Why
+
+- **APIs and microservices**
+
+  More "lightweight" alternative for application server style deployment model: there's no server to deploy your code to, your code is the server
+  $\rightarrow$ easier to build increasingly complex application.
+  ```javascript
+  const http = require('http');
+
+  const hostname = '127.0.0.1';
+  const port = 3000;
+
+  const server = http.createServer((req, res) => {
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'text/plain');
+    res.end('Hello World');
+  });
+
+  server.listen(port, hostname, () => {
+    console.log(`Server running at http://${hostname}:${port}/`);
+  });
+  ```
+- **Serverless cloud functions**
+
+  As a dynamic language runtime with a fast startup & low memory consumption.
+- **Command line applications**
+
+  `webpack`, `gulp`, `ESLint`, `Yeoman`, etc. written in JavaScript and run in Node.js.
+- **Desktop applications**
+
+  Due to `Electron` framework. For e.g. `Skype`, `Github Desktop`, `Visual Studio Code`, `Slack`, `Atom`, `Hyper`, etc.
+
+## How
+
+### History
+
+### Node Clusters
+
+Read more about [we should let a Node process to crash and exit](/learn/framework/nodejs/5-modules.mdx#errors--exceptions).
+
+Like its name, Node is actually nodes. In production, server runs cluster of node processes. With many-cores CPU, each node process is running for each core. One working process exiting should not mean the system is down.
+
+There will be cluster have a master process, which should be monitoring worker processes. And it starts the new one when the process crashes and exits.
+
+There are tools like `PM2` that wrap the cluster [module](/learn/framework/nodejs/5-modules.mdx) to run your Node application in production.
+
+## Why Not To
+
+- **CPU-intensive tasks**
+
+  Node is designed to build scalable network app, "network" implies "I/O" $\rightarrow$ required heavy use of CPU, better for I/O-intensive use cases
+- **Dynamic typed nature of JavaScript**
+
+## ResRef
+
+*** ResRef implies Resources & References :D ***
+
+https://jscomplete.com/learn/why-node-for-react
+
+https://www.freecodecamp.org/news/hard-coding-concepts-explained-with-simple-real-life-analogies-280635e98e37/

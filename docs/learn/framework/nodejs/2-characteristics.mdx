@@ -1,0 +1,116 @@
+---
+sidebar_label: characteristics
+---
+
+# Characteristics
+
+Some other server-side architectures:
+- **Process-per-client (Multi-process)**:
+  - Each incoming request is allocated a process from a pool of processes *(either existing one or a new one is forked)*.
+  - Handling multiple requests simultaneously -> run many processes (each still handling just **one request at a time**).
+  - Code running in each process is effectively **isolated and unaware of the other requests** being handled simultaneously.
+- **Thread-Per-Client (Multi-threaded)**:
+  - A single process may have a pool of many threads.
+  $\rightarrow$ concurrency is based on how many threads are available.
+  - Code running is isolated to a single thread, may be *aware of other concurrent requests*, especially if they're accessing shared memory.
+
+## Event Loop
+
+Learn about [event loop](learn/framework/nodejs/6-concurrency.mdx#event-loop).
+
+Node, on the other hand, uses an event loop in a **"single-threaded"** model.
+
+Under the hood, **Node does run multiple threads**. However, JavaScript code running in Node.js is **single-threaded** (it can only execute one chunk of code at a time) in a **single process**.
+
+This "single-threaded" model means there is no simultaneous access to shared memory, but there is also no process or thread isolation between requests. They're all served by the same code running in the same process via the same event loop.
+
+These events are typically surfaced in your application by registering callback functions, which Node will invoke when the specific events arise.
+
+:::infoKey takeaway
+In a general sense, **only one function in code is running at any one time**.
+:::
+
+## Asynchronous Development
+
+*Ví dụ nhà hàng có đầu bếp, phục vụ và khách. Phục vụ hỏi khách muốn order gì rồi báo cho đầu bếp làm, sau khi đầu bếp làm xong thì đưa ra cho khách.*
+
+*1 phục vụ có thể phục vụ nhiều khách cùng lúc, bằng cách phục vụ không đợi ai để hoàn thành việc cả. Nếu phục vụ mà đợi (ví dụ đợi đầu bếp nấu xong thì mới đi lấy order khách, hoặc đợi khách) thì sẽ rất tệ.*
+
+*Trong thực tế đầu bếp là database, phục vụ là phục vụ HTTP response lại cho khách HTTP request.*
+
+```javascript
+function serveCustomer(customer) {
+  let order = customer.placeOrder(menu)
+  let food = cook.prepareFood(order)
+  let tip = customer.eatAndPay(food)
+  return tip
+}
+```
+
+In a traditional server-side scenario, each customer may be served in their own process or thread. As ví dụ mentioned before, the above code is not working since a function with a series of blocking actions will prevent anything else from happening.
+
+$\rightarrow$ Node can help us in asynchronous way:
+
+```javascript
+// traditional way, this code is kinda hard to read
+function serveCustomer(customer, done) {
+  customer.placeOrder(menu, (error, order) => {
+    cook.prepareFood(order, (error, food) => {
+      customer.eatAndPay(food, done);
+    })
+  })
+}
+// promises way
+function serveCustomer(customer) {
+  return customer.placeOrder(menu)
+    .then(order => cook.prepareFood(order))
+    .then(food => customer.eatAndPay(food))
+}
+// async/await way, readable like anti-pattern example above
+const serveCustomer = async (customer) => {
+  let order = await customer.placeOrder(menu)
+  let food = await cook.prepareFood(order)
+  let tip = await customer.eatAndPay(food)
+  return tip
+}
+```
+
+Ví dụ ở trên, khi gọi đến `serveCustomer` thì sẽ được return immediately (điều này giúp ta có thể làm việc khác -> mấu chốt của làm việc simultaneously). Tại một thời điểm trong tương lai, hàm `done` sẽ được gọi & ta biết customer đó đã được phục vụ.
+
+:::noteThink Asynchronous
+Think of our application as a collection of functions that **react to events**, which invoke work that will cause **future** events to be fired and so on.
+:::
+
+## Node APIs
+
+`util.promisify(callback)`
+
+
+## Streams
+
+### Readable Streams
+- **Events**: `readable`, `data`, `end`, `error`
+- **Methods**: `read`, `pause`, `resume`, `destroy`
+- **Properties**: `readable`. `readableLength`
+
+### Writable Streams
+- **Events**: `drain`, `close`, `finish`, `error`
+- **Methods**: `write`, `end`, `destroy`
+- **Properties**: `writable`. `writableLength`
+
+### Piping Streams
+
+Because readable and writeable streams both have a consistent interface for applying and coping with back pressure, you can pipe a readable stream to a writeable stream, and the back pressure will be communicated from one stream back to the other.
+
+### Read/Write Streams (Duplex, Transform)
+
+## Testing
+
+Mocha: test framework. (e.g. BDD: group tests)
+
+Chai: assertion library.
+
+Sinon: spies, stubs and mocks.
+
+Istanbul: code coverage. The CLI for this tool is called `nyc`.
+
