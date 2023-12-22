@@ -1,10 +1,12 @@
-const lightCodeTheme = require('prism-react-renderer/themes/github');
-const darkCodeTheme = require('prism-react-renderer/themes/dracula');
+// const lightCodeTheme = require('prism-react-renderer/themes/github');
+// const darkCodeTheme = require('prism-react-renderer/themes/dracula');
+
+import {themes as prismThemes} from 'prism-react-renderer';
 
 const getPrism = () => {
   return {
-    theme: lightCodeTheme,
-    darkTheme: darkCodeTheme,
+    theme: prismThemes.github,
+    darkTheme: prismThemes.dracula,
     additionalLanguages: ['java'],
     magicComments: [
       // Remember to extend the default highlight class name as well!

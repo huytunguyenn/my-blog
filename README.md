@@ -4,6 +4,15 @@
 
 Visit **my blog** at: https://huytunguyenn.github.io/my-blog/
 
+## Environment
+
+Require Node.js 18.0+
+
+```shell 
+nvm use 18
+```
+
+
 ## i18n
 
 ### Start your site

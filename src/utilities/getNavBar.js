@@ -42,11 +42,11 @@ const createNavBar = ({ style }) => {
         label: 'Blog', // either `label` or `html`. html: '<b>Introduction</b>'
         position: 'left',
       },
-      {
-        to: '/more-of-my-thoughts', // this should be match with routeBasePath at plugins in docusaurus.config.js
-        label: 'Journal',
-        position: 'left',
-      },
+      // {
+      //   to: '/more-of-my-thoughts', // this should be match with routeBasePath at plugins in docusaurus.config.js
+      //   label: 'Journal',
+      //   position: 'left',
+      // },
       {
         /**
          * link a navbar item to the first document link of a given sidebar
@@ -54,7 +54,7 @@ const createNavBar = ({ style }) => {
          * -> use this if your sidebar is updated often & order is not stable
          */
         type: 'docSidebar',
-        sidebarId: 'myself', // in sidebars.js
+        sidebarId: 'myself', // in ./sidebars.js
         /** sidebars.js
          * module.exports = {
          *   ....
@@ -78,7 +78,7 @@ const createNavBar = ({ style }) => {
       },
       {
         /**
-         * internationalization aka i18n
+         * internationalization
          */
         type: 'localeDropdown',
         dropdownItemsAfter: [

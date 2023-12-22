@@ -9,7 +9,7 @@ const sidebars = {
     },
   ],
   /**
-   * dưới này là custom sidebar để navbar reference tới (getNavBar.js)
+   * dưới này là custom sidebar để navbar reference tới (src/utilities/getNavBar.js)
    */
   myself: [
     'me-intro', // docs/me-intro
