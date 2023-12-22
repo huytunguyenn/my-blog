@@ -88,11 +88,62 @@ Each collection has more than 2 different components.
 | Prefer as **variable type**           | Concrete and instantiable   |
 | Often has a popular implementation    |                             |
 
-![collections' components](img/collections-component.png)
+```mermaid
+mindmap
+    root[**Collections**]
+        (**List**
+        ArrayList
+        LinkedList)
+        (**Set**
+        HashSet)
+            (**SortedSet**
+            TreeSet)
+        (**Queue**
+        PriorityQueue
+        )
+            (**Deque**
+            LinkedList
+            ArrayDeque)
+```
+---
+
+```mermaid
+mindmap
+    (**Map**
+    HashMap)
+        (**SortedMap**
+        TreeMap)
+```
+
 
 ### What to use?
 
-![collection decision tree](img/collection-decision-tree.png)
+```mermaid
+graph TB
+    A(["Elements are keyed?"])
+    B(["Elements must be unique?"])
+    C(["Order is important?"])
+    D(["Order is important?"])
+    E(["Insertion order matters?"])
+    F["`**Set**`"]
+    G["`**SortedSet**`"]
+    H["`**List**`"]
+    I["`**Deque**`"]
+    J["`**Map**`"]
+    K["`**SortedMap**`"]
+
+    A -- NO --> B
+    A -- YES --> C
+    B -- YES --> D
+    B -- NO --> E
+    D -- NO --> F
+    D -- YES --> G
+    E -- NO --> H
+    E -- YES --> I
+    C -- NO --> J
+    C -- YES --> K
+```
+
 
 ### Common Behaviors
 

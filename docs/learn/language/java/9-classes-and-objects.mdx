@@ -13,7 +13,30 @@ In Java, **everything is an object**. It is the root of Java class hierarchy.
 
 *For example, look at the below image, it is hierarchy of classes to deal with input, output stream, it has the root of `Object` class.*
 
-![InputOutputStreamClass](img/file_io.jpg)
+```mermaid
+graph LR
+    A(["Object"])
+    B(["InputStream"])
+    B1(["FileInputStream"])
+    B2(["ByteArrayInputStream"])
+    B3(["FilterInputStream"])
+    B4(["ObjectInputStream"])
+    B31(["BufferedInputStream"])
+    B32(["DataInputStream"])
+    C(["OutputStream"])
+    C1(["FileOutputStream"])
+    C2(["ByteArrayOutputStream"])
+    C3(["FilterOutputStream"])
+    C4(["ObjectOutputStream"])
+    C31(["BufferedOutputStream"])
+    C32(["DataOutputStream"])
+
+    A --> B & C
+    B --> B1 & B2 & B3 & B4
+    B3 --> B31 & B32
+    C --> C1 & C2 & C3 & C4
+    C3 --> C31 & C32
+```
 
 Object has some characteristics:
 - an `Object` reference can reference an instance of any class
