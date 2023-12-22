@@ -194,7 +194,7 @@ class Parent {
 }
 ```
 
-:::caution
+:::warning
 Don't overuse `final`. The best way to use it is when you know what to do and prevent bugs.
 :::
 
@@ -215,7 +215,7 @@ public final class Student extends Person { }
 public non-sealed class FullTimeWorker extends Worker { }
 ```
 
-:::caution
+:::warning
 Don't overuse `sealed` classes either.
 :::
 
@@ -279,7 +279,7 @@ student.goToSchool();  // now you can use Student method
 
 What if we change: `Person person = new Worker();`? then, we'll get `NullPointerException` followed by `ClassCastException`.
 
-:::caution
+:::warning
 Because ClassCastException & NullPointerException, we should:
 - use `instanceof`: checking before downcasting
 - **avoid downcasting**: improve design to remove unnecessary type conversion

@@ -11,7 +11,9 @@ const { getPrism } = require('./src/utilities/getPrism');
 const { COLOR } = require('./src/constant');
 const {editUrl} = require('./src/appConfig');
 
+// CHANGE COLOR HERE
 const style = COLOR.PURPLE;
+
 const { favicon, titleDelimiter } = getMetaDataTheme({ style });
 const i18n = getLocale();
 const docs = getDocs();
@@ -38,15 +40,21 @@ const config = {
   i18n,
   titleDelimiter,
   staticDirectories: ['static'],
+  markdown: {
+    mermaid: true,
+  },
+  themes: ['@docusaurus/theme-mermaid'],
   presets: [
     [
+      // Basic usage.
       'classic',
+      // With options object (babel style)
       /** @type {import('@docusaurus/preset-classic').Options} */
-      ({
+      {
         docs,
         blog,
         theme,
-      }),
+      },
     ],
   ],
   stylesheets: [
@@ -59,19 +67,23 @@ const config = {
     },
   ],
   themeConfig:
-    /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
-    ({
-      docs: {
-        sidebar: {
-          hideable: true,
-          // autoCollapseCategories: true,
-        },
-      },
-      navbar,
-      // announcementBar,
-      footer,
-      prism,
-    }),
+  // https://docusaurus.io/docs/api/themes/configuration
+  /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
+  {
+    docs: {
+      sidebar: {
+        hideable: true
+        // autoCollapseCategories: true,
+      }
+    },
+    navbar,
+    // announcementBar,
+    footer,
+    prism,
+    mermaid: {
+      theme: {light: 'neutral', dark: 'forest'},
+    },
+  },
   plugins: [
     [
       '@docusaurus/plugin-content-blog',
@@ -90,4 +102,4 @@ const config = {
   ],
 };
 
-module.exports = config;
+export default config;

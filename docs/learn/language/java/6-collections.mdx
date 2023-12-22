@@ -281,7 +281,7 @@ products.sort(Product.BY_WEIGHT);
 
 ### Implementations
 
-:::cautionAvoid `List` legacy implementations
+:::warningAvoid `List` legacy implementations
 **avoid** `Vector`, `Stack`, they're synchronized.
 :::
 
@@ -397,7 +397,7 @@ public boolean equals(final Object o) {
 public int hashCode() { return Objects.hash(name); }  // ? name.hashCode();
 ```
 
-:::caution
+:::warning
 Whatever type used as the keys in `HashMap`, those need to be immutable objects (always return the same value for `hashCode` method).
 :::
 

@@ -37,7 +37,7 @@
   },
   "theme.admonition.caution": {
     "message": "cẩn thận",
-    "description": "The default label used for the Caution admonition (:::caution)"
+    "description": "The default label used for the Warning admonition (:::warning)"
   },
   "theme.BackToTopButton.buttonAriaLabel": {
     "message": "Trở lại đầu trang",

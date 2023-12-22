@@ -328,7 +328,7 @@ T left
 left.compareTo(new Object())   // ClassCastException
 ```
 
-:::caution
+:::warning
 They are useless, and you should **avoid using raw types**. They only exist for backward compatibility.
 :::
 
@@ -357,7 +357,7 @@ public static void main(String[] args){
 
 Because of type-safe, generics prevents polymorphism $\rightarrow$ wildcard helps us a little more flexibility but still safety.
 
-:::caution
+:::warning
 A wildcard stands for a **particular, but unknown type**.
 
 It is **not** a list that contains objects of **arbitrary different types** (that would be `List<Object>`).
@@ -472,7 +472,7 @@ Use when define methods that take **parameters** of **parameterized types** (bec
 public static int size(List<?> list)
 ```
 
-:::caution
+:::warning
 Avoid using wildcards in the return type of a method
 :::
 

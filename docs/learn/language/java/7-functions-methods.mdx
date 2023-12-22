@@ -220,7 +220,7 @@ class Database {
 }
 ```
 
-:::caution
+:::warning
 **Finalizer should be avoided:**
 - Crash: we cannot know when a finalizer runs since garbage collection may occur anytime $\rightarrow$ crash when resources run out before clean-up happens
 - Performance: cost is expensive
