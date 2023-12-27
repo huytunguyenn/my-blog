@@ -27,7 +27,7 @@ function HomepageHeader() {
             id="HomepageHeader.pageTitle"
             description="The homepage title"
           >
-            Welcome stranger 👾
+            Welcome to Tus hub 👾
           </Translate>
         </h1>
         <p className="hero__subtitle">
