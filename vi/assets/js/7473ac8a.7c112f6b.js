@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkmy_website=self.webpackChunkmy_website||[]).push([[358],{4075:e=>{e.exports=JSON.parse('{"permalink":"/my-blog/vi/more-of-my-thoughts","page":1,"postsPerPage":2,"totalPages":1,"totalCount":2,"blogDescription":"Blog","blogTitle":"Tus\' thoughts"}')}}]);

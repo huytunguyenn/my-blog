@@ -2,18 +2,33 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://huytunguyenn.github.io/my-blog/more-of-technical-blogs</id>
     <title>huytu Blog</title>
-    <updated>2023-03-23T00:00:00.000Z</updated>
+    <updated>2023-12-22T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://huytunguyenn.github.io/my-blog/more-of-technical-blogs"/>
     <subtitle>huytu Blog</subtitle>
     <icon>https://huytunguyenn.github.io/my-blog/img/favicon/favicon-purple.ico</icon>
+    <entry>
+        <title type="html"><![CDATA[Dump là gì?]]></title>
+        <id>https://huytunguyenn.github.io/my-blog/more-of-technical-blogs/what-is-dump</id>
+        <link href="https://huytunguyenn.github.io/my-blog/more-of-technical-blogs/what-is-dump"/>
+        <updated>2023-12-22T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Dump là gì?]]></summary>
+        <content type="html"><![CDATA[<h2 class="anchor anchorWithHideOnScrollNavbar_WYt5" id="dump-là-gì">Dump là gì?<a href="https://huytunguyenn.github.io/my-blog/more-of-technical-blogs/what-is-dump#dump-l%C3%A0-g%C3%AC" class="hash-link" aria-label="Direct link to Dump là gì?" title="Direct link to Dump là gì?">​</a></h2>]]></content>
+        <author>
+            <name>Huy-Tu Nguyen</name>
+            <uri>https://github.com/huytunguyenn</uri>
+        </author>
+        <category label="career" term="career"/>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Vượt qua thử thách]]></title>
         <id>https://huytunguyenn.github.io/my-blog/more-of-technical-blogs/my-first-blog</id>
         <link href="https://huytunguyenn.github.io/my-blog/more-of-technical-blogs/my-first-blog"/>
         <updated>2023-03-23T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[Post about c]]></summary>
-        <content type="html"><![CDATA[<p>Luc nao cung so thi sao</p><p>This is my first post on Docusaurus 2.</p><p>A whole bunch of exploration to follow.</p>]]></content>
+        <content type="html"><![CDATA[<p>Luc nao cung so thi sao</p>
+<p>This is my first post on Docusaurus 2.</p>
+<p>A whole bunch of exploration to follow.</p>]]></content>
         <author>
             <name>Huy-Tu Nguyen</name>
             <uri>https://github.com/huytunguyenn</uri>
