@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunktu_website=self.webpackChunktu_website||[]).push([[9729],{3129:e=>{e.exports=JSON.parse('{"label":"career","permalink":"/my-blog/more-of-technical-blogs/tags/career","allTagsPath":"/my-blog/more-of-technical-blogs/tags","count":3,"unlisted":false}')}}]);
