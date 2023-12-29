@@ -1,0 +1,33 @@
+---
+slug: duck-typing
+title: Duck typing
+authors: [huytu]
+tags: [career]
+hide_table_of_contents: false
+---
+
+
+https://en.wikipedia.org/wiki/Broken_windows_theory
+
+
+## Tách hàm như thế nào
+
+```bash
+    src = if imageDownloadUrl != null then builtins.fetchurl {
+    } else fetchEcr {
+    };
+```
+
+
+https://en.wikipedia.org/wiki/Duck_typing
+
+Nếu có thể cho rằng bất cứ thứ gì biết bơi đều là vịt vì vịt có thể bơi thì cá voi có thể được coi là vịt; tuy nhiên, nếu người ta cũng cho rằng con vịt phải có khả năng bay thì con cá voi sẽ không được coi là con vịt.
+
+So it seems weird that the function has to be executed either with args A, B or with arg C, D, but no overlap. It doesn't even attempt to catch odd case if all args are specified.
+
+This should be separated back into two separate unrelated functions for clarity, and shouldn't be `doEverything(args, for, all, possible, cases)`
+
+
+I don't know if I'd agree with that. It's fine to have two functions returning the same "type" (i.e. in nix's case, similar to JavaScripts, using duck typing). But having function distinctly doing different things just so that it returns same return type is weird. If one function fails to return, for example, imageTag and that key is needed for evaluation, nix evaluation will fail with error message. And if it's not needed, no harm if function doesn't return it.
+
+I.e. there are many functions in nix (that can be used) for fetching git source code: fetchUrl, fetchGit, fetchGitHub, fetchGitLab, fetchTarball, fetchBitbucket, fetchgitLocal , fetchgitPrivate, and possibly even more. There even other functions for svn, hg, and other source-related fetches. Each, in the end, returns one same thing, a git repo. But you'll notice that there is not a function fetchRepo(name, revision, url, git, github, gitlab, tarball, bitbucket, local, private) which would reuse first two args, and then require exclusive 3rd arg (or some combination of exclusive arg sets, such as sometimes asking for authentication or w/e else). Because such a function would be unmanageable and confusing. So I think it's best to separate the two, and, in addition, make it clearer which one is fetching from where and requires what data explicitly (e.g. Ecr fetch always would require aws creds, not optionally)

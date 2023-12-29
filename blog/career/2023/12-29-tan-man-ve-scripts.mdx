@@ -1,0 +1,68 @@
+---
+slug: my-experience-about-writing-scripts
+title: Tản màn về scripts (2023)
+authors: [huytu]
+tags: []
+hide_table_of_contents: false
+---
+
+
+
+*Tâm sự nhảm (skip for now):*
+Năm mới sắp hết, hôm nay là ngày làm việc cuối cùng của năm - friday 29/12
+(thật ra hôm nay booked off rồi :v). Nên cũng muốn viết một cái gì đó. Cho nên
+hôm nay sẽ viết về một thứ liên quan tới công việc của mình trong nửa cuối năm
+vừa qua, đó chính là làm việc với scripts.
+
+# Làm việc với scripts
+
+## Kinh nghiệm với
+
+Chúng ta luôn có folder dự phòng `/tmp` ở đâu đó.
+
+Khi làm một lệnh gì đó nên check nếu lệnh đó có thể fail và gây crash. Một số ví dụ
+
+1.
+
+```bash
+# Copy file ở SOURCE -> TARGET
+scp $SOURCE/my_awesome_file $TARGET:/still_my_awesome_file
+```
+
+Nên:
+
+```bash
+scp ... || (echo "failed yada yada"; exit 1)
+```
+
+Những lệnh `cd` về technically vẫn có thể failed với những unexpected path.
+
+Use "|| true" to avoid interruption on stopping failure
+
+```bash
+docker-compose -f ${hostConfig.dockerComposeYmlPath} down -v || true
+
+```
+This stop on errors but hide all errors.
+
+2. Error
+
+
+```bash
+mkdir -p ${hostConfig.dockerRootDataDir} || true
+echo "Success!"
+```
+$\leftarrow$`|| true` here seems pointless, as it'll continue anyway. Also confusing in that it'll always write Success! even if mkdir fails -> It was meant to be `|| exit 1`
+
+```bash
+if [ ! -f "$file_path" ]; then
+  echo "Expecting the file at path $file_path but it's unavailable. Stop now"
+```
+should be going to stderr via >&2?
+
+
+```bash
+# For debug when needed
+set -x
+```
+
