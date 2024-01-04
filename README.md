@@ -158,3 +158,39 @@ Thêm `learn/cloud/_category_.yml`, `learn/cloud/aws/_category_.yml`, `learn/clo
 
 Lần lượt thêm các file markdown `.mdx` vào folder `learn/cloud/gcp` và `learn/cloud/aws` (nhớ ở đầu file markdown thêm `--- sidebar_position: 1 ---`, 2, 3, v.v.)
 
+
+### Cách thêm code
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<Tabs groupId="stack">
+  <TabItem value="py" label="Python">
+    ```py
+    ```
+  </TabItem>
+  <TabItem value="java" label="Java">
+    ```java
+    ```
+  </TabItem>
+  <TabItem value="cpp" label="C++">
+    ```cpp
+    ```
+  </TabItem>
+</Tabs>
+
+
+### Cách vẽ chart
+
+[Mermaid](https://mermaid.js.org/intro/)
+
+### Cách dùng math equation
+
+-> : $\rightarrow$
+
+
+#### Cách dùng emoji
+
+:ten_emoji:
+https://www.webfx.com/tools/emoji-cheat-sheet/
+

@@ -80,7 +80,7 @@ s.push(1);
 </TabItem>
 </Tabs>
 
-### Delete the most above element
+### Delete last (most above) element
 
 <Tabs groupId="stack">
 <TabItem value="py" label="Python">
@@ -106,7 +106,7 @@ s.pop();  // note that this doesn't return popped value
 </TabItem>
 </Tabs>
 
-### Get value of most above element
+### Get value of last (most above) element
 
 <Tabs groupId="stack">
 <TabItem value="py" label="Python">
@@ -225,14 +225,28 @@ FIFO (First In First Out)
    ---------
 ```
 
+Một lợi thế queue so với stack là về mặt bộ nhớ. Queue có thể implement bằng
+linked list nên nằm rời rạc ở các vùng nhớ được $\rightarrow$ tận dụng được vùng nhớ phân mảnh.
+
 ### Declare
 
 <Tabs groupId="queue">
 <TabItem value="py" label="Python">
 
 ```py
-from queue import Queue
+# There are many types like LIFO Queue, Queue, Priority Queue. So we need to
+# import correct one.
 
+# Python 2
+import Queue
+q = Queue.Queue()
+
+# Python 3
+import queue
+q = queue.Queue()
+
+# My favorite, only import what you need
+from queue import Queue
 q = Queue()
 ```
 
@@ -240,7 +254,7 @@ q = Queue()
 <TabItem value="java" label="Java">
 
 ```java
-// Queue in Java is just interface -> implement using LinkedList
+// Queue in Java is just interface (no memory located) -> so we implement it using LinkedList
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -260,7 +274,7 @@ queue<int> q;
 </TabItem>
 </Tabs>
 
-### Add elements
+### EnQueue (add element)
 
 <Tabs groupId="queue">
 <TabItem value="py" label="Python">
@@ -287,7 +301,11 @@ q.push(1);
 </TabItem>
 </Tabs>
 
-### Delete
+### Deque (delete element)
+
+Delete here means **remove the first element**. Since queue is FIFO, we can only
+delete the first element. So we don't have `pop()` method like stack (get the
+last element).
 
 <Tabs groupId="queue">
 <TabItem value="py" label="Python">
@@ -319,6 +337,7 @@ q.pop();  // doesn't return value
 <TabItem value="py" label="Python">
 
 ```py
+# Trick with Python, since queue is implemented using list.
 value = q.queue[0]
 ```
 
@@ -422,7 +441,10 @@ q1.swap(q2);
 </TabItem>
 </Tabs>
 
-## Dequeue
+## Deque (double ended queue)
+
+Deque thì thay vì như queue là **thêm cuối lấy đầu** thì dequeue có thể **thêm
+lấy ở cả 2 đầu**. Có thể nói là sự kết hợp giữa stack và queue.
 
 <Tabs groupId="dequeue">
 <TabItem value="py" label="Python">
@@ -449,3 +471,12 @@ q1.swap(q2);
 </Tabs>
 
 ## Compare complexity
+
+
+## Ứng dụng của stack và queue
+
+Lưu trữ và cơ chế hoạt động. Cơ chế hoạt động của đệ quy là stack (gọi dần xuống
+dưới, tới dưới cùng làm xong thì quay ngược lại)
+
+$\rightarrow$ Khử đệ quy thì dùng stack để lưu trữ function, info (vì dùng đệ quy
+phải tốn chi phí tạo lại function).
