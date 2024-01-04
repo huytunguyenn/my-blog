@@ -161,6 +161,7 @@ Lần lượt thêm các file markdown `.mdx` vào folder `learn/cloud/gcp` và 
 
 ### Cách thêm code
 
+```markdown
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -178,7 +179,7 @@ import TabItem from '@theme/TabItem';
     ```
   </TabItem>
 </Tabs>
-
+```
 
 ### Cách vẽ chart
 
@@ -186,8 +187,9 @@ import TabItem from '@theme/TabItem';
 
 ### Cách dùng math equation
 
+```markdown
 -> : $\rightarrow$
-
+```
 
 #### Cách dùng emoji
 
