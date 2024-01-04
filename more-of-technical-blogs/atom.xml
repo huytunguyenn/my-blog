@@ -2,18 +2,25 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://huytunguyenn.github.io/my-blog/more-of-technical-blogs</id>
     <title>huytu Blog</title>
-    <updated>2023-12-29T00:00:00.000Z</updated>
+    <updated>2024-01-04T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://huytunguyenn.github.io/my-blog/more-of-technical-blogs"/>
     <subtitle>huytu Blog</subtitle>
     <icon>https://huytunguyenn.github.io/my-blog/img/favicon/favicon-purple.ico</icon>
     <entry>
+        <title type="html"><![CDATA[blob-la-gi]]></title>
+        <id>https://huytunguyenn.github.io/my-blog/more-of-technical-blogs/2024/1/4/career/blob-la-gi</id>
+        <link href="https://huytunguyenn.github.io/my-blog/more-of-technical-blogs/2024/1/4/career/blob-la-gi"/>
+        <updated>2024-01-04T00:00:00.000Z</updated>
+    </entry>
+    <entry>
         <title type="html"><![CDATA[Duck typing]]></title>
         <id>https://huytunguyenn.github.io/my-blog/more-of-technical-blogs/duck-typing</id>
         <link href="https://huytunguyenn.github.io/my-blog/more-of-technical-blogs/duck-typing"/>
         <updated>2023-12-29T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[https://en.wikipedia.org/wiki/Brokenwindowstheory]]></summary>
-        <content type="html"><![CDATA[<p><a href="https://en.wikipedia.org/wiki/Broken_windows_theory" target="_blank" rel="noopener noreferrer">https://en.wikipedia.org/wiki/Broken_windows_theory</a></p>
+        <summary type="html"><![CDATA[ABC//medium.com/always-be-coding/abc-always-be-coding-d5f8051afce2]]></summary>
+        <content type="html"><![CDATA[<p>ABC: <a href="https://medium.com/always-be-coding/abc-always-be-coding-d5f8051afce2" target="_blank" rel="noopener noreferrer">https://medium.com/always-be-coding/abc-always-be-coding-d5f8051afce2</a></p>
+<p>Broken windows: <a href="https://en.wikipedia.org/wiki/Broken_windows_theory" target="_blank" rel="noopener noreferrer">https://en.wikipedia.org/wiki/Broken_windows_theory</a></p>
 <h2 class="anchor anchorWithHideOnScrollNavbar_WYt5" id="tách-hàm-như-thế-nào">Tách hàm như thế nào<a href="https://huytunguyenn.github.io/my-blog/more-of-technical-blogs/duck-typing#t%C3%A1ch-h%C3%A0m-nh%C6%B0-th%E1%BA%BF-n%C3%A0o" class="hash-link" aria-label="Direct link to Tách hàm như thế nào" title="Direct link to Tách hàm như thế nào">​</a></h2>
 <div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_biex"><pre tabindex="0" class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">    src = if imageDownloadUrl != null then builtins.fetchurl {</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">    } else fetchEcr {</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">    };</span><br></span></code></pre><div class="buttonGroup__atx"><button type="button" aria-label="Copy code to clipboard" title="Copy" class="clean-btn"><span class="copyButtonIcons_eSgA" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_y97N"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_LjdS"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
 <p><a href="https://en.wikipedia.org/wiki/Duck_typing" target="_blank" rel="noopener noreferrer">https://en.wikipedia.org/wiki/Duck_typing</a></p>
