@@ -10,12 +10,16 @@ import TabItem from '@theme/TabItem';
 
 Xem sơ đồ thị :palm_tree:. Do BFS và DFS là 2 thuật toán duyệt đồ thị.
 
-## BFS (Breathe First Search)
+## BFS (Breathe-First Search)
 
 ### Xài khi nào?
 
 Tìm kiếm theo chiều rộng. Dùng trên đồ thị **không trọng số** (vô hướng hoặc có hướng).
 Nếu có trọng số thì trọng số các đường đi phải giống nhau (do thuật toán chỉ đếm số cạnh đi qua).
+
+BFS trả lời được câu hỏi:
+- có đường từ u $\rightarrow$ v hay không?
+- tìm được đường đi ngắn nhất (nếu tồn tại)
 
 ### Giới thiệu cơ chế
 
@@ -29,10 +33,6 @@ $\rightarrow$ dùng array để lưu lại. Những điểm gần hơn thì mìn
 $\rightarrow$ xử lý thằng nào lưu trước
 $\rightarrow$ FIFO
 $\rightarrow$ dùng **queue**.
-
-BFS trả lời được câu hỏi:
-- có đường từ u $\rightarrow$ v hay không?
-- tìm được đường đi ngắn nhất (nếu tồn tại)
 
 **Độ phức tạp: $O(V + E)$**
 
@@ -252,7 +252,7 @@ Khi 2 đỉnh cần tìm không có đường đi tới được nhau (ví dụ 
 
 #### Làm sao chứng minh được đường đi đó là ngắn nhất?
 
-#### Đọc input
+#### Hàm main
 
 <Tabs groupId="stack">
   <TabItem value="py" label="Python">
@@ -453,4 +453,316 @@ C2: Dùng đệ quy:
 </Tabs>
 
 
-## DFS
+## DFS (Depth-First Search)
+
+### Xài khi nào?
+
+Tìm kiếm theo chiều sâu. Dùng trên đồ thị **không trọng số** (vô hướng hoặc có hướng).
+Nếu có trọng số thì trọng số các đường đi phải giống nhau (do thuật toán chỉ đếm số cạnh đi qua).
+
+DFS luôn tìm được đường đi từ 1 đỉnh bất kỳ tới 1 đỉnh bất kỳ khác. Tuy nhiên, nó
+**không chắc chắn** tìm được đường đi ngắn nhất.
+
+$\rightarrow$ Mục tiêu khi dùng là để xét xem có đường đi hay không thôi. Hoặc dùng
+hỗ trợ bài toán khác. Muốn kết quả tốt nhất thì xài BFS. Nhiều bài toán BFS hay DFS
+đều như nhau.
+
+### Giới thiệu cơ chế
+
+Khác với BFS giống như nhỏ giọt nước, DFS giống như đi mê cung, khi đi thì mình
+không biết mình sẽ đi đâu, về đâu. Mình sẽ chọn 1 đường đi tiếp hoài tới khi đường
+cụt hoặc lối ra.
+
+
+**Độ phức tạp: $O(V + E)$**
+
+*\*V: total of vertices E: total of edges*
+
+### Cách lưu trữ
+
+### Cài đặt
+
+Vì DFS xài stack nên có 2 cách cài. **Không dùng đệ quy (giống BFS), xài stack**:
+
+<Tabs groupId="stack">
+  <TabItem value="py" label="Python">
+    ```py
+    MAX = 100
+    V = None
+    E = None
+    visited = [False for i in range(MAX)]
+    path = [0 for i in range(MAX)]
+    graph = [[] for i in range(MAX)]
+
+    def DFS(src):
+      for i in range(V):
+        visited[i] = False
+        path[i] = -1
+      s = []
+      visited[src] = True
+      s.append(src)
+
+      while len(s) > 0:
+        u = s.pop()
+        for v in graph[u]:
+          if not visited[v]:
+            visited[v] = True
+            s.append(v)
+            path[v] = u
+    ```
+  </TabItem>
+  <TabItem value="java" label="Java">
+    ```java
+    import java.util.*;
+    public class Main {
+      private static ArrayList<ArrayList<Integer>> graph;
+      private static int V;
+      private static int E;
+      private static ArrayList<Boolean> visited;
+      private static ArrayList<Integer> path;
+
+      private static void DFS(int src){
+        Stack<Integer> s = new Stack<>();
+        visited = new ArrayList<>();
+        path = new ArrayList<>();
+        for (int i = 0; i < V; i++) {
+          visited.add(false);
+          path.add(-1);
+        }
+        visited.set(src, true);
+        s.add(src);
+        while(!s.empty()) {
+          int u = s.pop();
+          for (int i = 0; i < graph.get(u).size(); i++) {
+            int v = graph.get(u).get(i);
+            if (!visited.get(v)) {
+              visited.set(v, true);
+              s.add(v);
+              path.set(v, u);
+            }
+          }
+        }
+      }
+    }
+    ```
+  </TabItem>
+  <TabItem value="cpp" label="C++">
+    ```cpp
+    #include <iostream>
+    #include <vector>
+    #include <stack>
+    using namespace std;
+    #define MAX 100
+    int V;
+    int E;
+    vector<int> graph[MAX];
+    bool visited[MAX];
+    int path[MAX];
+
+    void DFS(int src){
+      for(int i = 0; i < V; i++){
+        visited[i] = false;
+        path[i] = -1;
+      }
+      stack<int> s;
+      visited[src] = true;
+      s.push(src);
+
+      while(!s.empty()) {
+        int u = s.top();
+        s.pop();
+        for(int i = 0; i < graph[u].size(); i++){
+          int v = graph[u][i];
+          if(!visited[v]){
+            visited[v] = true;
+            s.push(v);
+            path[v] = u;
+          }
+        }
+      }
+    }
+    ```
+  </TabItem>
+</Tabs>
+
+
+**Dùng đệ quy:**
+
+<Tabs groupId="stack">
+  <TabItem value="py" label="Python">
+    ```py
+    def DFSRecursion(s):
+      visited[s] = True
+      for v in graph[s]:
+        if not visited[v]:
+          path[v] = s
+          DFSRecursion(v)
+    ```
+  </TabItem>
+  <TabItem value="java" label="Java">
+    ```java
+    private static void DFSRecursion(int s) {
+      visited.set(s, true);
+      for (int i = 0; i < graph.get(s).size(); i++) {
+        int v = graph.get(s).get(i);
+        if (!visited.get(v)) {
+          path.set(v, s);
+          DFSRecursion(v);
+        }
+      }
+    }
+    ```
+  </TabItem>
+  <TabItem value="cpp" label="C++">
+    ```cpp
+    void DFSRecursion(int s) {
+      visited[s] = true;
+      for (int i = 0; i < graph[s].size(); i++) {
+        int v = graph[s][i];
+        if (!visited[v]) {
+          path[v] = s;
+          DFSRecursion(v);
+        }
+      }
+    }
+    ```
+  </TabItem>
+</Tabs>
+
+Note that BFS cho đường đi tốt hơn DFS stack hoặc DFS recursion. Do DFS stack &
+recursion sử dụng cấu trúc khác nhau nên có thể cho đường đi khác nhau (k chắc
+chắn stack sẽ tốt hơn recursion & ngc lại).
+
+### Thêm
+
+#### Hàm main
+
+<Tabs groupId="stack">
+  <TabItem value="py" label="Python">
+    ```py
+    if __name__ == "__main__":
+      V, E = map(int, input().split())
+      for i in range(E):
+        u, v = map(int, input().split())
+        graph[u].append(v)
+        graph[v].append(u)
+      s = 0
+      f = 5
+      DFS(s)
+      printPath(s, f)
+    ```
+  </TabItem>
+  <TabItem value="java" label="Java">
+    ```java
+    public static void main(String[] args){
+      Scanner sc = new Scanner(System.in);
+      V = sc.nextInt();
+      E = sc.nextInt();
+      graph = new ArrayList<>(V);
+      for (int i = 0; i < V; i++) {
+        graph.add(new ArrayList<>());
+      }
+      for (int i = 0; i < E; i++) {
+        int u = sc.nextInt();
+        int v = sc.nextInt();
+        graph.get(u).add(v);
+        graph.get(v).add(u);
+      }
+      int s = 0, f = 5;
+      DFS(s);
+      printPath(s, f);
+    }
+    ```
+  </TabItem>
+  <TabItem value="cpp" label="C++">
+    ```cpp
+    int main() {
+      int u, v;
+      cin >> V >> E;
+      for (int i = 0; i < E; i++) {
+        cin >> u >> v;
+        graph[u].push_back(v);
+        graph[v].push_back(u);
+      }
+      int s = 0;
+      int f = 5;
+      DFS(s);
+      printPath(s, f);
+      return 0;
+    }
+    ```
+  </TabItem>
+</Tabs>
+
+Nếu xài DFS đệ quy thì cần khởi tạo lại mảng `visited` và `path` trước khi gọi đệ
+quy (vì để trong đệ quy thì mỗi lần gọi lại reset trạng thái)
+
+<Tabs groupId="stack">
+  <TabItem value="py" label="Python">
+    ```py
+    if __name__ == "__main__":
+      V, E = map(int, input().split())
+      for i in range(E):
+        u, v = map(int, input().split())
+        graph[u].append(v)
+        graph[v].append(u)
+      s = 0
+      f = 5
+      for i in range(V):
+        visited[i] = False
+        path[i] = -1
+      DFSRecursion(s)
+      printPath(s, f)
+    ```
+  </TabItem>
+  <TabItem value="java" label="Java">
+    ```java
+    public static void main(String[] args) {
+      Scanner sc = new Scanner(System.in);
+      V = sc.nextInt();
+      E = sc.nextInt();
+      graph = new ArrayList<>(V);
+      for (int i = 0; i < V; i++) {
+        graph.add(new ArrayList<>());
+      }
+      for (int i = 0; i < E; i++) {
+        int u = sc.nextInt();
+        int v = sc.nextInt();
+        graph.get(u).add(v);
+        graph.get(v).add(u);
+      }
+      int s = 0, f = 5;
+      path = new ArrayList<>();
+      visited = new ArrayList<>();
+      for (int i = 0; i < V; i++) {
+        visited.add(false);
+        path.add(-1);
+      }
+      DFSRecursion(s);
+      printPath(s, f);
+    }
+    ```
+  </TabItem>
+  <TabItem value="cpp" label="C++">
+    ```cpp
+    int main() {
+      int u, v;
+      cin >> V >> E;
+      for (int i = 0; i < E; i++) {
+        cin >> u >> v;
+        graph[u].push_back(v);
+        graph[v].push_back(u);
+      }
+      int s = 0;
+      int f = 5;
+      for (int i = 0; i < V; i++) {
+        visited[i] = false;
+        path[i] = -1;
+      }
+      DFSRecursion(s);
+      printPath(s, f);
+      return 0;
+    }
+    ```
+  </TabItem>
+</Tabs>
