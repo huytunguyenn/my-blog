@@ -27,7 +27,7 @@ function HomepageHeader() {
             id="HomepageHeader.pageTitle"
             description="The homepage title"
           >
-            Welcome to Tus hub 👾
+            🔨 select * from &lt;me/&gt; ...
           </Translate>
         </h1>
         <p className="hero__subtitle">
@@ -35,7 +35,7 @@ function HomepageHeader() {
             id="HomepageHeader.tagline"
             description="The homepage tag line"
           >
-            I share what I know
+            I like to share the knowledge I stole from others.
           </Translate>
         </p>
         <div className={styles.buttons}>
@@ -46,7 +46,7 @@ function HomepageHeader() {
               id="HomepageHeader.buttonWord"
               description="The word on the center button of home page"
             >
-              Explore more
+              Lorem ipsum ✨
             </Translate>
           </Link>
         </div>
