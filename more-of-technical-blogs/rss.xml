@@ -4,10 +4,61 @@
         <title>huytu Blog</title>
         <link>https://huytunguyenn.github.io/my-blog/more-of-technical-blogs</link>
         <description>huytu Blog</description>
-        <lastBuildDate>Thu, 04 Jan 2024 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Wed, 15 May 2024 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
+        <item>
+            <title><![CDATA[Đo đạc hiệu năng]]></title>
+            <link>https://huytunguyenn.github.io/my-blog/more-of-technical-blogs/concurrency-series-1-measurement</link>
+            <guid>https://huytunguyenn.github.io/my-blog/more-of-technical-blogs/concurrency-series-1-measurement</guid>
+            <pubDate>Wed, 15 May 2024 00:00:00 GMT</pubDate>
+            <description><![CDATA[Chắc hẳn ai cũng muốn (không muốn thì đến lúc cũng phải muốn) cái app mình code chạy nhanh nhất,]]></description>
+            <content:encoded><![CDATA[<p>Chắc hẳn ai cũng muốn (không muốn thì đến lúc cũng phải muốn) cái app mình code chạy nhanh nhất,
+responsive nhất nên không lạ gì với các thông số đo đạc performance của hệ thống
+để biết nó nhanh hay chậm. Vài cái tiêu biểu là latency &amp; throughput.</p>
+<h3 class="anchor anchorWithHideOnScrollNavbar_WYt5" id="concurrency-series-1-đo-đạc-tốc-độ">[Concurrency series] #1 Đo đạc tốc độ<a href="https://huytunguyenn.github.io/my-blog/more-of-technical-blogs/concurrency-series-1-measurement#concurrency-series-1-%C4%91o-%C4%91%E1%BA%A1c-t%E1%BB%91c-%C4%91%E1%BB%99" class="hash-link" aria-label="Direct link to [Concurrency series] #1 Đo đạc tốc độ" title="Direct link to [Concurrency series] #1 Đo đạc tốc độ">​</a></h3>
+<p><strong>Latency (độ trễ)</strong> là thời gian từ khi gói tin được gửi đi cho đến khi gói tin
+được nhận, hay là thời gian từ khi bắt đầu tới khi hoàn thành task, hay là.
+Latency cao nghĩa là độ trễ cao, aka thời gian hoàn thành lớn-chậm.</p>
+<p><strong>Throughput (thông lượng)</strong> là số byte gửi/nhận trong 1 giây của mạng, là số lượng
+task mà system có thể handle trong 1 khoảng thời gian. Nó thể hiện cho “năng suất”.</p>
+<blockquote>
+<p><em>Một ví dụ đơn giản là xe máy &amp; xe bus, xe máy có thể nhanh gấp đôi xe bus nhưng
+xe bus lại chở được số lượng x25 lần xe máy. Xe bus có throughput lớn hơn xe máy.</em></p>
+</blockquote>
+<p>**</p>
+<p><em><strong>Vậy là hệ thống throughput cao thì latency thấp?</strong></em> Cũng không hẳn như vậy:</p>
+<blockquote>
+<p><em>Xe máy chở đc 1 người/h, xe bus thì chở 50 người/2h (là 25 người/h). Trong trường
+hợp này, xe bus có throughput cao, nhưng latency nó cũng cao hơn xe máy.</em></p>
+</blockquote>
+<p>→ Tương tự trong hệ thống máy tính, <strong>không phải throughput cao là đồng nghĩa với latency thấp.</strong></p>
+<p>Có 2 điều cần lưu ý rằng:</p>
+<ul>
+<li>Cải thiện yếu tố này có thể làm tệ đi yếu tố còn lại.</li>
+<li>Các khái niệm trái nghĩa nhau không đồng thời triệt tiêu nhau mà có thể tồn tại cùng nhau (cái này nói sau hehe).</li>
+</ul>
+<p>Nói một cách technical hơn 1 long-running task có thể được chia nhỏ thành nhiều
+task có thể được thực thi <em>song song</em>, giúp giảm thời gian thực thi → giảm latency.
+Nhiều task được thực hiện <em>đồng thời</em> cũng là giúp tăng throughput.</p>
+<p><code>x</code> còn giúp <strong>che giấu latency.</strong></p>
+<blockquote>
+<p><em>Một ví dụ đời thực là khi chờ xe bus, thay vì chỉ ngồi chờ, chúng ta có thể làm
+những task khác như đọc sách, check mail, tin nhắn, gọi điện, ăn sáng, etc.</em></p>
+</blockquote>
+<p>Đây là những hành động vô thức mà ta làm thường ngày. Tại sao chúng ta làm? → Bởi vì chúng ta “thấy” nó optimize hoạt động của mình.</p>
+<p><em>Tại sao nó optimize? Việc chúng check mail trong lúc chờ xe bus không giúp xe bus đi nhanh hơn?</em></p>
+<p>→ Well thực tế bởi vì chúng ta đã che giấu đi độ trễ của xe bus, i.e. làm task khác trong
+thời gian đợi task có latency cao. Đây cũng là một ví dụ cho thấy che giấu latency
+là một trong những key cho 1 responsive system (và đây là đáp án đầu tiên cho bài toán liên quan tới việc waiting).</p>
+<p>**</p>
+<p><em><strong>Q:</strong></em> What is <code>x</code>?</p>
+<p><em><strong>A:</strong></em> Based on the title and the bold words, you’ve already known. It is concurrency.</p>
+<p><em><strong>Q:</strong></em> What is concurrency?</p>
+<hr>
+<p><strong>ResRef</strong>: Kirill Bobrov, Manning Publications - Grokking Concurrency</p>]]></content:encoded>
+        </item>
         <item>
             <title><![CDATA[blob-la-gi]]></title>
             <link>https://huytunguyenn.github.io/my-blog/more-of-technical-blogs/2024/1/4/career/blob-la-gi</link>
@@ -72,18 +123,6 @@ vừa qua, đó chính là làm việc với scripts.</p>
             <pubDate>Fri, 22 Dec 2023 00:00:00 GMT</pubDate>
             <description><![CDATA[Dump là gì?]]></description>
             <content:encoded><![CDATA[<h2 class="anchor anchorWithHideOnScrollNavbar_WYt5" id="dump-là-gì">Dump là gì?<a href="https://huytunguyenn.github.io/my-blog/more-of-technical-blogs/what-is-dump#dump-l%C3%A0-g%C3%AC" class="hash-link" aria-label="Direct link to Dump là gì?" title="Direct link to Dump là gì?">​</a></h2>]]></content:encoded>
-            <category>career</category>
-        </item>
-        <item>
-            <title><![CDATA[Vượt qua thử thách]]></title>
-            <link>https://huytunguyenn.github.io/my-blog/more-of-technical-blogs/my-first-blog</link>
-            <guid>https://huytunguyenn.github.io/my-blog/more-of-technical-blogs/my-first-blog</guid>
-            <pubDate>Thu, 23 Mar 2023 00:00:00 GMT</pubDate>
-            <description><![CDATA[Post about c]]></description>
-            <content:encoded><![CDATA[<p>Luc nao cung so thi sao</p>
-<p>This is my first post on Docusaurus 2.</p>
-<p>A whole bunch of exploration to follow.</p>]]></content:encoded>
-            <category>live</category>
             <category>career</category>
         </item>
     </channel>
