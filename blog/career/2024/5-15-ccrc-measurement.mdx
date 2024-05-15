@@ -1,0 +1,67 @@
+---
+slug: concurrency-series-1-measurement
+title: Đo đạc hiệu năng
+authors: [huytu]
+tags: []
+hide_table_of_contents: false
+---
+
+Chắc hẳn ai cũng muốn (không muốn thì đến lúc cũng phải muốn) cái app mình code chạy nhanh nhất,
+responsive nhất nên không lạ gì với các thông số đo đạc performance của hệ thống
+để biết nó nhanh hay chậm. Vài cái tiêu biểu là latency & throughput.
+
+### \[Concurrency series\] #1 Đo đạc tốc độ
+
+
+**Latency (độ trễ)** là thời gian từ khi gói tin được gửi đi cho đến khi gói tin
+được nhận, hay là thời gian từ khi bắt đầu tới khi hoàn thành task, hay là.
+Latency cao nghĩa là độ trễ cao, aka thời gian hoàn thành lớn-chậm.
+
+**Throughput (thông lượng)** là số byte gửi/nhận trong 1 giây của mạng, là số lượng
+task mà system có thể handle trong 1 khoảng thời gian. Nó thể hiện cho “năng suất”.
+
+> *Một ví dụ đơn giản là xe máy & xe bus, xe máy có thể nhanh gấp đôi xe bus nhưng
+xe bus lại chở được số lượng x25 lần xe máy. Xe bus có throughput lớn hơn xe máy.*
+
+**
+
+***Vậy là hệ thống throughput cao thì latency thấp?*** Cũng không hẳn như vậy:
+
+> *Xe máy chở đc 1 người/h, xe bus thì chở 50 người/2h (là 25 người/h). Trong trường
+hợp này, xe bus có throughput cao, nhưng latency nó cũng cao hơn xe máy.*
+
+→ Tương tự trong hệ thống máy tính, **không phải throughput cao là đồng nghĩa với latency thấp.**
+
+Có 2 điều cần lưu ý rằng:
+
+- Cải thiện yếu tố này có thể làm tệ đi yếu tố còn lại.
+- Các khái niệm trái nghĩa nhau không đồng thời triệt tiêu nhau mà có thể tồn tại cùng nhau (cái này nói sau hehe).
+
+Nói một cách technical hơn 1 long-running task có thể được chia nhỏ thành nhiều
+task có thể được thực thi *song song*, giúp giảm thời gian thực thi → giảm latency.
+Nhiều task được thực hiện *đồng thời* cũng là giúp tăng throughput.
+
+`x` còn giúp **che giấu latency.**
+
+> *Một ví dụ đời thực là khi chờ xe bus, thay vì chỉ ngồi chờ, chúng ta có thể làm
+những task khác như đọc sách, check mail, tin nhắn, gọi điện, ăn sáng, etc.*
+
+Đây là những hành động vô thức mà ta làm thường ngày. Tại sao chúng ta làm? → Bởi vì chúng ta “thấy” nó optimize hoạt động của mình.
+
+*Tại sao nó optimize? Việc chúng check mail trong lúc chờ xe bus không giúp xe bus đi nhanh hơn?*
+
+→ Well thực tế bởi vì chúng ta đã che giấu đi độ trễ của xe bus, i.e. làm task khác trong
+thời gian đợi task có latency cao. Đây cũng là một ví dụ cho thấy che giấu latency
+là một trong những key cho 1 responsive system (và đây là đáp án đầu tiên cho bài toán liên quan tới việc waiting).
+
+**
+
+***Q:*** What is `x`?
+
+***A:*** Based on the title and the bold words, you’ve already known. It is concurrency.
+
+***Q:*** What is concurrency?
+
+---
+
+**ResRef**: Kirill Bobrov, Manning Publications - Grokking Concurrency

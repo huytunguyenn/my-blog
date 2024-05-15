@@ -1,0 +1,10 @@
+label: computer concepts
+position: 5
+link:
+  type: generated-index
+  title: Computer Concepts
+  description: the basics of computer science
+  keywords:
+    - architecture
+    - computer
+  image: /img/banner-small.png
