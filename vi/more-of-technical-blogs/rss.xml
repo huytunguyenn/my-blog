@@ -52,9 +52,11 @@ những task khác như đọc sách, check mail, tin nhắn, gọi điện, ăn
 <p>→ Well thực tế bởi vì chúng ta đã che giấu đi độ trễ của xe bus, i.e. làm task khác trong
 thời gian đợi task có latency cao. Đây cũng là một ví dụ cho thấy che giấu latency
 là một trong những key cho 1 responsive system (và đây là đáp án đầu tiên cho bài toán liên quan tới việc waiting).</p>
-<p>**</p>
-<p><em><strong>Q:</strong></em> What is <code>x</code>?</p>
+<p>** <em>Chatchit</em></p>
+<p><em><strong>Q:</strong></em> Wait, what is <code>x</code>?</p>
 <p><em><strong>A:</strong></em> Based on the title and the bold words, you’ve already known. It is concurrency.</p>
+<p><em><strong>Q:</strong></em> Vậy nói 1 hồi thì liên quan gì tới measurement?</p>
+<p><em><strong>A:</strong></em> Vì nó là động lực. Concurrency không mới nhưng nó là skill cần thiết với modern system ngày nay.</p>
 <p><em><strong>Q:</strong></em> What is concurrency?</p>
 <hr>
 <p><strong>ResRef</strong>: Kirill Bobrov, Manning Publications - Grokking Concurrency</p>]]></content:encoded>
