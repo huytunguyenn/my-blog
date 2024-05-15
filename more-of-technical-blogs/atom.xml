@@ -55,8 +55,9 @@ là một trong những key cho 1 responsive system (và đây là đáp án đ�
 <p><em><strong>Q:</strong></em> Wait, what is <code>x</code>?</p>
 <p><em><strong>A:</strong></em> Based on the title and the bold words, you’ve already known. It is concurrency.</p>
 <p><em><strong>Q:</strong></em> Vậy nói 1 hồi thì liên quan gì tới measurement?</p>
-<p><em><strong>A:</strong></em> Vì nó là động lực. Concurrency không mới nhưng nó là skill cần thiết với modern system ngày nay.</p>
+<p><em><strong>A:</strong></em> Vì nó là động lực. Concurrency không mới nhưng nó là skill cần thiết với modern systems ngày nay.</p>
 <p><em><strong>Q:</strong></em> What is concurrency?</p>
+<p><em><strong>A:</strong></em> Dunno yet.</p>
 <hr>
 <p><strong>ResRef</strong>: Kirill Bobrov, Manning Publications - Grokking Concurrency</p>]]></content>
         <author>
