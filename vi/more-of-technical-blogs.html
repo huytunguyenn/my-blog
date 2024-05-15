@@ -12,7 +12,7 @@
 <link rel="alternate" type="application/atom+xml" href="/my-blog/vi/more-of-my-thoughts/atom.xml" title="huytu Atom Feed">
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.24/dist/katex.min.css" integrity="sha384-odtC+0UGzzFL/6PNoE8rX/SPcQDXBJ+uRepguP4QkPCm2LBxH3FA3y+fKSiJ+AmM" crossorigin="anonymous"><link rel="stylesheet" href="/my-blog/vi/assets/css/styles.bd050792.css">
-<script src="/my-blog/vi/assets/js/runtime~main.2e7ffa04.js" defer="defer"></script>
+<script src="/my-blog/vi/assets/js/runtime~main.1457d8b5.js" defer="defer"></script>
 <script src="/my-blog/vi/assets/js/main.abda9cf7.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
@@ -33,7 +33,8 @@ xe bus lại chở được số lượng x25 lần xe máy. Xe bus có throughp
 <p><em><strong>Vậy là hệ thống throughput cao thì latency thấp?</strong></em> Cũng không hẳn như vậy:</p>
 <blockquote>
 <p><em>Xe máy chở đc 1 người/h, xe bus thì chở 50 người/2h (là 25 người/h). Trong trường
-hợp này, xe bus có throughput cao, nhưng latency nó cũng cao hơn xe máy.</em></p>
+hợp này, xe bus có throughput cao, nhưng latency nó cũng cao hơn xe máy. In the end,
+nó vẫn phải tốn 2h để hoàn thành nhiệm vụ</em></p>
 </blockquote>
 <p>→ Tương tự trong hệ thống máy tính, <strong>không phải throughput cao là đồng nghĩa với latency thấp.</strong></p>
 <p>Có 2 điều cần lưu ý rằng:</p>
@@ -46,7 +47,7 @@ task có thể được thực thi <em>song song</em>, giúp giảm thời gian 
 Nhiều task được thực hiện <em>đồng thời</em> cũng là giúp tăng throughput.</p>
 <p><code>x</code> còn giúp <strong>che giấu latency.</strong></p>
 <blockquote>
-<p><em>Một ví dụ đời thực là khi chờ xe bus, thay vì chỉ ngồi chờ, chúng ta c ó thể làm
+<p><em>Một ví dụ đời thực là khi chờ xe bus, thay vì chỉ ngồi chờ, chúng ta có thể làm
 những task khác như đọc sách, check mail, tin nhắn, gọi điện, ăn sáng, etc.</em></p>
 </blockquote>
 <p>Đây là những hành động vô thức mà ta làm thường ngày. Tại sao chúng ta làm? → Bởi vì chúng ta “thấy” nó optimize hoạt động của mình.</p>

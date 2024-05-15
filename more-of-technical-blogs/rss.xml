@@ -31,7 +31,8 @@ xe bus lại chở được số lượng x25 lần xe máy. Xe bus có throughp
 <p><em><strong>Vậy là hệ thống throughput cao thì latency thấp?</strong></em> Cũng không hẳn như vậy:</p>
 <blockquote>
 <p><em>Xe máy chở đc 1 người/h, xe bus thì chở 50 người/2h (là 25 người/h). Trong trường
-hợp này, xe bus có throughput cao, nhưng latency nó cũng cao hơn xe máy.</em></p>
+hợp này, xe bus có throughput cao, nhưng latency nó cũng cao hơn xe máy. In the end,
+nó vẫn phải tốn 2h để hoàn thành nhiệm vụ</em></p>
 </blockquote>
 <p>→ Tương tự trong hệ thống máy tính, <strong>không phải throughput cao là đồng nghĩa với latency thấp.</strong></p>
 <p>Có 2 điều cần lưu ý rằng:</p>
