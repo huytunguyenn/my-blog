@@ -1,8 +1,8 @@
 # Website
 
-**My blog** is built using [Docusaurus 2](https://docusaurus.io/), a modern static website generator.
+> [!NOTE] Visit **my ~~blog~~ note taking** at: https://huytunguyenn.github.io/my-blog/
 
-Visit **my blog** at: https://huytunguyenn.github.io/my-blog/
+Built using [Docusaurus 2](https://docusaurus.io/), a modern static website generator.
 
 ## Environment
 
@@ -11,7 +11,6 @@ Require Node.js 18.0+
 ```shell 
 nvm use 18
 ```
-
 
 ## i18n
 

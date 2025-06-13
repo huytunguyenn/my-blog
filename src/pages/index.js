@@ -35,7 +35,7 @@ function HomepageHeader() {
             id="HomepageHeader.tagline"
             description="The homepage tag line"
           >
-            I like to share the knowledge I stole from others.
+            I don't want my editor to look like a Christmas tree.
           </Translate>
         </p>
         <div className={styles.buttons}>
